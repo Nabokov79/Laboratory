@@ -8,7 +8,8 @@ public enum Status {
     WORK,
     COMPLETED,
     TRANSFERRED,
-    REMARK;
+    REMARK,
+    NOT_REQUIRED;
 
     public static Optional<Status> from(String stringStatus) {
         for (Status status : values()) {
