@@ -95,8 +95,8 @@ public class LabNKClient extends BaseClient {
                 , "endDate", String.valueOf(endDate));
     }
 
-    public Flux<Object> saveLaboratoryEmployee(Long id, String divisionType) {
-        return post(String.join(DELIMITER, API_PREFIX_EMPLOYEE, String.valueOf(id))
+    public Flux<Object> copyLaboratoryEmployee(Long id, String divisionType) {
+        return getAll(String.join(DELIMITER, API_PREFIX_EMPLOYEE, "copy", String.valueOf(id))
                                                                 , "divisionType", divisionType);
     }
 
