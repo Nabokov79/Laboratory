@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-@Schema(description = "Данные нормативно-технической документации")
+@Schema(description = "Данные для добавления/зменения данных нормативно-технической документации")
 public class DocumentationDto {
 
     @Schema(description = "Индентификатор")
