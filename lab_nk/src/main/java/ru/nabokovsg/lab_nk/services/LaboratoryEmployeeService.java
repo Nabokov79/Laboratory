@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface LaboratoryEmployeeService {
 
-    List<ShortLaboratoryEmployeeDto> save(Long id, String divisionType);
+    List<ShortLaboratoryEmployeeDto> copy(Long id, String divisionType);
 
     FullLaboratoryEmployeeDto get(Long id);
 

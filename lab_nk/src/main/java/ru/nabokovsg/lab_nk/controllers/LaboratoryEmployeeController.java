@@ -28,13 +28,13 @@ public class LaboratoryEmployeeController {
     private final LaboratoryEmployeeService service;
 
     @Operation(summary = "Добавление данных нового подр")
-    @PostMapping("/{id}")
-    public ResponseEntity<List<ShortLaboratoryEmployeeDto>> save(
+    @GetMapping("/copy/{id}")
+    public ResponseEntity<List<ShortLaboratoryEmployeeDto>> copy(
               @PathVariable
               @Parameter(description = "Индентификатор структурного подразделения") Long id
             , @RequestParam(name = "divisionType")
               @Parameter(description = "Тип структурного подразделения") String divisionType) {
-        return ResponseEntity.ok().body(service.save(id, divisionType));
+        return ResponseEntity.ok().body(service.copy(id, divisionType));
     }
 
     @Operation(summary = "Получение данных сотрудника")

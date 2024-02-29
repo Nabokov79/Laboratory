@@ -148,13 +148,13 @@ public class LabNKController {
     }
 
     @Operation(summary = "Добавление данных нового подр")
-    @PostMapping("/lab-nk/division/{id}")
-    public Flux<Object> saveLaboratoryEmployee(
+    @GetMapping("/lab-nk/division/{id}")
+    public Flux<Object> copyLaboratoryEmployee(
                                       @PathVariable @NotNull @Positive
                                       @Parameter(description = "Индентификатор структурного подразделения") Long id
                                     , @RequestParam(name = "divisionType") @NotBlank
                                       @Parameter(description = "Тип структурного подразделения") String divisionType) {
-        return client.saveLaboratoryEmployee(id, divisionType);
+        return client.copyLaboratoryEmployee(id, divisionType);
     }
 
     @Operation(summary = "Получение данных сотрудника")

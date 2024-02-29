@@ -23,7 +23,7 @@ public class LaboratoryEmployeeServiceImpl implements LaboratoryEmployeeService 
     private final LadNKClient client;
 
     @Override
-    public List<ShortLaboratoryEmployeeDto> save(Long id, String divisionType) {
+    public List<ShortLaboratoryEmployeeDto> copy(Long id, String divisionType) {
         List<LaboratoryEmployee> laboratoryEmployees = client.getAllEmployee(id, divisionType)
                                                              .stream()
                                                              .map(mapper::mapToLaboratoryEmployee)
