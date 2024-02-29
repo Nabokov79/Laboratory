@@ -20,6 +20,15 @@ public class BaseClient {
                 .bodyToMono(Object.class);
     }
 
+    public Flux<Object> post(String path, String paramName, String param) {
+        return client.post()
+                .uri(uriBuilder -> uriBuilder.path(path)
+                        .queryParam(paramName, param)
+                        .build())
+                .retrieve()
+                .bodyToFlux(Object.class);
+    }
+
     public <T> Mono<Object> patch(String path, T body) {
         return client.patch()
                 .uri(path)
@@ -31,6 +40,15 @@ public class BaseClient {
     public Mono<Object> get(String path) {
         return client.get()
                 .uri(path)
+                .retrieve()
+                .bodyToMono(Object.class);
+    }
+
+    public Mono<Object> get(String path, String paramName, String param) {
+        return client.get()
+                .uri(uriBuilder -> uriBuilder.path(path)
+                        .queryParam(paramName, param)
+                        .build())
                 .retrieve()
                 .bodyToMono(Object.class);
     }
@@ -47,6 +65,32 @@ public class BaseClient {
                 .uri(uriBuilder -> uriBuilder.path(path)
                                                 .queryParam(paramName, param)
                                                 .build())
+                .retrieve()
+                .bodyToFlux(Object.class);
+    }
+
+    public Flux<Object> getAll(String path, String firstParamName, String firstParam
+                                          , String secondParamName, String secondParam
+            , String thirdParamName, String thirdParam
+            , String fourthParamName, String fourthParam) {
+        return client.get()
+                .uri(uriBuilder -> uriBuilder.path(path)
+                        .queryParam(firstParamName, firstParam)
+                        .queryParam(secondParamName, secondParam)
+                        .queryParam(thirdParamName, thirdParam)
+                        .queryParam(fourthParam, fourthParamName)
+                        .build())
+                .retrieve()
+                .bodyToFlux(Object.class);
+    }
+
+    public Flux<Object> getAll(String path, String firstParamName, String firstParam
+            , String secondParamName, String secondParam) {
+        return client.get()
+                .uri(uriBuilder -> uriBuilder.path(path)
+                        .queryParam(firstParamName, firstParam)
+                        .queryParam(secondParamName, secondParam)
+                        .build())
                 .retrieve()
                 .bodyToFlux(Object.class);
     }
