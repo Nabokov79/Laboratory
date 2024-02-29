@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.client.LadNKClient;
-import ru.nabokovsg.lab_nk.dto.employees.DivisionDataDto;
 import ru.nabokovsg.lab_nk.dto.employees.FullLaboratoryEmployeeDto;
 import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
@@ -24,8 +23,8 @@ public class LaboratoryEmployeeServiceImpl implements LaboratoryEmployeeService 
     private final LadNKClient client;
 
     @Override
-    public List<ShortLaboratoryEmployeeDto> save(DivisionDataDto divisionDataDto) {
-        List<LaboratoryEmployee> laboratoryEmployees = client.getAllEmployee(divisionDataDto)
+    public List<ShortLaboratoryEmployeeDto> save(Long id, String divisionType) {
+        List<LaboratoryEmployee> laboratoryEmployees = client.getAllEmployee(id, divisionType)
                                                              .stream()
                                                              .map(mapper::mapToLaboratoryEmployee)
                                                              .toList();
