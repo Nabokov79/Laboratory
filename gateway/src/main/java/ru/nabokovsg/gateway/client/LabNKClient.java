@@ -2,6 +2,8 @@ package ru.nabokovsg.gateway.client;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,8 +13,13 @@ import ru.nabokovsg.gateway.dto.labNk_service.documentation.NewDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.UpdateDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.NewHeaderDocumentDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.UpdateHeaderDocumentDto;
+import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.NewMeasuringToolDto;
+import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.UpdateMeasuringToolDto;
+import ru.nabokovsg.gateway.dto.labNk_service.remarks.NewRemarkDto;
+import ru.nabokovsg.gateway.dto.labNk_service.remarks.UpdateRemarkDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class LabNKClient extends BaseClient {
@@ -88,11 +95,12 @@ public class LabNKClient extends BaseClient {
     }
 
     public Flux<Object> getAllDocuments(Long equipmentId, Long addressId, LocalDate startDate, LocalDate endDate) {
-        return getAll(String.join(DELIMITER, API_PREFIX_DOCUMENT, "all")
-                , "equipmentId", String.valueOf(equipmentId)
-                , "addressId", String.valueOf(addressId)
-                , "startDate", String.valueOf(startDate)
-                , "endDate", String.valueOf(endDate));
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.put(String.valueOf(equipmentId), List.of(String.valueOf(equipmentId)));
+        params.put(String.valueOf(addressId), List.of(String.valueOf(addressId)));
+        params.put(String.valueOf(startDate), List.of(String.valueOf(startDate)));
+        params.put(String.valueOf(endDate), List.of(String.valueOf(endDate)));
+        return getAll(String.join(DELIMITER, API_PREFIX_DOCUMENT, "all"), params);
     }
 
     public Flux<Object> copyLaboratoryEmployee(Long id, String divisionType) {
@@ -110,5 +118,47 @@ public class LabNKClient extends BaseClient {
 
     public Mono<String> deleteLaboratoryEmployee(Long id) {
         return delete(String.join(DELIMITER, API_PREFIX_EMPLOYEE, String.valueOf(id)));
+    }
+
+    public Mono<Object> saveMeasuringTool(NewMeasuringToolDto measuringToolDto) {
+        return post(API_PREFIX_MEASURING, measuringToolDto);
+    }
+
+    public Mono<Object> updateMeasuringTool(UpdateMeasuringToolDto measuringToolDto) {
+        return patch(API_PREFIX_MEASURING, measuringToolDto);
+    }
+
+    public Flux<Object> getAllMeasuringTools(String toll, String model, String workNumber,
+                                                                        LocalDate manufacturing, LocalDate exploitation,
+                                                                        String manufacturer, String organization,
+                                                                        String controlType, Long employeeId) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.put(toll, List.of(toll));
+        params.put(model, List.of(model));
+        params.put(workNumber, List.of(workNumber));
+        params.put(String.valueOf(manufacturing), List.of(String.valueOf(manufacturing)));
+        params.put(String.valueOf(exploitation), List.of(String.valueOf(exploitation)));
+        params.put(manufacturer, List.of(manufacturer));
+        params.put(organization, List.of(organization));
+        params.put(controlType, List.of(controlType));
+        params.put(String.valueOf(employeeId), List.of(String.valueOf(employeeId)));
+        return getAll(String.join(DELIMITER, API_PREFIX_MEASURING), params);
+    }
+
+    public Mono<String> deleteMeasuringTool(Long id) {
+        return delete(String.join(DELIMITER, API_PREFIX_MEASURING, String.valueOf(id)));
+    }
+
+    public Mono<Object> saveRemark(NewRemarkDto remarkDto) {
+        return post(API_PREFIX_REMARK, remarkDto);
+    }
+
+    public Mono<Object> updateRemark(UpdateRemarkDto remarkDto) {
+         return patch(API_PREFIX_REMARK, remarkDto);
+    }
+
+    public Flux<Object> getAllRemarks(Long id, Boolean inspector) {
+        return getAll(String.join(DELIMITER, API_PREFIX_REMARK, "all", String.valueOf(id))
+                                                        , "inspector", String.valueOf(inspector));
     }
 }

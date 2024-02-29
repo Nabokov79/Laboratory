@@ -2,6 +2,7 @@ package ru.nabokovsg.gateway.client;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,15 +19,6 @@ public class BaseClient {
                 .bodyValue(body)
                 .retrieve()
                 .bodyToMono(Object.class);
-    }
-
-    public Flux<Object> post(String path, String paramName, String param) {
-        return client.post()
-                .uri(uriBuilder -> uriBuilder.path(path)
-                        .queryParam(paramName, param)
-                        .build())
-                .retrieve()
-                .bodyToFlux(Object.class);
     }
 
     public <T> Mono<Object> patch(String path, T body) {
@@ -69,16 +61,10 @@ public class BaseClient {
                 .bodyToFlux(Object.class);
     }
 
-    public Flux<Object> getAll(String path, String firstParamName, String firstParam
-                                          , String secondParamName, String secondParam
-            , String thirdParamName, String thirdParam
-            , String fourthParamName, String fourthParam) {
+    public Flux<Object> getAll(String path, MultiValueMap<String, String> params) {
         return client.get()
                 .uri(uriBuilder -> uriBuilder.path(path)
-                        .queryParam(firstParamName, firstParam)
-                        .queryParam(secondParamName, secondParam)
-                        .queryParam(thirdParamName, thirdParam)
-                        .queryParam(fourthParam, fourthParamName)
+                        .queryParams(params)
                         .build())
                 .retrieve()
                 .bodyToFlux(Object.class);

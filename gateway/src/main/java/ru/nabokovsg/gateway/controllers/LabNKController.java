@@ -20,6 +20,10 @@ import ru.nabokovsg.gateway.dto.labNk_service.documentation.NewDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.UpdateDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.NewHeaderDocumentDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.UpdateHeaderDocumentDto;
+import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.NewMeasuringToolDto;
+import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.UpdateMeasuringToolDto;
+import ru.nabokovsg.gateway.dto.labNk_service.remarks.NewRemarkDto;
+import ru.nabokovsg.gateway.dto.labNk_service.remarks.UpdateRemarkDto;
 
 import java.time.LocalDate;
 
@@ -175,5 +179,62 @@ public class LabNKController {
     public Mono<String> deleteLaboratoryEmployee(@PathVariable @NotNull @Positive
                                                  @Parameter(description = "Индентификатор") Long id) {
         return client.deleteLaboratoryEmployee(id);
+    }
+
+    @Operation(summary = "Добавление данных нового интструмента(прибора)")
+    @PostMapping("/measuring")
+    public Mono<Object> saveMeasuringTool(@RequestBody @Valid
+                                  @Parameter(description = "Инструмент(прибор)") NewMeasuringToolDto measuringToolDto) {
+        return client.saveMeasuringTool(measuringToolDto);
+    }
+
+    @Operation(summary = "Изменение данных инструмента(прибора)")
+    @PatchMapping("/measuring")
+    public Mono<Object> updateMeasuringTool(@RequestBody @Valid
+                              @Parameter(description = "Инструмент(прибор)") UpdateMeasuringToolDto measuringToolDto) {
+        return client.updateMeasuringTool(measuringToolDto);
+    }
+
+    @Operation(summary = "Получение инструментов(приборов) по заданным параметрам")
+    @GetMapping
+    public Flux<Object> getAllMeasuringTools(
+            @RequestParam(required = false) @Parameter(description = "Название") String toll,
+            @RequestParam(required = false) @Parameter(description = "Модель") String model,
+            @RequestParam(required = false) @Parameter(description = "Заводской номер") String workNumber,
+            @RequestParam(required = false) @Parameter(description = "Дата изготовления") LocalDate manufacturing,
+            @RequestParam(required = false) @Parameter(description = "Дата начала эксплуатации") LocalDate exploitation,
+            @RequestParam(required = false) @Parameter(description = "Завод-изготовитель") String manufacturer,
+            @RequestParam(required = false) @Parameter(description = "Метрологическая организация") String organization,
+            @RequestParam(required = false) @Parameter(description = "Вид контроля") String controlType,
+            @RequestParam(required = false) @Parameter(description = "Индентификатор сотрудника") Long employeeId) {
+        return client.getAllMeasuringTools(toll, model, workNumber, manufacturing,exploitation, manufacturer,
+                                           organization, controlType, employeeId);
+    }
+
+    @Operation(summary = "Удаление инструмента(прибора)")
+    @DeleteMapping("/measuring/{id}")
+    public Mono<String> deleteMeasuringTool(@PathVariable @NotNull @Positive
+                                         @Parameter(description = "Индентификатор инструмента(прибора)") Long id) {
+        return client.deleteMeasuringTool(id);
+    }
+
+    @Operation(summary = "Добавление данных нового замечания к документу или чертежу")
+    @PostMapping("/remark")
+    public Mono<Object> saveRemark(@RequestBody @Valid @Parameter(description = "Замечание") NewRemarkDto remarkDto) {
+        return client.saveRemark(remarkDto);
+    }
+
+    @Operation(summary = "Изменение данных замечания к документу или чертежу")
+    @PatchMapping("/remark")
+    public Mono<Object> update(@RequestBody @Valid @Parameter(description = "Замечание") UpdateRemarkDto remarkDto) {
+        return client.updateRemark(remarkDto);
+    }
+
+    @Operation(summary = "Получение замечаний к документу и чертежу")
+    @GetMapping("/remarks/{id}")
+    public Flux<Object> getAllRemarks(@PathVariable @NotNull @Positive
+                                                      @Parameter(description = "Индентификатор сотрудника") Long id,
+                                                      @RequestParam(name = "inspector") @NotNull Boolean inspector) {
+        return client.getAllRemarks(id, inspector);
     }
 }

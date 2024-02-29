@@ -1,50 +1,64 @@
-package ru.nabokovsg.lab_nk.dto.measuringTool;
+package ru.nabokovsg.gateway.dto.labNk_service.measuringToll;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
-@Schema(description = "Данные для добавления/изменения информации о измерительном инструменте(приборе)")
-public class MeasuringToolDto {
+@Schema(description = "Данные для добавления измерительнго инструменте(приборе)")
+public class NewMeasuringToolDto {
 
-    @Schema(description = "Индентификатор")
-    private Long id;
     @Schema(description = "Название")
+    @NotBlank(message = "toll should not be blank")
     private String toll;
     @Schema(description = "Модель")
+    @NotBlank(message = "model should not be blank")
     private String model;
     @Schema(description = "Заводской номер")
+    @NotBlank(message = "work number should not be blank")
     private String workNumber;
     @Schema(description = "Назначение")
+    @NotBlank(message = "purpose should not be blank")
     private String purpose;
     @Schema(description = "Дата изготовления")
+    @NotNull(message = "manufacturing should not be blank")
     private LocalDate manufacturing;
     @Schema(description = "Дата начала эксплуатации")
+    @NotNull(message = "exploitation should not be blank")
     private LocalDate exploitation;
-    @Schema(description = "Организация-изготовитель")
+    @Schema(description = "Индентификатор организации-изготовителя")
+    @NotBlank(message = "manufacturer should not be blank")
     private String manufacturer;
     @Schema(description = "Диапазон измерений")
+    @NotBlank(message = "measuring range should not be blank")
     private String  measuringRange;
     @Schema(description = "Характеристики")
+    @NotBlank(message = "characteristics should not be blank")
     private String characteristics;
-    @Schema(description = "Владелец средства измерения(прибора)")
-    private String owner;
+    @Schema(description = "Индентификатор владелеца средства(прибора)")
+    @NotBlank(message = "owner should not be blank")
+    private Long owner;
     @Schema(description = "Дата поверки")
+    @NotNull(message = "verification date should not be blank")
     private LocalDate verificationDate;
     @Schema(description = "Дата следующей поверки")
+    @NotNull(message = "next verification date should not be blank")
     private LocalDate nextVerificationDate;
-    @Schema(description = "Mетрологическая организация")
+    @Schema(description = "Индентификатор метрологической организации")
+    @NotBlank(message = "organization should not be blank")
     private String organization;
     @Schema(description = "Номер свидетельства о поверке")
+    @NotBlank(message = "certificate number should not be blank")
     private String certificateNumber;
     @Schema(description = "Номер госреестра")
+    @NotBlank(message = "registry should not be blank")
     private String registry;
     @Schema(description = "Примечание")
     private String note;
