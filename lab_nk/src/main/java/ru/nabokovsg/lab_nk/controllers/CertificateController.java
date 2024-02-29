@@ -28,32 +28,28 @@ public class CertificateController {
     @Operation(summary = "Добавление данных сертификатов сотрудника")
     @PostMapping
     public ResponseEntity<FullCertificateDto> save(
-            @RequestBody
-            @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
+               @RequestBody @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
         return ResponseEntity.ok().body(service.save(certificateDto));
     }
 
     @Operation(summary = "Изменение данных аттестации сотрудника")
     @PatchMapping
     public ResponseEntity<FullCertificateDto> update(
-            @RequestBody
-            @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
+                @RequestBody @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
         return ResponseEntity.ok().body(service.update(certificateDto));
     }
 
     @Operation(summary = "Получение данных сертификатов сотрудников")
-    @GetMapping
-    public ResponseEntity<List<FullCertificateDto>> getAll(@RequestParam
-                                                      @Parameter(description = "Индентификатор сотрудника") Long employeeId) {
-        return ResponseEntity.ok().body(service.getAll(employeeId));
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<FullCertificateDto>> getAll(
+                        @PathVariable @Parameter(description = "Индентификатор сотрудника") Long id) {
+        return ResponseEntity.ok().body(service.getAll(id));
     }
 
     @Operation(summary = "Удаление данных сертификата сотрудника")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable
-                                         @Parameter(description = "Индентификатор сертификата") Long id) {
+    public ResponseEntity<String> delete(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         service.delete(id);
         return ResponseEntity.ok("Аттестация сотрудника удалена.");
     }
-
 }
