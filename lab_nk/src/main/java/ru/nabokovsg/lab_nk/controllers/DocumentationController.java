@@ -40,7 +40,7 @@ public class DocumentationController {
     }
 
     @Operation(summary = "Получение данных документов")
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<FullDocumentationDto>> getAll(
                                                 @RequestParam(name = "id", required = false)
                                                 @Parameter(description = "Индентификаторы документов") List<Long> ids,
