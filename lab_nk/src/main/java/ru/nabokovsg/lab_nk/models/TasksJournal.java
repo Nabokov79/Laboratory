@@ -2,6 +2,7 @@ package ru.nabokovsg.lab_nk.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.nabokovsg.lab_nk.models.enums.Status;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -35,6 +36,9 @@ public class TasksJournal {
     private Long equipmentId;
     @Column(name = "equipment")
     private String equipment;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "tasks_journal_employees",
