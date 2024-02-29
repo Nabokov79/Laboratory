@@ -6,7 +6,9 @@ public enum DivisionType {
 
     ORGANIZATION,
     BRANCH,
-    DEPARTMENT;
+    DEPARTMENT,
+    EXPLOITATION_REGION,
+    BUILDING;
 
     public static Optional<DivisionType> from(String division) {
         for (DivisionType type : values()) {
