@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS TASKS_JOURNAL
     equipment    VARCHAR                                 NOT NULL,
     task_source  VARCHAR,
     comment      VARCHAR,
+    status       VARCHAR                                 NOT NULL,
     CONSTRAINT pk_tasksJournal PRIMARY KEY (id)
 );
 
