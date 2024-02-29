@@ -42,8 +42,8 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<FullCertificateDto> getAll(Long employeeId) {
-        return repository.findAllByEmployeeId(employeeId)
+    public List<FullCertificateDto> getAll(Long id) {
+        return repository.findAllByEmployeeId(id)
                 .stream()
                 .map(mapper::mapToFullCertificateDto)
                 .toList();
