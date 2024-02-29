@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.company.dto.address.FullAddressDto;
 import ru.nabokovsg.company.dto.department.ShortDepartmentDto;
+import ru.nabokovsg.company.dto.exploitationRegion.FullExploitationRegionDto;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public class FullBranchDto {
     private FullAddressDto address;
     @Schema(description = "Подразделения")
     private List<ShortDepartmentDto> departments;
+    @Schema(description = "Подразделения")
+    private List<FullExploitationRegionDto> heatSupplyAreas;
 }
