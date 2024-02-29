@@ -10,7 +10,7 @@ public interface CertificateService {
 
     FullCertificateDto update(CertificateDto certificateDto);
 
-    List<FullCertificateDto> getAll(Long employeeId);
+    List<FullCertificateDto> getAll(Long id);
 
     void delete(Long id);
 }
