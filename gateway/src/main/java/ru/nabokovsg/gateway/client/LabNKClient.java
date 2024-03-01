@@ -7,8 +7,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import ru.nabokovsg.gateway.dto.labNk_service.NewCertificateDto;
-import ru.nabokovsg.gateway.dto.labNk_service.UpdateCertificateDto;
+import ru.nabokovsg.gateway.dto.labNk_service.certificates.NewCertificateDto;
+import ru.nabokovsg.gateway.dto.labNk_service.certificates.UpdateCertificateDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.NewDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.UpdateDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.NewHeaderDocumentDto;
@@ -17,6 +17,8 @@ import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.NewMeasuringToolDto;
 import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.UpdateMeasuringToolDto;
 import ru.nabokovsg.gateway.dto.labNk_service.remarks.NewRemarkDto;
 import ru.nabokovsg.gateway.dto.labNk_service.remarks.UpdateRemarkDto;
+import ru.nabokovsg.gateway.dto.labNk_service.taskJournal.NewTaskJournalDto;
+import ru.nabokovsg.gateway.dto.labNk_service.taskJournal.UpdateTaskJournalDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -160,5 +162,30 @@ public class LabNKClient extends BaseClient {
     public Flux<Object> getAllRemarks(Long id, Boolean inspector) {
         return getAll(String.join(DELIMITER, API_PREFIX_REMARK, "all", String.valueOf(id))
                                                         , "inspector", String.valueOf(inspector));
+    }
+
+    public Mono<Object> saveWork(NewTaskJournalDto taskJournalDto) {
+        return post(API_PREFIX_JOURNAL, taskJournalDto);
+    }
+
+    public Mono<Object> updateWork(UpdateTaskJournalDto taskJournalDto) {
+        return patch(API_PREFIX_JOURNAL, taskJournalDto);
+    }
+
+    public Mono<Object> getWork(Long id) {
+        return get(String.join(DELIMITER, API_PREFIX_JOURNAL, String.valueOf(id)));
+    }
+
+    public Flux<Object> getAllWorks(Long employeeId, String status, LocalDate startPeriod, LocalDate endPeriod) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.put(String.valueOf(employeeId), List.of(String.valueOf(employeeId)));
+        params.put(status, List.of(status));
+        params.put(String.valueOf(startPeriod), List.of(String.valueOf(startPeriod)));
+        params.put(String.valueOf(endPeriod), List.of(String.valueOf(endPeriod)));
+        return getAll(String.join(DELIMITER, API_PREFIX_JOURNAL), params);
+    }
+
+    public Mono<String> deleteWork(Long id) {
+        return delete(String.join(DELIMITER, API_PREFIX_JOURNAL, String.valueOf(id)));
     }
 }

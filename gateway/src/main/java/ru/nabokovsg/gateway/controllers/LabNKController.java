@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.nabokovsg.gateway.client.LabNKClient;
-import ru.nabokovsg.gateway.dto.labNk_service.NewCertificateDto;
-import ru.nabokovsg.gateway.dto.labNk_service.UpdateCertificateDto;
+import ru.nabokovsg.gateway.dto.labNk_service.certificates.NewCertificateDto;
+import ru.nabokovsg.gateway.dto.labNk_service.certificates.UpdateCertificateDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.NewDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.documentation.UpdateDocumentationDto;
 import ru.nabokovsg.gateway.dto.labNk_service.headerDocument.NewHeaderDocumentDto;
@@ -24,6 +24,8 @@ import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.NewMeasuringToolDto;
 import ru.nabokovsg.gateway.dto.labNk_service.measuringToll.UpdateMeasuringToolDto;
 import ru.nabokovsg.gateway.dto.labNk_service.remarks.NewRemarkDto;
 import ru.nabokovsg.gateway.dto.labNk_service.remarks.UpdateRemarkDto;
+import ru.nabokovsg.gateway.dto.labNk_service.taskJournal.NewTaskJournalDto;
+import ru.nabokovsg.gateway.dto.labNk_service.taskJournal.UpdateTaskJournalDto;
 
 import java.time.LocalDate;
 
@@ -236,5 +238,47 @@ public class LabNKController {
                                                       @Parameter(description = "Индентификатор сотрудника") Long id,
                                                       @RequestParam(name = "inspector") @NotNull Boolean inspector) {
         return client.getAllRemarks(id, inspector);
+    }
+
+    @Operation(summary = "Добавление данных новой задачи на выполнение работы")
+    @PostMapping("/work/journal")
+    public Mono<Object> saveWork(
+                            @RequestBody @Valid
+                            @Parameter(description = "Задача на выполнение работы") NewTaskJournalDto taskJournalDto) {
+        return client.saveWork(taskJournalDto);
+    }
+
+    @Operation(summary = "Изменение данных задачи на выполнение работы")
+    @PatchMapping("/work/journal")
+    public Mono<Object> updateWork(
+                        @RequestBody @Valid
+                        @Parameter(description = "Задача на выполнение работы") UpdateTaskJournalDto taskJournalDto) {
+        return client.updateWork(taskJournalDto);
+    }
+
+    @Operation(summary = "Получение задачи")
+    @GetMapping("/work/journal/{id}")
+    public Mono<Object> getWork(@PathVariable @NotNull @Positive @Parameter(description = "Индентификатор") Long id) {
+        return client.getWork(id);
+    }
+
+    @Operation(summary = "Получение данных задачи на выполнение работы")
+    @GetMapping("/work/journal")
+    public Flux<Object> getAllWorks(@RequestParam(value = "employeeId", required = false)
+                                @Parameter(description = "Индентификатор сотрудника") Long employeeId
+                              , @RequestParam(value = "status", required = false)
+                                @Parameter(description = "Статус выполнения работы") String status
+                              , @RequestParam(value = "startPeriod", required = false)
+                                @Parameter(description = "Начало периода для выборки данных") LocalDate startPeriod
+                              , @RequestParam(value = "endPeriod", required = false)
+                                @Parameter(description = "Окончание периода для выборки данных") LocalDate endPeriod) {
+        return client.getAllWorks(employeeId, status, startPeriod, endPeriod);
+    }
+
+    @Operation(summary = "Удаление задачи")
+    @DeleteMapping("/work/journal/{id}")
+    public Mono<String> deleteWork(@PathVariable @NotNull @Positive
+                                   @Parameter(description = "Индентификатор") Long id) {
+        return client.deleteWork(id);
     }
 }

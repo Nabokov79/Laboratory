@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Данные для добавления/изменения задачи на выполнения работы")
+@Schema(description = "Данные для добавления/изменения работы в журнал задач")
 public class TaskJournalDto {
 
     @Schema(description = "Индентификатор")

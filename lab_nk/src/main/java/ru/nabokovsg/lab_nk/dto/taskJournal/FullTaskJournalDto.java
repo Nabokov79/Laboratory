@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Данные задачи на выполнения работы")
+@Schema(description = "Данные работы в жернале задач")
 public class FullTaskJournalDto {
 
     @Schema(description = "Индентификатор")
