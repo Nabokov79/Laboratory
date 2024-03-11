@@ -1,8 +1,8 @@
 package ru.nabokovsg.result.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import ru.nabokovsg.result.dto.sizeParameters.SizeParametersDto;
 import ru.nabokovsg.result.mappers.SizeParametersMapper;
 import ru.nabokovsg.result.models.SizeParameters;
@@ -62,7 +62,7 @@ public class SizeParametersServiceImpl implements SizeParametersService {
         if (parameters.size() != ids.size() || parameters.isEmpty()) {
             List<Long> idsDb = new ArrayList<>(parameters.keySet());
             ids = ids.stream().filter(e -> !idsDb.contains(e)).collect(Collectors.toList());
-            throw new ChangeSetPersister.NotFoundException(String.format("parameters with ids= %s not found", ids));
+            throw new NotFoundException(String.format("parameters with ids= %s not found", ids));
         }
     }
 }
