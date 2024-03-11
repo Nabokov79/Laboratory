@@ -19,4 +19,6 @@ public class OrganizationDto {
     private String shortName;
     @Schema(description = "Индентификатор адреса")
     private Long addressId;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

@@ -31,4 +31,6 @@ public class UpdateBuildingDto {
     @NotNull(message = "address id should not be blank")
     @Positive(message = "address id can only be positive")
     private Long addressId;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.lab_nk.dto.measuringTool.FullMeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.MeasuringToolDto;
-import ru.nabokovsg.lab_nk.dto.measuringTool.RequestParameters;
+import ru.nabokovsg.lab_nk.dto.measuringTool.SearchParameters;
 import ru.nabokovsg.lab_nk.services.MeasuringToolService;
 
 import java.time.LocalDate;
@@ -46,6 +46,8 @@ public class MeasuringToolController {
     @Operation(summary = "Получение инструментов(приборов) по заданным параметрам")
     @GetMapping
     public ResponseEntity<List<FullMeasuringToolDto>> getAll(
+            @RequestParam(name = "id", required = false)
+            @Parameter(description = "Индентификаторы документов") List<Long> ids,
      @RequestParam(required = false) @Parameter(description = "Название") String toll,
      @RequestParam(required = false) @Parameter(description = "Модель") String model,
      @RequestParam(required = false) @Parameter(description = "Заводской номер") String workNumber,
@@ -55,7 +57,7 @@ public class MeasuringToolController {
      @RequestParam(required = false) @Parameter(description = "Метрологическая организация") String organization,
      @RequestParam(required = false) @Parameter(description = "Вид контроля") String controlType,
      @RequestParam(required = false) @Parameter(description = "Индентификатор сотрудника") Long employeeId) {
-        return ResponseEntity.ok().body(service.getAll(new RequestParameters(toll, model, workNumber, manufacturing,
+        return ResponseEntity.ok().body(service.getAll(new SearchParameters(ids, toll, model, workNumber, manufacturing,
                                                                            exploitation, manufacturer, organization,
                                                                            controlType, employeeId)));
     }

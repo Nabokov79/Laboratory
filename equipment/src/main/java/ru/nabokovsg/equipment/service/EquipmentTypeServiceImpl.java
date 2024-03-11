@@ -47,6 +47,9 @@ public class EquipmentTypeServiceImpl implements EquipmentTypeService {
         if (equipmentDto.getModel() != null) {
             booleanBuilder.and(QEquipmentType.equipmentType.model.eq(equipmentDto.getModel()));
         }
+        if (equipmentDto.getVolume() != null) {
+            booleanBuilder.and(QEquipmentType.equipmentType.volume.eq(equipmentDto.getVolume()));
+        }
         return new JPAQueryFactory(em).from(equipmentType)
                 .select(equipmentType)
                 .where(booleanBuilder)

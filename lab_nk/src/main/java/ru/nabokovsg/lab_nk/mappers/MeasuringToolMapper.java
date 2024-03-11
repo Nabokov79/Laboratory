@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.lab_nk.dto.measuringTool.FullMeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.MeasuringToolDto;
-import ru.nabokovsg.lab_nk.dto.measuringTool.RequestParameters;
+import ru.nabokovsg.lab_nk.dto.measuringTool.SearchParameters;
 import ru.nabokovsg.lab_nk.models.LaboratoryEmployee;
 import ru.nabokovsg.lab_nk.models.MeasuringTool;
 
@@ -18,5 +18,5 @@ public interface MeasuringToolMapper {
     MeasuringTool mapMeasuringToolWithLaboratoryEmployee(MeasuringTool measuringTool, LaboratoryEmployee employee);
     FullMeasuringToolDto mapToFullMeasuringToolDto(MeasuringTool newMeasuringTool);
 
-    MeasuringToolDto mapToMeasuringToolDto(RequestParameters parameters);
+    SearchParameters mapToRequestParameters(MeasuringToolDto measuringToolDto);
 }

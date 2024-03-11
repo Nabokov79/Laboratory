@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.nabokovsg.template.dto.header.HeaderTemplateDto;
 
 @Setter
 @Getter
@@ -16,13 +15,13 @@ public class PageTitleTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Индентификатор типа объекта")
-    private Long objectTypeId;
-    @Schema(description = "Индентификатор типа отчетного документа")
-    private Long reportingDocumentId;
-    @Schema(description = "Строка наименования объекта")
-    private String object;
-    @Schema(description = "Строка наименования места расположения объекта")
+    @Schema(description = "Индентификатор типа документа")
+    private Long headerDocumentId;
+    @Schema(description = "Индентификатор типа оборудования")
+    private Long equipmentTypeId;
+    @Schema(description = "Строка наименования оборудования")
+    private String equipment;
+    @Schema(description = "Строка наименования места расположения оборудования")
     private String installationLocation;
     @Schema(description = "Строка указания адреса")
     private String address;
@@ -30,6 +29,4 @@ public class PageTitleTemplateDto {
     private Long employeeId;
     @Schema(description = "Населенный пункт")
     private String city;
-    @Schema(description = "Заголовок титульного листа")
-    private HeaderTemplateDto header;
 }

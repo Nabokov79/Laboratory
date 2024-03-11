@@ -14,10 +14,8 @@ public class ShortProtocolTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Данные типа объекта")
-    private String objectType;
     @Schema(description = "Заголовок")
-    private HeaderTemplateDto header;
+    private HeaderTemplateDto leftHeaderTemplate;
     @Schema(description = "Название документа")
     private String title;
     @Schema(description = "Заголовок документа")

@@ -14,10 +14,6 @@ public class FullPageTitleTemplateDto {
 
     @Schema(description = "Индентификатор")
     private long id;
-    @Schema(description = "Индентификатор типа объекта")
-    private Long objectTypeId;
-    @Schema(description = "Индентификатор типа отчетного документа")
-    private Long reportingDocumentId;
     @Schema(description = "Заголовок")
     private FullHeaderTemplateDto header;
     @Schema(description = "Название документа")
@@ -25,7 +21,7 @@ public class FullPageTitleTemplateDto {
     @Schema(description = "Заголовок документа")
     private String heading;
     @Schema(description = "Строка наименования объекта")
-    private String object;
+    private String equipment;
     @Schema(description = "Строка местоположения")
     private String installationLocation;
     @Schema(description = "Строка адреса")
@@ -34,6 +30,4 @@ public class FullPageTitleTemplateDto {
     private String signature;
     @Schema(description = "Населенный пункт")
     private String city;
-    @Schema(description = "Год")
-    private String year;
 }

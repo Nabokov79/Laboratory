@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.company.dto.address.FullAddressDto;
 import ru.nabokovsg.company.dto.branch.ShortBranchDto;
+import ru.nabokovsg.company.dto.licenses.FullLicenseDto;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class FullOrganizationDto {
     private String shortName;
     @Schema(description = "Адрес")
     private FullAddressDto address;
+    @Schema(description = "Лицензия/аттеставция организации")
+    private List<FullLicenseDto> licenses;
     @Schema(description = "Филиалы")
     private List<ShortBranchDto> branches;
 }

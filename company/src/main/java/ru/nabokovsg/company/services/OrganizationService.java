@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface OrganizationService {
 
-    FullOrganizationDto save(OrganizationDto organizationDto);
+    ShortOrganizationDto save(OrganizationDto organizationDto);
 
-    FullOrganizationDto update(OrganizationDto organizationDto);
+    ShortOrganizationDto update(OrganizationDto organizationDto);
 
     FullOrganizationDto get(Long id);
 

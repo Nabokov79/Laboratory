@@ -23,14 +23,12 @@ public class Department {
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+    @OneToOne
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private DivisionContact contact;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id",  nullable = false)
     private Branch branch;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "departments_licenses",
-            joinColumns = {@JoinColumn(name = "department_id")},
-            inverseJoinColumns = {@JoinColumn(name = "license_id")})
-    @ToString.Exclude
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private List<Licenses> licenses;
 }

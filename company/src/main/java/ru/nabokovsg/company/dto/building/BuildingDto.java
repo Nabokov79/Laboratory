@@ -23,4 +23,6 @@ public class BuildingDto {
     private Long exploitationRegionId;
     @Schema(description = "Индентификатор адреса")
     private Long addressId;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

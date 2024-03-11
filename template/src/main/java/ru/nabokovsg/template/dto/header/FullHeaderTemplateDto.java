@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.nabokovsg.template.models.DivisionData;
+import ru.nabokovsg.template.models.enums.TypeDocument;
 
 @Setter
 @Getter
@@ -13,28 +15,15 @@ public class FullHeaderTemplateDto {
 
     @Schema(description = "Индентификатор")
     private long id;
-    @Schema(description = "Организация")
-    private String organization;
-    @Schema(description = "Указать в документе адрес организации")
-    private String organizationAddress;
-    @Schema(description = "Лицензия организации")
-    private String organizationLicense;
-    @Schema(description = "Лицензия организации")
-    private String organizationContacts;
-    @Schema(description = "Филиал организации")
-    private String branch;
-    @Schema(description = "Указать в документе адрес филиала")
-    private String branchAddress;
-    @Schema(description = "Реквизиты филиала")
-    private String branchContacts;
-    @Schema(description = "Лицензия/аттестация филиала")
-    private String branchLicense;
-    @Schema(description = "Подразделение филиала организации")
-    private String department;
-    @Schema(description = "Указать в документе адрес подразделения филиала")
-    private String departmentAddress;
-    @Schema(description = "Реквизиты подразделения")
-    private String departmentContacts;
-    @Schema(description = "Лицензия/аттестация подразделения")
-    private String departmentLicense;
+    private TypeDocument typeDocument;
+    @Schema(description = "Данные организации")
+    private DivisionData organization;
+    @Schema(description = "Данные филиала")
+    private DivisionData branch;
+    @Schema(description = "Данные подразделения")
+    private DivisionData department;
+    @Schema(description = "Данные района теплоснабжения")
+    private DivisionData heatSupplyArea;
+    @Schema(description = "Данные участка теплоснабжения")
+    private DivisionData exploitationRegion;
 }

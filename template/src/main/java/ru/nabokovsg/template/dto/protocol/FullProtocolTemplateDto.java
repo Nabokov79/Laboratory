@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.template.dto.appendices.FullAppendicesTemplateDto;
 import ru.nabokovsg.template.dto.conclusion.FullConclusionTemplateDto;
+import ru.nabokovsg.template.dto.header.FullHeaderTemplateDto;
 import ru.nabokovsg.template.dto.subsection.FullSubsectionTemplateDto;
 import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
 import java.util.List;
@@ -18,14 +19,12 @@ public class FullProtocolTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Данные типа объекта")
-    private String objectsType;
+    @Schema(description = "Заголовок")
+    private FullHeaderTemplateDto leftHeaderTemplate;
     @Schema(description = "Название документа")
     private String title;
     @Schema(description = "Заголовок документа")
     private String heading;
-    @Schema(description = "Заголовок")
-    private FullProtocolTemplateDto header;
     @Schema(description = "Подразделы")
     private List<FullSubsectionTemplateDto> subsections;
     @Schema(description = "Таблицы")

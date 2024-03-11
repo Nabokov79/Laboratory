@@ -18,6 +18,12 @@ public class TableTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
+    @Schema(description = "Индентификатор части шаблона документа")
+    private Long documentPartId;
+    @Schema(description = "Тип части шаблона документа")
+    private String documentPartType;
+    @Schema(description = "Тип данных таблицы")
+    private String tableDataType;
     @Schema(description = "Порядковый номер таблицы")
     private Integer sequentialNumber;
     @Schema(description = "Название таблицы")

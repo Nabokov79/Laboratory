@@ -23,4 +23,6 @@ public class DepartmentDto {
     private Long addressId;
     @Schema(description = "Индентификатор филиала")
     private Long branchId;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

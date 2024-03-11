@@ -29,4 +29,6 @@ public class UpdateDepartmentDto {
     @NotNull(message = "branch id should not be blank")
     @Positive(message = "branch id must be positive")
     private Long branchId;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

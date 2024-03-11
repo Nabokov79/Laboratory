@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.template.dto.autoData.AutoDataCollectionDto;
 import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
+import ru.nabokovsg.template.models.enums.TypeDocument;
 
 @Setter
 @Getter
@@ -29,6 +29,10 @@ public class FullSubsectionTemplateDto {
     private String certificateEmployee;
     @Schema(description = "Индентификатор таблицы")
     private FullTableTemplateDto table;
-    @Schema(description = "Данные для атоматического сбора и записи информации")
-    private AutoDataCollectionDto autoDataCollection;
+    @Schema(description = "Тип документа для автоматического сбора информации")
+    private TypeDocument typeDocument;
+    @Schema(description = "Заключение протокола(для автоматической вставки)")
+    private boolean protocolConclusion;
+    @Schema(description = "Сводная таблица протокола")
+    private boolean autoTable;
 }

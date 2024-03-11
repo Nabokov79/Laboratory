@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.dto.measuringTool.FullMeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.MeasuringToolDto;
-import ru.nabokovsg.lab_nk.dto.measuringTool.RequestParameters;
+import ru.nabokovsg.lab_nk.dto.measuringTool.SearchParameters;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.MeasuringToolMapper;
 import ru.nabokovsg.lab_nk.models.MeasuringTool;
@@ -54,11 +54,11 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
     }
 
     @Override
-    public List<FullMeasuringToolDto> getAll(RequestParameters parameters) {
+    public List<FullMeasuringToolDto> getAll(SearchParameters parameters) {
         QMeasuringTool measuringTool = QMeasuringTool.measuringTool;
         return new JPAQueryFactory(em).from(measuringTool)
                                       .select(measuringTool)
-                                      .where(getPredicate(mapper.mapToMeasuringToolDto(parameters)))
+                                      .where(getPredicate(parameters))
                                       .fetch()
                                       .stream()
                                       .map(mapper::mapToFullMeasuringToolDto)
@@ -78,17 +78,20 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
         QMeasuringTool measuringTool = QMeasuringTool.measuringTool;
         return new JPAQueryFactory(em).from(measuringTool)
                 .select(measuringTool)
-                .where(getPredicate(measuringToolDto))
+                .where(getPredicate(mapper.mapToRequestParameters(measuringToolDto)))
                 .fetchOne();
     }
 
-    private BooleanBuilder getPredicate(MeasuringToolDto measuringToolDto) {
+    private BooleanBuilder getPredicate(SearchParameters measuringToolDto) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        if (measuringToolDto.getToll() != null) {
-            booleanBuilder.and(QMeasuringTool.measuringTool.toll.eq(measuringToolDto.getToll()));
+        if (measuringToolDto.getIds() != null && !measuringToolDto.getToll().isEmpty()) {
+            booleanBuilder.and(QMeasuringTool.measuringTool.toll.in(measuringToolDto.getToll()));
         }
-        if (measuringToolDto.getModel() != null) {
-            booleanBuilder.and(QMeasuringTool.measuringTool.model.eq(measuringToolDto.getModel()));
+        if (measuringToolDto.getToll() != null && !measuringToolDto.getToll().isEmpty()) {
+            booleanBuilder.and(QMeasuringTool.measuringTool.toll.in(measuringToolDto.getToll()));
+        }
+        if (measuringToolDto.getModel() != null && !measuringToolDto.getModel().isEmpty()) {
+            booleanBuilder.and(QMeasuringTool.measuringTool.model.in(measuringToolDto.getModel()));
         }
         if (measuringToolDto.getWorkNumber() != null) {
             booleanBuilder.and(QMeasuringTool.measuringTool.workNumber.eq(measuringToolDto.getWorkNumber()));
@@ -101,9 +104,6 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
         }
         if (measuringToolDto.getManufacturer() != null) {
             booleanBuilder.and(QMeasuringTool.measuringTool.manufacturer.eq(measuringToolDto.getManufacturer()));
-        }
-        if (measuringToolDto.getCertificateNumber() != null) {
-            booleanBuilder.and(QMeasuringTool.measuringTool.organization.eq(measuringToolDto.getCertificateNumber()));
         }
         if (measuringToolDto.getEmployeeId() != null) {
             booleanBuilder.and(QMeasuringTool.measuringTool.employee.id.eq(measuringToolDto.getEmployeeId()));

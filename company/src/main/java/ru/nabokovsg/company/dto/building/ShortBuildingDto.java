@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.nabokovsg.company.dto.address.FullAddressDto;
+import ru.nabokovsg.company.dto.divisionContact.FullDivisionContact;
 
 @Setter
 @Getter
@@ -22,4 +23,6 @@ public class ShortBuildingDto {
     private String login;
     @Schema(description = "Адрес")
     private FullAddressDto address;
+    @Schema(description = "Контакты сотрудника котельной, ЦТП")
+    private FullDivisionContact contact;
 }

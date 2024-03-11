@@ -22,15 +22,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentMapper mapper;
     private final AddressService addressService;
     private final BranchService branchService;
+    private final EmployeeService employeeService;
 
     @Override
     public ShortDepartmentDto save(DepartmentDto departmentDto) {
         return mapper.mapToShortDepartmentDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(departmentDto.getFullName())
                         , () -> repository.save(
-                                mapper.mapToNewDepartment(departmentDto
-                                                        , addressService.get(departmentDto.getAddressId())
-                                                        , branchService.getById(departmentDto.getBranchId())))));
+                                mapper.mapToDepartment(departmentDto
+                                                     , employeeService.getDivisionContact(departmentDto.getEmployeeId())
+                                                     , addressService.get(departmentDto.getAddressId())
+                                                     , branchService.getById(departmentDto.getBranchId())))));
     }
 
     @Override
@@ -38,9 +40,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (repository.existsById(departmentDto.getId())) {
             return mapper.mapToShortDepartmentDto(
                     repository.save(
-                            mapper.mapToUpdateDepartment(departmentDto
-                                                       , addressService.get(departmentDto.getAddressId())
-                                                       , branchService.getById(departmentDto.getBranchId())))
+                            mapper.mapToDepartment(departmentDto
+                                                 , employeeService.getDivisionContact(departmentDto.getEmployeeId())
+                                                 , addressService.get(departmentDto.getAddressId())
+                                                 , branchService.getById(departmentDto.getBranchId())))
             );
         }
         throw new NotFoundException(

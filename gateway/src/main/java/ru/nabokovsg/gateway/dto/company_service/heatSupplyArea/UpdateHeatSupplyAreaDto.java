@@ -20,10 +20,16 @@ public class UpdateHeatSupplyAreaDto {
     @NotNull(message = "id should not be blank")
     @Positive(message = "id must be positive")
     private Long id;
+    @Schema(description = "Индентификатор филиала")
+    @NotNull(message = "branch id should not be blank")
+    @Positive(message = "branch id must be positive")
+    private Long branchId;
     @Schema(description = "Полное наименование")
     @NotBlank(message = "full name heat supply area should not be blank")
     private String fullName;
     @Schema(description = "Краткое наименование")
     @NotBlank(message = "short name  heat supply area should not be blank")
     private String shortName;
+    @Schema(description = "Индентификатор сотрудника")
+    private Long employeeId;
 }

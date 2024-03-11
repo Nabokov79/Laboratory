@@ -25,11 +25,9 @@ public class Organization {
     private Address address;
     @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
     private List<Branch> branches;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "organizations_licenses",
-            joinColumns = {@JoinColumn(name = "organization_id")},
-            inverseJoinColumns = {@JoinColumn(name = "license_id")})
-    @ToString.Exclude
+    @OneToOne
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private DivisionContact contact;
+    @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
     private List<Licenses> licenses;
 }

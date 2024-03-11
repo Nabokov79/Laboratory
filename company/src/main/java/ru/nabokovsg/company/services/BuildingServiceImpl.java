@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.building.BuildingDto;
 import ru.nabokovsg.company.dto.building.FullBuildingDto;
 import ru.nabokovsg.company.dto.building.ShortBuildingDto;
+import ru.nabokovsg.company.exceptions.BadRequestException;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.BuildingMapper;
 import ru.nabokovsg.company.models.Building;
 import ru.nabokovsg.company.models.QBuilding;
+import ru.nabokovsg.company.models.enums.BuildingType;
 import ru.nabokovsg.company.repository.BuildingRepository;
 import java.util.List;
 import java.util.Objects;
@@ -25,24 +27,29 @@ public class BuildingServiceImpl implements BuildingService {
     private final ExploitationRegionService regionService;
     private final AddressService addressService;
     private final EntityManager entityManager;
+    private final EmployeeService employeeService;
 
     @Override
     public ShortBuildingDto save(BuildingDto buildingDto) {
         return mapper.mapToShortBuildingDto(
                 Objects.requireNonNullElseGet(getDuplicateByPredicate(buildingDto)
                         , () -> repository.save(
-                                mapper.mapToNewBuilding(buildingDto
-                                        , addressService.get(buildingDto.getAddressId())
-                                        , regionService.getById(buildingDto.getExploitationRegionId())))));
+                                mapper.mapToBuilding(buildingDto
+                                                   , employeeService.getDivisionContact(buildingDto.getEmployeeId())
+                                                   , getBuildingType(buildingDto.getBuildingType())
+                                                   , addressService.get(buildingDto.getAddressId())
+                                                   , regionService.getById(buildingDto.getExploitationRegionId())))));
     }
 
     @Override
     public ShortBuildingDto update(BuildingDto buildingDto) {
         if (repository.existsById(buildingDto.getId())) {
             return mapper.mapToShortBuildingDto(
-                    repository.save(mapper.mapToUpdateBuilding(buildingDto
-                                                        , addressService.get(buildingDto.getAddressId())
-                                                        , regionService.getById(buildingDto.getExploitationRegionId())))
+                    repository.save(mapper.mapToBuilding(buildingDto
+                                                       , employeeService.getDivisionContact(buildingDto.getEmployeeId())
+                                                       , getBuildingType(buildingDto.getBuildingType())
+                                                       , addressService.get(buildingDto.getAddressId())
+                                                       , regionService.getById(buildingDto.getExploitationRegionId())))
             );
         }
         throw new NotFoundException(String.format("Building with id=%s not found for update.", buildingDto.getId()));
@@ -80,7 +87,7 @@ public class BuildingServiceImpl implements BuildingService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         booleanBuilder.and(QBuilding.building.exploitationRegion.id.eq(buildingDto.getExploitationRegionId()));
         booleanBuilder.and(QBuilding.building.address.id.eq(buildingDto.getAddressId()));
-        booleanBuilder.and(QBuilding.building.buildingType.eq(buildingDto.getBuildingType()));
+        booleanBuilder.and(QBuilding.building.buildingType.eq( getBuildingType(buildingDto.getBuildingType())));
         if (buildingDto.getLogin() != null) {
             booleanBuilder.and(QBuilding.building.login.eq(buildingDto.getLogin()));
         }
@@ -89,5 +96,10 @@ public class BuildingServiceImpl implements BuildingService {
                 .select(building)
                 .where(booleanBuilder)
                 .fetchOne();
+    }
+
+    private BuildingType getBuildingType(String buildingType) {
+        return BuildingType.from(buildingType)
+                .orElseThrow(() -> new BadRequestException(String.format("Unknown type=%s", buildingType)));
     }
 }

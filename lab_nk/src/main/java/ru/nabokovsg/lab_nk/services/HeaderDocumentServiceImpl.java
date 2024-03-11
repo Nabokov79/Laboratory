@@ -45,6 +45,14 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
     }
 
     @Override
+    public FullHeaderDocumentDto get(Long id) {
+        return mapper.mapToFullHeaderDocumentDto(
+                repository.findById(id)
+                     .orElseThrow(() -> new NotFoundException(String.format("HeaderDocument with id=%s not found", id)))
+        );
+    }
+
+    @Override
     public List<FullHeaderDocumentDto> getAll() {
         return repository.findAll()
                          .stream()

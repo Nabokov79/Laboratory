@@ -21,23 +21,26 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final OrganizationRepository repository;
     private final OrganizationMapper mapper;
     private final AddressService addressService;
+    private final EmployeeService employeeService;
 
     @Override
-    public FullOrganizationDto save(OrganizationDto organizationDto) {
-        return mapper.mapToOrganizationDto(
+    public ShortOrganizationDto save(OrganizationDto organizationDto) {
+        return mapper.mapToShortOrganizationDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(organizationDto.getFullName())
-                        , () -> repository.save(mapper.mapToNewOrganization(organizationDto
-                                                                 , addressService.get(organizationDto.getAddressId()))))
+                        , () -> repository.save(mapper.mapToOrganization(organizationDto
+                                                   , employeeService.getDivisionContact(organizationDto.getEmployeeId())
+                                                   , addressService.get(organizationDto.getAddressId()))))
         );
     }
 
     @Override
-    public FullOrganizationDto update(OrganizationDto organizationDto) {
+    public ShortOrganizationDto update(OrganizationDto organizationDto) {
         if (repository.existsById(organizationDto.getId())) {
-            return mapper.mapToOrganizationDto(
+            return mapper.mapToShortOrganizationDto(
                     repository.save(
-                            mapper.mapToUpdateOrganization(organizationDto
-                                                         , addressService.get(organizationDto.getAddressId())))
+                            mapper.mapToOrganization(organizationDto
+                                                   , employeeService.getDivisionContact(organizationDto.getEmployeeId())
+                                                   , addressService.get(organizationDto.getAddressId())))
             );
         }
         throw new NotFoundException(

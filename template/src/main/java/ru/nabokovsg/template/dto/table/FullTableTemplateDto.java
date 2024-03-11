@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.template.dto.columns.FullColumnHeaderTemplateDto;
+import ru.nabokovsg.template.models.enums.TableDataType;
+
 import java.util.List;
 
 @Setter
@@ -15,6 +17,8 @@ public class FullTableTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
+    @Schema(description = "Тип данных таблицы")
+    private TableDataType tableDataType;
     @Schema(description = "Порядковый номер таблицы")
     private Integer sequentialNumber;
     @Schema(description = "Название таблицы")

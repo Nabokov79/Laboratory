@@ -8,6 +8,7 @@ import ru.nabokovsg.company.dto.employee.ShortEmployeeDto;
 import ru.nabokovsg.company.exceptions.BadRequestException;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.EmployeeMapper;
+import ru.nabokovsg.company.models.DivisionContact;
 import ru.nabokovsg.company.models.Employee;
 import ru.nabokovsg.company.models.enums.DivisionType;
 import ru.nabokovsg.company.repository.EmployeeRepository;
@@ -56,8 +57,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public FullEmployeeDto get(Long id) {
-        return mapper.mapToFullEmployeeDto(repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Employee with id=%s was not found", id))));
+        return mapper.mapToFullEmployeeDto(getById(id));
+    }
+
+    @Override
+    public DivisionContact getDivisionContact(Long id) {
+        Employee employee = getById(id);
+        return mapper.mapToDivisionContact(employee, employee.getContact());
     }
 
     @Override
@@ -92,5 +98,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new BadRequestException(
                         String.format("Unknown data format divisionType=%s", divisionType))
                 );
+    }
+
+    private Employee getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Employee with id=%s was not found", id)));
     }
 }

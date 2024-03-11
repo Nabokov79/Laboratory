@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.company.dto.address.FullAddressDto;
+import ru.nabokovsg.company.dto.divisionContact.FullDivisionContact;
 
 @Setter
 @Getter
@@ -20,4 +21,6 @@ public class FullBuildingDto {
     private String login;
     @Schema(description = "Адрес")
     private FullAddressDto address;
+    @Schema(description = "Контакты сотрудника котельной, ЦТП")
+    private FullDivisionContact contact;
 }

@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
-public class RequestParameters {
+public class SearchParameters {
 
+    private List<Long> ids;
     private String toll;
     private String model;
     private String workNumber;

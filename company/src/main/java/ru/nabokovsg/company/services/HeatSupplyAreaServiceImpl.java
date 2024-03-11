@@ -19,12 +19,15 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
 
     private final HeatSupplyAreaRepository repository;
     private final HeatSupplyAreaMapper mapper;
-
+    private final EmployeeService employeeService;
+    private final BranchService branchService;
     @Override
     public ShortHeatSupplyAreaDto save(HeatSupplyAreaDto areaDto) {
         return mapper.mapToShortHeatSupplyAreaDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(areaDto.getFullName())
-                        , () -> repository.save(mapper.mapToHeatSupplyArea(areaDto)))
+                        , () -> repository.save(mapper.mapToHeatSupplyArea(areaDto
+                                                        , branchService.getById(areaDto.getBranchId())
+                                                        , employeeService.getDivisionContact(areaDto.getEmployeeId()))))
         );
     }
 
@@ -32,8 +35,9 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
     public ShortHeatSupplyAreaDto update(HeatSupplyAreaDto areaDto) {
         if (repository.existsById(areaDto.getId())) {
             return mapper.mapToShortHeatSupplyAreaDto(
-                    repository.save(
-                            mapper.mapToHeatSupplyArea(areaDto))
+                    repository.save(mapper.mapToHeatSupplyArea(areaDto
+                                                        , branchService.getById(areaDto.getBranchId())
+                                                        , employeeService.getDivisionContact(areaDto.getEmployeeId())))
             );
         }
         throw new NotFoundException(

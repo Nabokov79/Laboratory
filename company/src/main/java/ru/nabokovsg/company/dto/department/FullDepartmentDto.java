@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nabokovsg.company.dto.address.FullAddressDto;
+import ru.nabokovsg.company.dto.divisionContact.FullDivisionContact;
+import ru.nabokovsg.company.dto.licenses.FullLicenseDto;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,4 +24,8 @@ public class FullDepartmentDto {
     private String shortName;
     @Schema(description = "Адрес")
     private FullAddressDto address;
+    @Schema(description = "Контакты сотрудника подразделения")
+    private FullDivisionContact contact;
+    @Schema(description = "Лицензия/аттеставция подразделения")
+    private List<FullLicenseDto> licenses;
 }

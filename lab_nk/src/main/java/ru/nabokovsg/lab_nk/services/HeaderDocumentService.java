@@ -10,6 +10,8 @@ public interface HeaderDocumentService {
 
     FullHeaderDocumentDto update(HeaderDocumentDto headerDocumentDto);
 
+    FullHeaderDocumentDto get(Long id);
+
     List<FullHeaderDocumentDto> getAll();
 
     void delete(Long id);

@@ -13,8 +13,10 @@ public class ProtocolReportTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
-    @Schema(description = "Индентификатор типа протокола")
-    private Long reportingDocumentId;
+    @Schema(description = "Индентификатор типа документа")
+    private Long headerDocumentId;
+    @Schema(description = "Индентификатор раздела")
+    private Long sectionId;
     @Schema(description = "Порядковый номер протокола")
     private Integer sequentialNumber;
     @Schema(description = "Текст пользователя после заголовка")

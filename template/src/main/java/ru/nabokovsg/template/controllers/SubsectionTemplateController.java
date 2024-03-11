@@ -1,0 +1,53 @@
+package ru.nabokovsg.template.controllers;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.nabokovsg.template.dto.subsection.FullSubsectionTemplateDto;
+import ru.nabokovsg.template.dto.subsection.SubsectionTemplateDto;
+import ru.nabokovsg.template.services.SubsectionTemplateService;
+
+@RestController
+@RequestMapping(
+        value = "/subsection",
+        consumes = MediaType.ALL_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequiredArgsConstructor
+@Tag(name="Шаблон подраздела",
+        description="API для работы с данными шаблона подраздела раздела")
+public class SubsectionTemplateController {
+
+    private final SubsectionTemplateService service;
+
+    @Operation(summary = "Добавление нового шаблона подраздела раздела")
+    @PostMapping
+    public ResponseEntity<FullSubsectionTemplateDto> save(
+                    @RequestBody @Parameter(description = "Шаблон подраздела") SubsectionTemplateDto subsectionsDto) {
+        return ResponseEntity.ok().body(service.save(subsectionsDto));
+    }
+
+    @Operation(summary = "Изменение данных шаблона подраздела")
+    @PatchMapping
+    public ResponseEntity<FullSubsectionTemplateDto> update(
+                     @RequestBody @Parameter(description = "Шаблон подраздела") SubsectionTemplateDto subsectionsDto) {
+        return ResponseEntity.ok().body(service.update(subsectionsDto));
+    }
+
+    @Operation(summary = "Получить данные шаблона подраздела")
+    @GetMapping("/{id}")
+    public ResponseEntity<FullSubsectionTemplateDto> get(@PathVariable
+                                                         @Parameter(description = "Индентификатор") Long id) {
+        return ResponseEntity.ok().body(service.get(id));
+    }
+
+    @Operation(summary = "Удалить подраздел")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Шаблон подраздела успешно удален.");
+    }
+}

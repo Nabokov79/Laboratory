@@ -40,6 +40,12 @@ public class HeaderDocumentController {
     }
 
     @Operation(summary = "Получение данных типов отчетных документов")
+    @GetMapping("/{id}")
+    public ResponseEntity<FullHeaderDocumentDto> get(@PathVariable Long id) {
+        return ResponseEntity.ok().body(service.get(id));
+    }
+
+    @Operation(summary = "Получение данных типов отчетных документов")
     @GetMapping
     public ResponseEntity<List<FullHeaderDocumentDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());

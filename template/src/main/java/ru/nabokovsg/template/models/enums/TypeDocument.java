@@ -1,0 +1,19 @@
+package ru.nabokovsg.template.models.enums;
+
+import java.util.Optional;
+
+public enum TypeDocument {
+
+    REPORT,
+    INSPECTION_PROTOCOL,
+    CONTROL_PROTOCOL;
+
+    public static Optional<TypeDocument> from(String document) {
+        for (TypeDocument type : values()) {
+            if (type.name().equalsIgnoreCase(document)) {
+                return Optional.of(type);
+            }
+        }
+        return Optional.empty();
+    }
+}

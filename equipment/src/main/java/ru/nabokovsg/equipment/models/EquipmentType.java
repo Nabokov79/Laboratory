@@ -19,6 +19,8 @@ public class EquipmentType {
     private long id;
     @Column(name = "equipment_name")
     private String equipmentName;
+    @Column(name = "volume")
+    private Integer volume;
     @Column(name = "model")
     private String model;
 }

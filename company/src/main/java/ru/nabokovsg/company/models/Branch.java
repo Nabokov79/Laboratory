@@ -23,6 +23,9 @@ public class Branch {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+    @OneToOne
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private DivisionContact contact;
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
     private List<HeatSupplyArea> heatSupplyAreas;
     @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
@@ -30,11 +33,6 @@ public class Branch {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id",  nullable = false)
     private Organization organization;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "branches_licenses",
-            joinColumns = {@JoinColumn(name = "branch_id")},
-            inverseJoinColumns = {@JoinColumn(name = "license_id")})
-    @ToString.Exclude
+    @OneToMany(mappedBy = "branch", fetch = FetchType.LAZY)
     private List<Licenses> licenses;
 }

@@ -28,14 +28,14 @@ public class OrganizationController {
 
     @Operation(summary = "Добавление данных организации")
     @PostMapping
-    public ResponseEntity<FullOrganizationDto> save(@RequestBody
+    public ResponseEntity<ShortOrganizationDto> save(@RequestBody
                                               @Parameter(description = "Организация") OrganizationDto organizationDto) {
         return ResponseEntity.ok().body(service.save(organizationDto));
     }
 
     @Operation(summary = "Изменение данных организации")
     @PatchMapping
-    public ResponseEntity<FullOrganizationDto> update(@RequestBody
+    public ResponseEntity<ShortOrganizationDto> update(@RequestBody
                                               @Parameter(description = "Организация") OrganizationDto organizationDto) {
         return ResponseEntity.ok().body(service.update(organizationDto));
     }

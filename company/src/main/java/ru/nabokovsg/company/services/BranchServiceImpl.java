@@ -21,14 +21,16 @@ public class BranchServiceImpl implements BranchService {
     private final BranchMapper mapper;
     private final OrganizationService organizationService;
     private final AddressService addressService;
+    private final EmployeeService employeeService;
 
     @Override
     public ShortBranchDto save(BranchDto branchDto) {
         return mapper.mapToShortBranchDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(branchDto.getFullName()), () -> repository.save(
-                        mapper.mapToNewBranch(branchDto
-                                            , addressService.get(branchDto.getAddressId())
-                                            , organizationService.getById(branchDto.getOrganizationId())))
+                        mapper.mapToBranch(branchDto
+                                         , employeeService.getDivisionContact(branchDto.getEmployeeId())
+                                         , addressService.get(branchDto.getAddressId())
+                                         , organizationService.getById(branchDto.getOrganizationId())))
                 )
         );
     }
@@ -37,9 +39,10 @@ public class BranchServiceImpl implements BranchService {
     public ShortBranchDto update(BranchDto branchDto) {
         if (repository.existsById(branchDto.getId())) {
             return mapper.mapToShortBranchDto(
-                    repository.save(mapper.mapToUpdateBranch(branchDto
-                                                           , addressService.get(branchDto.getAddressId())
-                                                           , organizationService.getById(branchDto.getOrganizationId()))
+                    repository.save(mapper.mapToBranch(branchDto
+                                                     , employeeService.getDivisionContact(branchDto.getEmployeeId())
+                                                     , addressService.get(branchDto.getAddressId())
+                                                     , organizationService.getById(branchDto.getOrganizationId()))
                     )
             );
         }

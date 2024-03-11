@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.nabokovsg.company.dto.divisionContact.FullDivisionContact;
 
 @Setter
 @Getter
@@ -19,4 +20,6 @@ public class ShortBranchDto {
     private String fullName;
     @Schema(description = "Краткое наименование")
     private String shortName;
+    @Schema(description = "Контакты сотрудника филиала")
+    private FullDivisionContact contact;
 }

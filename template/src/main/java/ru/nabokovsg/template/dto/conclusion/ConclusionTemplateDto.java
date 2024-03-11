@@ -15,6 +15,10 @@ public class ConclusionTemplateDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
+    @Schema(description = "Индентификатор")
+    private Long headerDocumentId;
+    @Schema(description = "Тип составной части документа или тип дукумента")
+    private String documentPartType;
     @Schema(description = "Основной текст заключения")
     private String headerText;
     @Schema(description = "Текст заключения при отсутствии дефектов")

@@ -30,4 +30,13 @@ public class Licenses {
     private LocalDate startData;
     @Column(name = "end_data")
     private LocalDate endData;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "organization_id",  nullable = false)
+    private Organization organization;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id",  nullable = false)
+    private Branch branch;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id",  nullable = false)
+    private Department department;
 }
