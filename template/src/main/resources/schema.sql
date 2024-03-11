@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS PROTOCOL_TEMPLATES
     header_id              BIGINT                                  NOT NULL,
     conclusion_template_id BIGINT,
     CONSTRAINT pk_protocolTemplate PRIMARY KEY (id),
-    CONSTRAINT UQ_PROTOCOL_TEMPLATES UNIQUE (type_document, equipment_type_id),
+    CONSTRAINT UQ_PROTOCOL_TEMPLATES UNIQUE (type_document_id, equipment_type_id),
     CONSTRAINT FK_PROTOCOL_TEMPLATES_ON_HEADER_TEMPLATES FOREIGN KEY (header_id) REFERENCES header_templates (id),
     CONSTRAINT FK_PROTOCOL_TEMPLATES_ON_CONCLUSION_TEMPLATES
         FOREIGN KEY (conclusion_template_id) REFERENCES conclusion_templates (id)
