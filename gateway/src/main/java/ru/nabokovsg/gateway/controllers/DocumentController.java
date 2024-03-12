@@ -17,7 +17,7 @@ import ru.nabokovsg.gateway.client.CollectorClient;
 @Validated
 @Tag(name="Сервис сборки документа",
         description="API для работы с сервисом сборки документа")
-public class CollectorController {
+public class DocumentController {
 
     private final CollectorClient client;
 }
