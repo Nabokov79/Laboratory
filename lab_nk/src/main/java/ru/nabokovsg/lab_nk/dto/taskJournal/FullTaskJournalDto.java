@@ -29,6 +29,8 @@ public class FullTaskJournalDto {
     private String taskSource;
     @Schema(description = "Сотрудники выполнившие работу")
     private Set<ShortLaboratoryEmployeeDto> employees;
+    @Schema(description = "Руководитель работ")
+    private ShortLaboratoryEmployeeDto chief;
     @Schema(description = "Комментарий к задачи")
     private String comment;
 }

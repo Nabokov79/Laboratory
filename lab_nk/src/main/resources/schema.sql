@@ -58,10 +58,12 @@ CREATE TABLE IF NOT EXISTS TASKS_JOURNAL
     address      VARCHAR                                 NOT NULL,
     equipment_id BIGINT                                  NOT NULL,
     equipment    VARCHAR                                 NOT NULL,
+    chief_id     BIGINT                                  NOT NULL,
     task_source  VARCHAR,
     comment      VARCHAR,
     status       VARCHAR                                 NOT NULL,
-    CONSTRAINT pk_tasksJournal PRIMARY KEY (id)
+    CONSTRAINT pk_tasksJournal PRIMARY KEY (id),
+    CONSTRAINT FK_TASKS_JOURNAL_ON_LABORATORY_EMPLOYEES FOREIGN KEY (chief_id) REFERENCES laboratory_employees (id)
 );
 
 CREATE TABLE IF NOT EXISTS TASKS_JOURNAL_EMPLOYEES

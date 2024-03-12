@@ -8,7 +8,7 @@
 		<module>lab_nk</module>
 		<module>template</module>
 		<module>result</module>
-		<module>collector</module>
+		<module>document</module>
 		<module>file</module>
 		<module>gateway</module>
         <module>equipment</module>

@@ -120,7 +120,7 @@ public class TaskJournalServiceImpl implements TaskJournalService {
         String branch = branchDto.getFullName();
         String building = String.join(" ", buildingDto.getBuildingType(), buildingDto.getLogin());
         String address = getStringAddress(buildingDto.getAddress());
-        String equipment = getStringEquipment(client.getEquipment(taskJournalDto.getEquipmentId()));
+        String equipment = getStringEquipment(taskJournalDto.getEquipmentId());
         return mapper.mapToTaskJournal(taskJournalDto, branch, building, address, equipment);
     }
 
@@ -142,7 +142,8 @@ public class TaskJournalServiceImpl implements TaskJournalService {
         }
     }
 
-    private String getStringEquipment(FullEquipmentDto equipment) {
+    private String getStringEquipment(Long equipmentId) {
+        FullEquipmentDto equipment = client.getEquipment(equipmentId);
         String name = equipment.getFullName();
         if (equipment.getModel() != null) {
             name = String.join(" ", name, equipment.getModel());

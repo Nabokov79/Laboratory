@@ -36,6 +36,11 @@ public class TasksJournal {
     private Long equipmentId;
     @Column(name = "equipment")
     private String equipment;
+    @Column(name = "chief_id")
+    private String chiefId;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chief_id",  nullable = false)
+    private LaboratoryEmployee chief;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;

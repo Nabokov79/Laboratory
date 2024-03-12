@@ -25,6 +25,8 @@ public class TaskJournalDto {
     private Long addressId;
     @Schema(description = "Индентификатор оборудования")
     private Long equipmentId;
+    @Schema(description = "Индентификаторы сотрудник руководителя работ")
+    private Long chiefId;
     @Schema(description = "Индентификаторы сотрудников")
     private List<Long> employeesId;
     @Schema(description = "Основание для проведения работы")
