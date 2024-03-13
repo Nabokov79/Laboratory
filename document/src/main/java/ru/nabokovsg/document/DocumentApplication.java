@@ -1,4 +1,4 @@
-package ru.nabokovsg.collector;
+package ru.nabokovsg.document;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

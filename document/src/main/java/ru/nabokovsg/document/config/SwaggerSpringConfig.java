@@ -1,4 +1,4 @@
-package ru.nabokovsg.collector.config;
+package ru.nabokovsg.document.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
