@@ -1,9 +1,7 @@
-package ru.nabokovsg.lab_nk.models;
+package ru.nabokovsg.document.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Setter
 @Getter
@@ -27,11 +25,4 @@ public class Remark {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id",  nullable = false)
     private Document document;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "remarks_employees",
-            joinColumns =  {@JoinColumn(name = "remark_id")},
-            inverseJoinColumns = {@JoinColumn(name = "employee_id")})
-    @ToString.Exclude
-    private Set<LaboratoryEmployee> employees;
 }
