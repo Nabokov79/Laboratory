@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.dto.remark;
+package ru.nabokovsg.document.dto.remark;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

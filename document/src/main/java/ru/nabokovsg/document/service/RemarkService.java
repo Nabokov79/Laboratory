@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.services;
+package ru.nabokovsg.document.service;
 
 import ru.nabokovsg.lab_nk.dto.remark.FullRemarkDto;
 import ru.nabokovsg.lab_nk.dto.remark.RemarkDto;

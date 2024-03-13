@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.models.enums;
+package ru.nabokovsg.document.models.enums;
 
 import java.util.Optional;
 

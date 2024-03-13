@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.controllers;
+package ru.nabokovsg.document.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.dto.document;
+package ru.nabokovsg.document.dto.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.mappers;
+package ru.nabokovsg.document.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

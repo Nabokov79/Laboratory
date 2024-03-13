@@ -35,7 +35,7 @@ public class Document {
             joinColumns =  {@JoinColumn(name = "document_id")},
             inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
     @ToString.Exclude
-    private Set<Subscriber> employees;
+    private Set<Subscriber> inspectors;
     @Column(name = "document_number")
     private Integer documentNumber;
     @Column(name = "document_status")
@@ -44,8 +44,4 @@ public class Document {
     @Column(name = "drawing_status")
     @Enumerated(EnumType.STRING)
     private DocumentStatus drawingStatus;
-    @Column(name = "date_transfer")
-    private LocalDate dateTransfer;
-    @Column(name = "document_transfer")
-    private String documentTransfer;
 }

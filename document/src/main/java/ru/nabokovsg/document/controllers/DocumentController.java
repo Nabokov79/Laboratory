@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.controllers;
+package ru.nabokovsg.document.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -6,10 +6,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.nabokovsg.document.dto.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.DocumentSearchParam;
+import ru.nabokovsg.document.dto.document.FullDocumentDto;
+import ru.nabokovsg.document.service.DocumentService;
 import ru.nabokovsg.lab_nk.dto.document.DocumentSearchParam;
 import ru.nabokovsg.lab_nk.dto.document.FullDocumentDto;
 import ru.nabokovsg.lab_nk.services.DocumentService;
@@ -29,10 +30,17 @@ public class DocumentController {
 
     private final DocumentService service;
 
+
+    @Operation(summary = "Добавление данных отчетного документа")
+    @PostMapping
+    public ResponseEntity<Boolean> save(TaskJournalDto taskJournalDto) {
+        return ResponseEntity.ok().body(service.save(taskJournalDto));
+    }
+
     @Operation(summary = "Получение данных отчетного документа")
     @GetMapping("/{id}")
     public ResponseEntity<FullDocumentDto> get(
-            @RequestParam
+            @PathVariable
             @Parameter(description = "Индентификатор записи в журнале задач, замечания") Long id,
             @RequestParam(value = "type")
             @Parameter(description = "Тип данных для поиска по индентификатору") String type) {

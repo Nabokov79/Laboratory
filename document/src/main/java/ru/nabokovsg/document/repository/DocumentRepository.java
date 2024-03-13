@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.repository;
+package ru.nabokovsg.document.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

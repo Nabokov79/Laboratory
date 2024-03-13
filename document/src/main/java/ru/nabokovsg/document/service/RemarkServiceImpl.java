@@ -1,4 +1,4 @@
-package ru.nabokovsg.lab_nk.services;
+package ru.nabokovsg.document.service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
