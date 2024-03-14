@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные оборудования")
-public class FullEquipmentDto {
+public class EquipmentDto {
 
     @Schema(description = "Индентификатор")
     private Long id;

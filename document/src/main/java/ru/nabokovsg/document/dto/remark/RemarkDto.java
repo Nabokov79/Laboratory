@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные для добавления/изменения замечания к документу или чертежу")
-public class RemarkDto {
+public class  RemarkDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
@@ -18,7 +18,7 @@ public class RemarkDto {
     @Schema(description = "Замечание к документу или чертежу")
     private String remark;
     @Schema(description = "Индентификатор сотрудника")
-    private Long employeeId;
+    private Long inspectorId;
     @Schema(description = "Отметка об исправлении замечания")
     private Boolean documentCorrected;
 }

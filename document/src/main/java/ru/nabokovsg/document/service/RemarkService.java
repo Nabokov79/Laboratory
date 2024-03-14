@@ -1,7 +1,7 @@
 package ru.nabokovsg.document.service;
 
-import ru.nabokovsg.lab_nk.dto.remark.FullRemarkDto;
-import ru.nabokovsg.lab_nk.dto.remark.RemarkDto;
+import ru.nabokovsg.document.dto.remark.FullRemarkDto;
+import ru.nabokovsg.document.dto.remark.RemarkDto;
 import java.util.List;
 
 public interface RemarkService {

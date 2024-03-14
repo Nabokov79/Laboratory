@@ -66,4 +66,9 @@ public class LaboratoryEmployeeServiceImpl implements LaboratoryEmployeeService 
                 .orElseThrow(() -> new NotFoundException(
                         String.format("LaboratoryEmployee with id=%s not found", id)));
     }
+
+    @Override
+    public List<LaboratoryEmployee> getByAllById(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
 }

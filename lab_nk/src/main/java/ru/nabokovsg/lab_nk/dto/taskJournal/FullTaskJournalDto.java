@@ -3,6 +3,9 @@ package ru.nabokovsg.lab_nk.dto.taskJournal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
+import ru.nabokovsg.lab_nk.models.HeaderDocument;
+
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -33,4 +36,6 @@ public class FullTaskJournalDto {
     private ShortLaboratoryEmployeeDto chief;
     @Schema(description = "Комментарий к задачи")
     private String comment;
+    @Schema(description = "Тип документа по результатам выполнения работы")
+    private FullHeaderDocumentDto headerDocument;
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Schema(description = "Данные котельной, цтп")
-public class FullBuildingDto {
+public class BuildingDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
@@ -18,5 +18,5 @@ public class FullBuildingDto {
     @Schema(description = "Название")
     private String login;
     @Schema(description = "Адрес")
-    private FullAddressDto address;
+    private AddressDto address;
 }

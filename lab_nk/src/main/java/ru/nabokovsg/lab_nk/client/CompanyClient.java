@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.nabokovsg.lab_nk.client.dto.FullBranchDto;
+import ru.nabokovsg.lab_nk.client.dto.BranchDto;
 import ru.nabokovsg.lab_nk.client.dto.ShortEmployeeDto;
 
 import java.util.List;
@@ -30,11 +30,11 @@ public class CompanyClient {
                 .blockFirst();
     }
 
-    public FullBranchDto getBranch(String path) {
+    public BranchDto getBranch(String path) {
         return client.get()
                 .uri(path)
                 .retrieve()
-                .bodyToMono(FullBranchDto.class)
+                .bodyToMono(BranchDto.class)
                 .block();
     }
 }

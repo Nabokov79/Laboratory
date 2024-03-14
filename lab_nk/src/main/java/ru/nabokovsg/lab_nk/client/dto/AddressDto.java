@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Schema(description = "Данные адреса")
-public class FullAddressDto {
+public class AddressDto {
 
     @Schema(description = "Индентификатор города")
     private Long id;

@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,4 +26,6 @@ public class TaskJournalDto {
     private List<LaboratoryEmployeeDto> employees;
     @Schema(description = "Руководитель работ")
     private LaboratoryEmployeeDto chief;
+    @Schema(description = "Тип документа по результатам выполнения работы")
+    private HeaderDocumentDto headerDocument;
 }

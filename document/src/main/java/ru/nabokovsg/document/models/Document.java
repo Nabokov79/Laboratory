@@ -26,6 +26,10 @@ public class Document {
     private String heading;
     @Column(name = "date")
     private LocalDate date;
+    @Column(name = "address")
+    private String address;
+    @Column(name = "equipment")
+    private String equipment;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "chief_id",  nullable = false)
     private Subscriber chief;

@@ -13,6 +13,7 @@ import ru.nabokovsg.lab_nk.dto.taskJournal.TaskSearchParameters;
 import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.TaskJournalMapper;
+import ru.nabokovsg.lab_nk.models.LaboratoryEmployee;
 import ru.nabokovsg.lab_nk.models.QLaboratoryEmployee;
 import ru.nabokovsg.lab_nk.models.TasksJournal;
 import ru.nabokovsg.lab_nk.models.enums.Status;
@@ -22,6 +23,7 @@ import ru.nabokovsg.lab_nk.models.QTasksJournal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,40 +34,40 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     private final TaskJournalMapper mapper;
     private final LadNKClient client;
     private final EntityManager em;
-    private final DocumentService documentService;
+    private final HeaderDocumentService headerDocumentService;
+    private final StringBuilderService builderService;
+    private final LaboratoryEmployeeService employeeService;
 
     @Override
     public FullTaskJournalDto save(TaskJournalDto taskJournalDto) {
         TasksJournal task = repository.findByDateAndEquipmentId(taskJournalDto.getDate(),
                 taskJournalDto.getEquipmentId());
         if (task == null) {
-                 task = repository.save(getTasksJournalData(taskJournalDto));
-                 documentService.create(task);
-            return mapper.mapToFullTasksJournalDto(task);
+            task = repository.save(getTasksJournalData(taskJournalDto));
+            if (task.getDate() != null) {
+                client.createDocumentData(mapper.mapToFullTasksJournalDto(task));
+            }
         }
-        throw new BadRequestException(
-                String.format("A record with the data: date=%s, building=%s, address=%s, equipment=%s exists"
-                                , task.getDate(), task.getBuilding(), task.getAddress(), task.getEquipment())
-        );
+        if (task.getDate() != null) {
+            client.createDocumentData(mapper.mapToFullTasksJournalDto(task));
+        }
+        return mapper.mapToFullTasksJournalDto(task);
     }
 
     @Override
     public FullTaskJournalDto update(TaskJournalDto taskJournalDto) {
-        documentService.validByTasksJournalId(taskJournalDto.getId());
-        if (repository.existsById(taskJournalDto.getId())) {
+        TasksJournal taskJournal = getById(taskJournalDto.getId());
+        if (taskJournal.getDocumentId() == null) {
             return mapper.mapToFullTasksJournalDto(repository.save(getTasksJournalData(taskJournalDto)));
         }
         throw new NotFoundException(
-                String.format("TasksJournal with id=%s not found for update", taskJournalDto.getId())
+                String.format("The task cannot be updated, a document with an ID = %s has been created for this task", taskJournal.getDocumentId())
         );
     }
 
     @Override
     public FullTaskJournalDto get(Long id) {
-        return mapper.mapToFullTasksJournalDto(
-               repository.findById(id)
-                      .orElseThrow(() ->  new NotFoundException(String.format("TasksJournal with id=%s not found", id)))
-        );
+        return mapper.mapToFullTasksJournalDto(getById(id));
     }
 
     @Override
@@ -89,6 +91,11 @@ public class TaskJournalServiceImpl implements TaskJournalService {
         throw new NotFoundException(String.format("TasksJournal with id=%s not found for delete", id));
     }
 
+    private TasksJournal getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->  new NotFoundException(String.format("TasksJournal with id=%s not found", id)));
+    }
+
     private BooleanBuilder getPredicate(TaskSearchParameters parameters) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         if (parameters.getEmployeeId() != null && parameters.getEmployeeId() > 0) {
@@ -110,50 +117,28 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     }
 
     private TasksJournal getTasksJournalData(TaskJournalDto taskJournalDto) {
-        FullBranchDto branchDto = client.getBranch(taskJournalDto.getBranchId());
-        FullBuildingDto buildingDto = branchDto.getHeatSupplyAreas()
-                                               .stream()
-                                               .map(FullExploitationRegionDto::getBuildings)
-                                               .flatMap(Collection::stream)
-                                               .collect(Collectors.toMap(FullBuildingDto::getId, b -> b))
-                                               .get(taskJournalDto.getBranchId());
-        String branch = branchDto.getFullName();
-        String building = String.join(" ", buildingDto.getBuildingType(), buildingDto.getLogin());
-        String address = getStringAddress(buildingDto.getAddress());
-        String equipment = getStringEquipment(taskJournalDto.getEquipmentId());
-        return mapper.mapToTaskJournal(taskJournalDto, branch, building, address, equipment);
-    }
-
-    private String getStringAddress(FullAddressDto address) {
-        String string = String.join(", ", address.getCity()
-                , String.join(" ", address.getStreet()
-                        , "д.", String.valueOf(address.getHouseNumber())));
-        if (address.getBuildingNumber() != null) {
-            string = String.join(", ", string, String.join(""
-                    , "корп.", String.valueOf(address.getBuildingNumber())));
-        }
-        if (address.getLetter() != null) {
-            string = String.join(", ", string, String.join("", "лит.", address.getLetter()));
-        }
-        if (address.getIndex() != null) {
-            return String.join(", ", String.valueOf(address.getIndex()), string);
-        } else {
-            return string;
-        }
-    }
-
-    private String getStringEquipment(Long equipmentId) {
-        FullEquipmentDto equipment = client.getEquipment(equipmentId);
-        String name = equipment.getFullName();
-        if (equipment.getModel() != null) {
-            name = String.join(" ", name, equipment.getModel());
-        }
-        if (equipment.getStationaryNumber() != null) {
-            name = String.join(" ", name, "cт. № ", String.valueOf(equipment.getStationaryNumber()));
-        }
-        if (equipment.getVolume() != null) {
-            name = String.join(" ", name, "V = ", String.valueOf(equipment.getVolume()), "м3");
-        }
-        return name;
+        TasksJournal taskJournal = mapper.mapToTaskJournal(taskJournalDto);
+        BranchDto branchDto = client.getBranch(taskJournal.getBranchId());
+        EquipmentDto equipment = client.getEquipment(taskJournal.getEquipmentId());
+        List<Long> ids = taskJournalDto.getEmployeesId();
+        ids.add(taskJournalDto.getChiefId());
+        Map<Long, LaboratoryEmployee> employees = employeeService.getByAllById(ids)
+                                                          .stream()
+                                                          .collect(Collectors.toMap(LaboratoryEmployee::getId, l -> l));
+        taskJournal.setBranch(branchDto.getFullName());
+        taskJournal.setBuilding(builderService.buildFromBuilding(branchDto.getHeatSupplyAreas()
+                .stream()
+                .map(ExploitationRegionDto::getBuildings)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(BuildingDto::getId, b -> b))
+                .get(taskJournal.getBranchId())));
+        taskJournal.setEquipment(builderService.getStringEquipment(equipment));
+        taskJournal.setChief(employees.get(taskJournalDto.getChiefId()));
+        taskJournal.setEmployees(employees.values()
+                                          .stream()
+                                          .filter( e -> taskJournalDto.getEmployeesId().contains(e.getId()))
+                                          .collect(Collectors.toSet()));
+        taskJournal.setHeaderDocument(headerDocumentService.getById(taskJournalDto.getHeaderDocumentId()));
+        return taskJournal;
     }
 }

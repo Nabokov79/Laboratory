@@ -33,4 +33,6 @@ public class TaskJournalDto {
     private String taskSource;
     @Schema(description = "Комментарий к задачи")
     private String comment;
+    @Schema(description = "Индентификатор типа документа по результатам выполнения работы")
+    private Long headerDocumentId;
 }

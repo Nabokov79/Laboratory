@@ -7,6 +7,7 @@ import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
 import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.HeaderDocumentMapper;
+import ru.nabokovsg.lab_nk.models.HeaderDocument;
 import ru.nabokovsg.lab_nk.models.enums.TypeDocument;
 import ru.nabokovsg.lab_nk.repository.HeaderDocumentRepository;
 
@@ -46,10 +47,7 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
 
     @Override
     public FullHeaderDocumentDto get(Long id) {
-        return mapper.mapToFullHeaderDocumentDto(
-                repository.findById(id)
-                     .orElseThrow(() -> new NotFoundException(String.format("HeaderDocument with id=%s not found", id)))
-        );
+        return mapper.mapToFullHeaderDocumentDto(getById(id));
     }
 
     @Override
@@ -67,6 +65,12 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
             return;
         }
         throw new NotFoundException(String.format("HeaderDocument with id = %s not found for delete", id));
+    }
+
+    @Override
+    public HeaderDocument getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("HeaderDocument with id=%s not found", id)));
     }
 
     private TypeDocument convertToTypeDocument(String typeDocument) {

@@ -2,6 +2,7 @@ package ru.nabokovsg.document.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.nabokovsg.document.models.enums.RemarkStatus;
 
 @Setter
 @Getter
@@ -16,12 +17,15 @@ public class Remark {
     private Long id;
     @Column(name = "remark")
     private String remark;
-    @Column(name = "employee_id")
-    private Long employeeId;
-    @Column(name = "employee")
-    private String employee;
-    @Column(name = "document_corrected")
-    private Boolean documentCorrected;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "inspector_id",  nullable = false)
+    private Subscriber inspector;
+    @Column(name = "verification_status")
+    @Enumerated(EnumType.STRING)
+    private RemarkStatus verificationStatus;
+    @Column(name = "correction_status")
+    @Enumerated(EnumType.STRING)
+    private RemarkStatus correctionStatus;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id",  nullable = false)
     private Document document;

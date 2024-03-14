@@ -3,14 +3,15 @@ package ru.nabokovsg.document.service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.lab_nk.dto.remark.FullRemarkDto;
-import ru.nabokovsg.lab_nk.dto.remark.RemarkDto;
-import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
-import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
-import ru.nabokovsg.lab_nk.mappers.RemarkMapper;
-import ru.nabokovsg.lab_nk.models.*;
-import ru.nabokovsg.lab_nk.repository.RemarkRepository;
+import ru.nabokovsg.document.dto.remark.FullRemarkDto;
+import ru.nabokovsg.document.dto.remark.RemarkDto;
+import ru.nabokovsg.document.exceptions.BadRequestException;
+import ru.nabokovsg.document.mapper.RemarkMapper;
+import ru.nabokovsg.document.models.Remark;
+import ru.nabokovsg.document.models.enums.RemarkStatus;
+import ru.nabokovsg.document.repository.RemarkRepository;
 import java.util.List;
 
 @Service
@@ -20,21 +21,19 @@ public class RemarkServiceImpl implements RemarkService {
     private final RemarkRepository repository;
     private final RemarkMapper mapper;
     private final DocumentService documentService;
-    private final LaboratoryEmployeeService laboratoryEmployeeService;
     private final EntityManager em;
+    private final SubscriberService subscriberService;
 
     @Override
     public FullRemarkDto save(RemarkDto remarkDto) {
-        Remark remark = repository.findByDocumentIdAndEmployeeIdAndRemark(remarkDto.getDocumentId()
-                                                                        , remarkDto.getEmployeeId()
-                                                                        , remarkDto.getRemark());
+        Remark remark = repository.findByDocumentIdAndRemark(remarkDto.getDocumentId(), remarkDto.getRemark());
         if (remark == null) {
-            Document document = documentService.getById(remarkDto.getDocumentId());
             return mapper.mapToFullRemarkDto(
-                    repository.save(mapper.mapToRemark(remarkDto
-                                                     , getEmployee(remarkDto.getEmployeeId())
-                                                     , document
-                                                     , document.getTaskJournal().getEmployees()))
+                    repository.save(mapper.mapToRemark(remarkDto.getRemark()
+                                  , subscriberService.getById(remarkDto.getInspectorId())
+                                  , RemarkStatus.NEW
+                                  , RemarkStatus.NEW
+                                  , documentService.getById(remarkDto.getDocumentId())))
             );
         }
        throw new BadRequestException(String.format("Remark was found: %s", remark.getRemark()));

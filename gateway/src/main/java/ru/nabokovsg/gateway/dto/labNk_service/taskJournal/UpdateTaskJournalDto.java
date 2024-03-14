@@ -48,4 +48,8 @@ public class UpdateTaskJournalDto {
     private String taskSource;
     @Schema(description = "Комментарий к задачи")
     private String comment;
+    @Schema(description = "Индентификатор типа документа по результатам выполнения работы")
+    @NotNull(message = "header document id should not be null")
+    @Positive(message = "header document id can only be positive")
+    private Long headerDocumentId;
 }

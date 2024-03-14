@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DocumentSearchParam {
 
-    private Long equipmentId;
-    private Long addressId;
+    private Long taskJournalId;
+    private Long chiefId;
+    private Long inspectorId;
     private LocalDate startDate;
     private LocalDate endDate;
 }

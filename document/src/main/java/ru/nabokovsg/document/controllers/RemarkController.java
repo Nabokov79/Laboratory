@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.lab_nk.dto.remark.FullRemarkDto;
-import ru.nabokovsg.lab_nk.dto.remark.RemarkDto;
-import ru.nabokovsg.lab_nk.services.RemarkService;
+import ru.nabokovsg.document.dto.remark.FullRemarkDto;
+import ru.nabokovsg.document.dto.remark.RemarkDto;
+import ru.nabokovsg.document.service.RemarkService;
 import java.util.List;
 
 @RestController

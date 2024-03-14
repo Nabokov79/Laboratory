@@ -4,23 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.nabokovsg.lab_nk.client.dto.EquipmentDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.FullTaskJournalDto;
 
 @Component
-public class EquipmentClient {
+public class DocumentClient {
 
     private final WebClient client;
 
     @Autowired
-    public EquipmentClient(@Qualifier("webClientEquipment") WebClient client) {
+    public DocumentClient(@Qualifier("webClientDocument") WebClient client) {
         this.client = client;
     }
 
-    public EquipmentDto getEquipment(String path) {
-        return client.get()
+    public Long createDocumentData(String path, FullTaskJournalDto taskJournalDto) {
+        return client.post()
                 .uri(path)
+                .bodyValue(taskJournalDto)
                 .retrieve()
-                .bodyToMono(EquipmentDto.class)
-                .block();
+                .bodyToFlux(Long.class)
+                .blockFirst();
     }
 }

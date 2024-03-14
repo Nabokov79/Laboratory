@@ -14,7 +14,8 @@ public interface LaboratoryEmployeeService {
 
     List<ShortLaboratoryEmployeeDto> getAll();
 
-   void delete(Long id);
+    void delete(Long id);
 
     LaboratoryEmployee getById(Long id);
+    List<LaboratoryEmployee> getByAllById(List<Long> ids);
 }

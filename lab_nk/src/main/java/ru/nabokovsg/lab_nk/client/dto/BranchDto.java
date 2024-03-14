@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Schema(description = "Данные филиала")
-public class FullBranchDto {
+public class BranchDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
@@ -19,5 +19,5 @@ public class FullBranchDto {
     @Schema(description = "Краткое название")
     private String shortName;
     @Schema(description = "Подразделения")
-    private List<FullExploitationRegionDto> heatSupplyAreas;
+    private List<ExploitationRegionDto> heatSupplyAreas;
 }
