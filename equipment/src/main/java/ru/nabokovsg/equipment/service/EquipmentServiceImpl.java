@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.equipment.dto.equipments.EquipmentDto;
-import ru.nabokovsg.equipment.dto.equipments.FullEquipmentDto;
+import ru.nabokovsg.equipment.dto.equipments.ResponseEquipmentDto;
 import ru.nabokovsg.equipment.exceptions.NotFoundException;
 import ru.nabokovsg.equipment.models.*;
 import ru.nabokovsg.equipment.mappers.EquipmentMapper;
@@ -25,7 +25,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     private final EquipmentTypeService equipmentTypeService;
 
     @Override
-    public FullEquipmentDto save(EquipmentDto equipmentDto) {
+    public ResponseEquipmentDto save(EquipmentDto equipmentDto) {
         return mapper.mapToFullEquipmentDto(
                 Objects.requireNonNullElseGet(getByPredicate(equipmentDto),
                         () -> repository.save(
@@ -36,7 +36,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public FullEquipmentDto update(EquipmentDto equipmentDto) {
+    public ResponseEquipmentDto update(EquipmentDto equipmentDto) {
         if (repository.existsById(equipmentDto.getId())) {
             return mapper.mapToFullEquipmentDto(
                     repository.save(mapper.mapToEquipment(equipmentDto, equipmentTypeService.create(equipmentDto)))
@@ -46,12 +46,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public FullEquipmentDto get(Long id) {
+    public ResponseEquipmentDto get(Long id) {
         return mapper.mapToFullEquipmentDto(getById(id));
     }
 
     @Override
-    public List<FullEquipmentDto> getAll(Long id) {
+    public List<ResponseEquipmentDto> getAll(Long id) {
         return repository.findAllByBuildingId(id).stream()
                                                  .map(mapper::mapToFullEquipmentDto)
                                                  .toList();

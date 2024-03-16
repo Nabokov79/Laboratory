@@ -2,7 +2,7 @@ package ru.nabokovsg.template.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.template.dto.report.ReportTemplateDto;
+import ru.nabokovsg.template.dto.report.ResponseReportTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.ReportTemplateMapper;
 import ru.nabokovsg.template.models.AppendicesTemplate;
@@ -21,7 +21,7 @@ public class ReportTemplateServiceImpl implements ReportTemplateService {
     private final ReportTemplateMapper mapper;
 
     @Override
-    public ReportTemplateDto get(Long id) {
+    public ResponseReportTemplateDto get(Long id) {
         return mapper.mapToReportTemplateDto(
                 repository.findById(id)
                   .orElseThrow(() -> new NotFoundException(String.format("ReportTemplateDto with id=%s not found", id)))

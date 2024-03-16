@@ -1,16 +1,16 @@
 package ru.nabokovsg.lab_nk.services;
 
 import ru.nabokovsg.lab_nk.dto.certificate.CertificateDto;
-import ru.nabokovsg.lab_nk.dto.certificate.FullCertificateDto;
+import ru.nabokovsg.lab_nk.dto.certificate.ResponseCertificateDto;
 import java.util.List;
 
 public interface CertificateService {
 
-    FullCertificateDto save(CertificateDto certificateDto);
+    ResponseCertificateDto save(CertificateDto certificateDto);
 
-    FullCertificateDto update(CertificateDto certificateDto);
+    ResponseCertificateDto update(CertificateDto certificateDto);
 
-    List<FullCertificateDto> getAll(Long id);
+    List<ResponseCertificateDto> getAll(Long id);
 
     void delete(Long id);
 }

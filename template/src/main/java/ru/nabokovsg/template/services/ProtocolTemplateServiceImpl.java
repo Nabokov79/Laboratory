@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.template.client.LNKClient;
 import ru.nabokovsg.template.client.dto.HeaderDocumentDto;
-import ru.nabokovsg.template.dto.protocol.FullProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ResponseProtocolTemplateDto;
 import ru.nabokovsg.template.dto.protocol.ProtocolTemplateDto;
-import ru.nabokovsg.template.dto.protocol.ShortProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ShortResponseProtocolTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.ProtocolTemplateMapper;
 import ru.nabokovsg.template.models.*;
@@ -24,7 +24,7 @@ public class ProtocolTemplateServiceImpl extends ConverterToEnum implements Prot
     private final HeaderTemplateService headerService;
 
     @Override
-    public ShortProtocolTemplateDto save(ProtocolTemplateDto protocolDto) {
+    public ShortResponseProtocolTemplateDto save(ProtocolTemplateDto protocolDto) {
         ProtocolTemplate template = repository.findByHeaderDocumentIdAndEquipmentTypeId(
                                                                                   protocolDto.getHeaderDocumentId()
                                                                                 , protocolDto.getEquipmentTypeId());
@@ -39,7 +39,7 @@ public class ProtocolTemplateServiceImpl extends ConverterToEnum implements Prot
     }
 
     @Override
-    public ShortProtocolTemplateDto update(ProtocolTemplateDto protocolDto) {
+    public ShortResponseProtocolTemplateDto update(ProtocolTemplateDto protocolDto) {
         if (repository.existsById(protocolDto.getId())) {
             HeaderDocumentDto headerDocumentDto = client.getHeaderDocument(protocolDto.getHeaderDocumentId());
             return mapper.mapToShortProtocolTemplateDto(
@@ -55,12 +55,12 @@ public class ProtocolTemplateServiceImpl extends ConverterToEnum implements Prot
     }
 
     @Override
-    public FullProtocolTemplateDto get(Long id) {
+    public ResponseProtocolTemplateDto get(Long id) {
         return mapper.mapToFullProtocolTemplateDto(getById(id));
     }
 
     @Override
-    public List<ShortProtocolTemplateDto> getAll() {
+    public List<ShortResponseProtocolTemplateDto> getAll() {
         return repository.findAll()
                          .stream()
                          .map(mapper::mapToShortProtocolTemplateDto)

@@ -2,7 +2,7 @@ package ru.nabokovsg.template.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
+import ru.nabokovsg.template.dto.table.ResponseTableTemplateDto;
 import ru.nabokovsg.template.dto.table.TableTemplateDto;
 import ru.nabokovsg.template.models.ColumnHeaderTemplate;
 import ru.nabokovsg.template.models.TableTemplate;
@@ -21,5 +21,5 @@ public interface TableTemplateMapper {
     TableTemplate mapToTableTemplate(TableTemplateDto tableDto, TableDataType tableDataType
                                     , List<ColumnHeaderTemplate> columnHeaders);
 
-    FullTableTemplateDto mapToFullTableTemplateDto(TableTemplate table);
+    ResponseTableTemplateDto mapToFullTableTemplateDto(TableTemplate table);
 }

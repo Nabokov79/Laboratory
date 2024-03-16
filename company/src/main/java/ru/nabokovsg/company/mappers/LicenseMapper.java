@@ -2,7 +2,7 @@ package ru.nabokovsg.company.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.company.dto.licenses.FullLicenseDto;
+import ru.nabokovsg.company.dto.licenses.ResponseLicenseDto;
 import ru.nabokovsg.company.dto.licenses.LicenseDto;
 import ru.nabokovsg.company.models.Licenses;
 import ru.nabokovsg.company.models.Organization;
@@ -16,5 +16,5 @@ public interface LicenseMapper {
     @Mapping(source = "licenseDto.id", target = "id")
     Licenses mapToUpdateLicenses(LicenseDto licenseDto, Organization issuedLicense);
 
-    FullLicenseDto mapToFullLicenseDto(Licenses license);
+    ResponseLicenseDto mapToFullLicenseDto(Licenses license);
 }

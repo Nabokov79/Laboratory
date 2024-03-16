@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.equipment.dto.partElement.FullPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ResponsePartElementDto;
 import ru.nabokovsg.equipment.dto.partElement.PartElementDto;
-import ru.nabokovsg.equipment.dto.partElement.ShortPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ShortResponsePartElementDto;
 import ru.nabokovsg.equipment.service.PartElementService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class PartElementController {
 
     @Operation(summary = "Добавление нового подэлемента")
     @PostMapping
-    public ResponseEntity<FullPartElementDto> save(
+    public ResponseEntity<ResponsePartElementDto> save(
             @RequestBody @Parameter(description = "Подэлемент") PartElementDto partElementDto) {
         return ResponseEntity.ok().body(service.save(partElementDto));
     }
 
     @Operation(summary = "Изменение данных подэлемента")
     @PatchMapping
-    public ResponseEntity<FullPartElementDto> update(
+    public ResponseEntity<ResponsePartElementDto> update(
             @RequestBody @Parameter(description = "Подэлемент") PartElementDto partElementDto) {
         return ResponseEntity.ok().body(service.update(partElementDto));
     }
 
     @Operation(summary = "Получить подэлемент")
     @GetMapping("/{id}")
-    public ResponseEntity<FullPartElementDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponsePartElementDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить все подэлементы элементы")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortPartElementDto>> getAll(
+    public ResponseEntity<List<ShortResponsePartElementDto>> getAll(
             @PathVariable @Parameter(description = "Индентификатор элемента") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

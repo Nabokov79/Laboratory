@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
+import ru.nabokovsg.template.dto.table.ResponseTableTemplateDto;
 import ru.nabokovsg.template.dto.table.TableTemplateDto;
 import ru.nabokovsg.template.services.TableTemplateService;
 
@@ -25,21 +25,21 @@ public class TableTemplateController {
 
     @Operation(summary = "Добавление нового шаблона таблицы")
     @PostMapping
-    public ResponseEntity<FullTableTemplateDto> save(@RequestBody
+    public ResponseEntity<ResponseTableTemplateDto> save(@RequestBody
                                          @Parameter(description = "Данные шаблона таблицы") TableTemplateDto tableDto) {
         return ResponseEntity.ok().body(service.save(tableDto));
     }
 
     @Operation(summary = "Изменение информации в шаблоне таблицы")
     @PatchMapping
-    public ResponseEntity<FullTableTemplateDto> update(@RequestBody
+    public ResponseEntity<ResponseTableTemplateDto> update(@RequestBody
                                    @Parameter(description = "Данные шаблона таблицы") TableTemplateDto tableDto) {
         return ResponseEntity.ok().body(service.update(tableDto));
     }
 
     @Operation(summary = "Получить таблицу")
     @GetMapping("/{id}")
-    public ResponseEntity<FullTableTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseTableTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.company.dto.licenses.FullLicenseDto;
+import ru.nabokovsg.company.dto.licenses.ResponseLicenseDto;
 import ru.nabokovsg.company.dto.licenses.LicenseDto;
 import ru.nabokovsg.company.services.LicenseService;
 
@@ -27,21 +27,21 @@ public class LicensesController {
 
     @Operation(summary = "Добавление данных лицензии/свидетельства")
     @PostMapping
-    public ResponseEntity<FullLicenseDto> save(@RequestBody
+    public ResponseEntity<ResponseLicenseDto> save(@RequestBody
                                            @Parameter(description = "Лицензия/Свидетельство") LicenseDto licenseDto) {
         return ResponseEntity.ok().body(service.save(licenseDto));
     }
 
     @Operation(summary = "Изменение данных лицензии/свидетельства")
     @PatchMapping
-    public ResponseEntity<FullLicenseDto> update(@RequestBody
+    public ResponseEntity<ResponseLicenseDto> update(@RequestBody
                                              @Parameter(description = "Лицензия/Свидетельство") LicenseDto licenseDto) {
         return ResponseEntity.ok().body(service.update(licenseDto));
     }
 
     @Operation(summary = "Получение данных всех лицензий/свидетельств")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<FullLicenseDto>> getAll(
+    public ResponseEntity<List<ResponseLicenseDto>> getAll(
                                        @PathVariable
                                        @Parameter(description = "Индентификатор структурного подразделения") Long id
                                      , @RequestParam(name = "divisionType")

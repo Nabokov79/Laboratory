@@ -3,8 +3,8 @@ package ru.nabokovsg.equipment.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.equipment.dto.element.ElementDto;
-import ru.nabokovsg.equipment.dto.element.FullElementDto;
-import ru.nabokovsg.equipment.dto.element.ShortElementDto;
+import ru.nabokovsg.equipment.dto.element.ResponseElementDto;
+import ru.nabokovsg.equipment.dto.element.ShortResponseElementDto;
 import ru.nabokovsg.equipment.models.Element;
 import ru.nabokovsg.equipment.models.Equipment;
 import ru.nabokovsg.equipment.models.StandardSize;
@@ -17,9 +17,9 @@ public interface ElementMapper {
     @Mapping(source = "elementDto.id", target = "id")
     Element mapToElement(ElementDto elementDto, Equipment equipment);
 
-    ShortElementDto mapToShortElementDto(Element element);
+    ShortResponseElementDto mapToShortElementDto(Element element);
 
-    FullElementDto mapToFullElementDto(Element element);
+    ResponseElementDto mapToFullElementDto(Element element);
 
     @Mapping(source = "element.elementName", target = "elementName")
     @Mapping(source = "standardSize", target = "standardSize")

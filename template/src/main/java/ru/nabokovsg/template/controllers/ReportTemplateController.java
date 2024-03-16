@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.report.ReportTemplateDto;
+import ru.nabokovsg.template.dto.report.ResponseReportTemplateDto;
 import ru.nabokovsg.template.services.ReportTemplateService;
 
 @RestController
@@ -26,7 +26,7 @@ public class ReportTemplateController {
 
     @Operation(summary = "Получить шаблон отчета")
     @GetMapping("/{id}")
-    public ResponseEntity<ReportTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseReportTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 }

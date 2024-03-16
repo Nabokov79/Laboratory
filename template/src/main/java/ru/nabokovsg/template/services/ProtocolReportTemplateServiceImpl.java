@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.template.client.LNKClient;
 import ru.nabokovsg.template.dto.protocolReport.ProtocolReportTemplateDto;
-import ru.nabokovsg.template.dto.protocolReport.FullProtocolReportTemplateDto;
-import ru.nabokovsg.template.dto.protocolReport.ShortProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ResponseProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ShortResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.ProtocolReportTemplateMapper;
 import ru.nabokovsg.template.models.*;
@@ -27,7 +27,7 @@ public class ProtocolReportTemplateServiceImpl implements ProtocolReportTemplate
     private final LNKClient client;
 
     @Override
-    public ShortProtocolReportTemplateDto save(ProtocolReportTemplateDto protocolDto) {
+    public ShortResponseProtocolReportTemplateDto save(ProtocolReportTemplateDto protocolDto) {
         ProtocolReportTemplate protocol = getByPredicate(protocolDto.getHeaderDocumentId(), protocolDto.getSectionId());
         if (protocol == null) {
             protocol = repository.save(
@@ -40,7 +40,7 @@ public class ProtocolReportTemplateServiceImpl implements ProtocolReportTemplate
     }
 
     @Override
-    public ShortProtocolReportTemplateDto update(ProtocolReportTemplateDto protocolDto) {
+    public ShortResponseProtocolReportTemplateDto update(ProtocolReportTemplateDto protocolDto) {
         if (repository.existsById(protocolDto.getId())) {
             return mapper.mapToShortProtocolReportTemplateDto(
                     repository.save(
@@ -54,12 +54,12 @@ public class ProtocolReportTemplateServiceImpl implements ProtocolReportTemplate
     }
 
     @Override
-    public FullProtocolReportTemplateDto get(Long id) {
+    public ResponseProtocolReportTemplateDto get(Long id) {
         return mapper.mapToFullProtocolReportTemplateDto(getById(id));
     }
 
     @Override
-    public List<ShortProtocolReportTemplateDto> getAll(Long id) {
+    public List<ShortResponseProtocolReportTemplateDto> getAll(Long id) {
         return repository.findAllProtocols(id)
                          .stream()
                          .map(mapper::mapToShortProtocolReportTemplateDto)

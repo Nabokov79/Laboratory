@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.protocol.FullProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ResponseProtocolTemplateDto;
 import ru.nabokovsg.template.dto.protocol.ProtocolTemplateDto;
-import ru.nabokovsg.template.dto.protocol.ShortProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ShortResponseProtocolTemplateDto;
 import ru.nabokovsg.template.services.ProtocolTemplateService;
 
 import java.util.List;
@@ -28,28 +28,28 @@ public class ProtocolTemplateController {
 
     @Operation(summary = "Данные нового шаблона протокола/заключения")
     @PostMapping
-    public ResponseEntity<ShortProtocolTemplateDto> save(
+    public ResponseEntity<ShortResponseProtocolTemplateDto> save(
             @RequestBody @Parameter(description = "Шаблон протокола/заключения") ProtocolTemplateDto protocolDto) {
         return ResponseEntity.ok().body(service.save(protocolDto));
     }
 
     @Operation(summary = "Данные для изменения информации в шаблоне протокола/заключения")
     @PatchMapping
-    public ResponseEntity<ShortProtocolTemplateDto> update(
+    public ResponseEntity<ShortResponseProtocolTemplateDto> update(
             @RequestBody @Parameter(description = "Шаблон протокола/заключения") ProtocolTemplateDto protocolDto) {
         return ResponseEntity.ok().body(service.update(protocolDto));
     }
 
     @Operation(summary = "Получить данные шаблона протокола/заключения")
     @GetMapping("/{id}")
-    public ResponseEntity<FullProtocolTemplateDto> get(@PathVariable
+    public ResponseEntity<ResponseProtocolTemplateDto> get(@PathVariable
                                                            @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить краткие данные шаблонов протоколов/заключений")
     @GetMapping("/all")
-    public ResponseEntity<List<ShortProtocolTemplateDto>> getAll() {
+    public ResponseEntity<List<ShortResponseProtocolTemplateDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 }

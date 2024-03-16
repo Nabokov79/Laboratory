@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.pageTitle.FullPageTitleTemplateDto;
+import ru.nabokovsg.template.dto.pageTitle.ResponsePageTitleTemplateDto;
 import ru.nabokovsg.template.dto.pageTitle.PageTitleTemplateDto;
 import ru.nabokovsg.template.services.PageTitleTemplateService;
 
@@ -25,14 +25,14 @@ public class PageTitleTemplateController {
 
     @Operation(summary = "Данные титульного листа")
     @PostMapping
-    public ResponseEntity<FullPageTitleTemplateDto> save(
+    public ResponseEntity<ResponsePageTitleTemplateDto> save(
             @RequestBody @Parameter(description = "Данные Титульного листа") PageTitleTemplateDto pageTitleDto) {
         return ResponseEntity.ok().body(service.save(pageTitleDto));
     }
 
     @Operation(summary = "Изменение данных титульного листа")
     @PatchMapping
-    public ResponseEntity<FullPageTitleTemplateDto> update(
+    public ResponseEntity<ResponsePageTitleTemplateDto> update(
             @RequestBody @Parameter(description = "Данные Титульного листа") PageTitleTemplateDto pageTitleDto) {
         return ResponseEntity.ok().body(service.update(pageTitleDto));
     }

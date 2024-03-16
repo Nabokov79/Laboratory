@@ -1,5 +1,5 @@
 package ru.nabokovsg.template.services;
-import ru.nabokovsg.template.dto.report.ReportTemplateDto;
+import ru.nabokovsg.template.dto.report.ResponseReportTemplateDto;
 import ru.nabokovsg.template.models.AppendicesTemplate;
 import ru.nabokovsg.template.models.PageTitleTemplate;
 import ru.nabokovsg.template.models.ReportTemplate;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface ReportTemplateService {
 
-    ReportTemplateDto get(Long id);
+    ResponseReportTemplateDto get(Long id);
 
     void addPageTitleTemplate(Long headerDocumentId, Long equipmentTypeId, PageTitleTemplate pageTitleTemplate);
 

@@ -1,13 +1,13 @@
 package ru.nabokovsg.template.services;
 
 import ru.nabokovsg.template.dto.appendices.AppendicesTemplateDto;
-import ru.nabokovsg.template.dto.appendices.FullAppendicesTemplateDto;
+import ru.nabokovsg.template.dto.appendices.ResponseAppendicesTemplateDto;
 
 public interface AppendicesTemplateService {
 
-    FullAppendicesTemplateDto save(AppendicesTemplateDto appendicesDto);
+    ResponseAppendicesTemplateDto save(AppendicesTemplateDto appendicesDto);
 
-    FullAppendicesTemplateDto update(AppendicesTemplateDto appendicesDto);
+    ResponseAppendicesTemplateDto update(AppendicesTemplateDto appendicesDto);
 
     void delete(Long id);
 }

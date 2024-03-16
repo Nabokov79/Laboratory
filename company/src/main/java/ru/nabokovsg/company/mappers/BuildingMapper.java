@@ -3,8 +3,8 @@ package ru.nabokovsg.company.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.company.dto.building.BuildingDto;
-import ru.nabokovsg.company.dto.building.FullBuildingDto;
-import ru.nabokovsg.company.dto.building.ShortBuildingDto;
+import ru.nabokovsg.company.dto.building.ResponseBuildingDto;
+import ru.nabokovsg.company.dto.building.ShortResponseBuildingDto;
 import ru.nabokovsg.company.models.Address;
 import ru.nabokovsg.company.models.Building;
 import ru.nabokovsg.company.models.DivisionContact;
@@ -23,7 +23,7 @@ public interface BuildingMapper {
     Building mapToBuilding(BuildingDto buildingDto, DivisionContact divisionContact, BuildingType buildingType
                          , Address address, ExploitationRegion exploitationRegion);
 
-    FullBuildingDto mapToFullBuildingDto(Building building);
+    ResponseBuildingDto mapToFullBuildingDto(Building building);
 
-    ShortBuildingDto mapToShortBuildingDto(Building building);
+    ShortResponseBuildingDto mapToShortBuildingDto(Building building);
 }

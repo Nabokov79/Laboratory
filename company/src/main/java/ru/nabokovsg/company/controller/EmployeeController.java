@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.company.dto.employee.EmployeeDto;
-import ru.nabokovsg.company.dto.employee.FullEmployeeDto;
-import ru.nabokovsg.company.dto.employee.ShortEmployeeDto;
+import ru.nabokovsg.company.dto.employee.ResponseEmployeeDto;
+import ru.nabokovsg.company.dto.employee.ShortResponseEmployeeDto;
 import ru.nabokovsg.company.services.EmployeeService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class EmployeeController {
 
     @Operation(summary = "Добавление данных нового сотрудника")
     @PostMapping
-    public ResponseEntity<ShortEmployeeDto> save(@RequestBody
+    public ResponseEntity<ShortResponseEmployeeDto> save(@RequestBody
                                                  @Parameter(description = "Сотрудник") EmployeeDto employeeDto) {
         return ResponseEntity.ok().body(service.save(employeeDto));
     }
 
     @Operation(summary = "Изменение данных сотрудника")
     @PatchMapping
-    public ResponseEntity<ShortEmployeeDto> update(@RequestBody
+    public ResponseEntity<ShortResponseEmployeeDto> update(@RequestBody
                                                   @Parameter(description = "Сотрудник") EmployeeDto employeeDto) {
         return ResponseEntity.ok().body(service.update(employeeDto));
     }
 
     @Operation(summary = "Получение данных сотрудника")
     @GetMapping("/{id}")
-    public ResponseEntity<FullEmployeeDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseEmployeeDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение данных всех сотрудников")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortEmployeeDto>> getAll(
+    public ResponseEntity<List<ShortResponseEmployeeDto>> getAll(
                                        @PathVariable
                                        @Parameter(description = "Индентификатор структурного подразделения") Long id,
                                        @RequestParam(name = "divisionType")

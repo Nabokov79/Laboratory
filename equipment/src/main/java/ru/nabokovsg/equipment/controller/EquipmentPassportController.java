@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.equipment.dto.passport.EquipmentPassportDto;
-import ru.nabokovsg.equipment.dto.passport.FullEquipmentPassportDto;
+import ru.nabokovsg.equipment.dto.passport.ResponseEquipmentPassportDto;
 import ru.nabokovsg.equipment.service.EquipmentPassportService;
 
 @RestController
@@ -25,14 +25,14 @@ public class EquipmentPassportController {
 
     @Operation(summary = "Добавление данных паспорта")
     @PostMapping
-    public ResponseEntity<FullEquipmentPassportDto> save(@RequestBody
+    public ResponseEntity<ResponseEquipmentPassportDto> save(@RequestBody
                                                  @Parameter(description = "Пасспорт") EquipmentPassportDto passportDto) {
         return ResponseEntity.ok().body(service.save(passportDto));
     }
 
     @Operation(summary = "Изменение данных паспорта")
     @PatchMapping
-    public ResponseEntity<FullEquipmentPassportDto> update(@RequestBody
+    public ResponseEntity<ResponseEquipmentPassportDto> update(@RequestBody
                                                    @Parameter(description = "Паспорт") EquipmentPassportDto passportDto) {
         return ResponseEntity.ok().body(service.update(passportDto));
     }

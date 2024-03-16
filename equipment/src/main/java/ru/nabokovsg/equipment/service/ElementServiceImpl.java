@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.equipment.dto.element.ElementDto;
-import ru.nabokovsg.equipment.dto.element.FullElementDto;
-import ru.nabokovsg.equipment.dto.element.ShortElementDto;
+import ru.nabokovsg.equipment.dto.element.ResponseElementDto;
+import ru.nabokovsg.equipment.dto.element.ShortResponseElementDto;
 import ru.nabokovsg.equipment.exceptions.NotFoundException;
 import ru.nabokovsg.equipment.mappers.ElementMapper;
 import ru.nabokovsg.equipment.models.Element;
@@ -29,7 +29,7 @@ public class ElementServiceImpl implements ElementService {
     private final StandardSizeService standardSizeService;
 
     @Override
-    public ShortElementDto save(ElementDto elementDto) {
+    public ShortResponseElementDto save(ElementDto elementDto) {
         Element element = getByPredicate(elementDto);
         if (element == null) {
             element = mapper.mapToElement(elementDto, equipmentService.getById(elementDto.getEquipmentId()));
@@ -43,7 +43,7 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public ShortElementDto update(ElementDto elementDto) {
+    public ShortResponseElementDto update(ElementDto elementDto) {
         if (repository.existsById(elementDto.getId())) {
             return mapper.mapToShortElementDto(
                     repository.save(mapper.mapToElement(elementDto
@@ -54,12 +54,12 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public FullElementDto get(Long id) {
+    public ResponseElementDto get(Long id) {
         return mapper.mapToFullElementDto(getById(id));
     }
 
     @Override
-    public List<ShortElementDto> getAll(Long id) {
+    public List<ShortResponseElementDto> getAll(Long id) {
         return repository.findAllByEquipmentId(id)
                          .stream()
                          .map(mapper::mapToShortElementDto)

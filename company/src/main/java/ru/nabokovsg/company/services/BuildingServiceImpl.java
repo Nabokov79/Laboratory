@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.building.BuildingDto;
-import ru.nabokovsg.company.dto.building.FullBuildingDto;
-import ru.nabokovsg.company.dto.building.ShortBuildingDto;
+import ru.nabokovsg.company.dto.building.ResponseBuildingDto;
+import ru.nabokovsg.company.dto.building.ShortResponseBuildingDto;
 import ru.nabokovsg.company.exceptions.BadRequestException;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.BuildingMapper;
@@ -30,7 +30,7 @@ public class BuildingServiceImpl implements BuildingService {
     private final EmployeeService employeeService;
 
     @Override
-    public ShortBuildingDto save(BuildingDto buildingDto) {
+    public ShortResponseBuildingDto save(BuildingDto buildingDto) {
         return mapper.mapToShortBuildingDto(
                 Objects.requireNonNullElseGet(getDuplicateByPredicate(buildingDto)
                         , () -> repository.save(
@@ -42,7 +42,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public ShortBuildingDto update(BuildingDto buildingDto) {
+    public ShortResponseBuildingDto update(BuildingDto buildingDto) {
         if (repository.existsById(buildingDto.getId())) {
             return mapper.mapToShortBuildingDto(
                     repository.save(mapper.mapToBuilding(buildingDto
@@ -56,7 +56,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public FullBuildingDto get(Long id) {
+    public ResponseBuildingDto get(Long id) {
         return mapper.mapToFullBuildingDto(getById(id));
     }
 
@@ -67,7 +67,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public List<ShortBuildingDto> getAll(Long id) {
+    public List<ShortResponseBuildingDto> getAll(Long id) {
         return repository.findAllByExploitationRegionId(id)
                          .stream()
                          .map(mapper::mapToShortBuildingDto)

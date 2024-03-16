@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.lab_nk.dto.measuringTool.FullMeasuringToolDto;
+import ru.nabokovsg.lab_nk.dto.measuringTool.ResponseMeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.MeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.SearchParameters;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
@@ -26,7 +26,7 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
     private final LaboratoryEmployeeService employeeService;
 
     @Override
-    public FullMeasuringToolDto save(MeasuringToolDto measuringToolDto) {
+    public ResponseMeasuringToolDto save(MeasuringToolDto measuringToolDto) {
         MeasuringTool measuringTool = getByPredicate(measuringToolDto);
         if (measuringTool == null) {
             measuringTool = mapper.mapToMeasuringTool(measuringToolDto);
@@ -39,7 +39,7 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
     }
 
     @Override
-    public FullMeasuringToolDto update(MeasuringToolDto measuringToolDto) {
+    public ResponseMeasuringToolDto update(MeasuringToolDto measuringToolDto) {
         if (repository.existsById(measuringToolDto.getId())) {
             MeasuringTool measuringTool = mapper.mapToMeasuringTool(measuringToolDto);
             if (measuringToolDto.getEmployeeId() != null) {
@@ -54,7 +54,7 @@ public class MeasuringToolServiceImpl implements MeasuringToolService {
     }
 
     @Override
-    public List<FullMeasuringToolDto> getAll(SearchParameters parameters) {
+    public List<ResponseMeasuringToolDto> getAll(SearchParameters parameters) {
         QMeasuringTool measuringTool = QMeasuringTool.measuringTool;
         return new JPAQueryFactory(em).from(measuringTool)
                                       .select(measuringTool)

@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.header.FullHeaderTemplateDto;
+import ru.nabokovsg.template.dto.header.ResponseHeaderTemplateDto;
 import ru.nabokovsg.template.dto.header.HeaderTemplateDto;
 import ru.nabokovsg.template.services.HeaderTemplateService;
 
@@ -27,21 +27,21 @@ public class HeaderTemplateController {
 
     @Operation(summary = "Добавление нового шаблона заголовка")
     @PostMapping
-    public ResponseEntity<FullHeaderTemplateDto> save(
+    public ResponseEntity<ResponseHeaderTemplateDto> save(
                         @RequestBody @Parameter(description = "Данные шаблона заголовка") HeaderTemplateDto headerDto) {
         return ResponseEntity.ok().body(service.save(headerDto));
     }
 
     @Operation(summary = "Изменение информации в шаблоне заголовка")
     @PatchMapping
-    public ResponseEntity<FullHeaderTemplateDto> update(
+    public ResponseEntity<ResponseHeaderTemplateDto> update(
                         @RequestBody @Parameter(description = "Данные шаблона заголовка") HeaderTemplateDto headerDto) {
         return ResponseEntity.ok().body(service.update(headerDto));
     }
 
     @Operation(summary = "Получить шаблон заголовка")
     @GetMapping("/{id}")
-    public ResponseEntity<FullHeaderTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseHeaderTemplateDto> get(@PathVariable @Parameter(name = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 

@@ -3,7 +3,7 @@ package ru.nabokovsg.template.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.template.dto.conclusion.ConclusionTemplateDto;
-import ru.nabokovsg.template.dto.conclusion.FullConclusionTemplateDto;
+import ru.nabokovsg.template.dto.conclusion.ResponseConclusionTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.ConclusionTemplateMapper;
 import ru.nabokovsg.template.models.ConclusionTemplate;
@@ -20,7 +20,7 @@ public class ConclusionTemplateServiceImpl extends ConverterToEnum implements Co
     private final ProtocolReportTemplateService protocolReportService;
 
     @Override
-    public FullConclusionTemplateDto save(ConclusionTemplateDto conclusionDto) {
+    public ResponseConclusionTemplateDto save(ConclusionTemplateDto conclusionDto) {
         ConclusionTemplate conclusion = null;
         DocumentPartType type = convertToDocumentPartType(conclusionDto.getDocumentPartType());
         switch (type) {
@@ -39,7 +39,7 @@ public class ConclusionTemplateServiceImpl extends ConverterToEnum implements Co
     }
 
     @Override
-    public FullConclusionTemplateDto update(ConclusionTemplateDto conclusionDto) {
+    public ResponseConclusionTemplateDto update(ConclusionTemplateDto conclusionDto) {
         if (repository.existsById(conclusionDto.getId())) {
             return mapper.mapToFullConclusionTemplateDto(
                     repository.save(mapper.mapToConclusionTemplate(conclusionDto))

@@ -3,8 +3,8 @@ package ru.nabokovsg.company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.branch.BranchDto;
-import ru.nabokovsg.company.dto.branch.FullBranchDto;
-import ru.nabokovsg.company.dto.branch.ShortBranchDto;
+import ru.nabokovsg.company.dto.branch.ResponseBranchDto;
+import ru.nabokovsg.company.dto.branch.ShortResponseBranchDto;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.BranchMapper;
 import ru.nabokovsg.company.models.Branch;
@@ -24,7 +24,7 @@ public class BranchServiceImpl implements BranchService {
     private final EmployeeService employeeService;
 
     @Override
-    public ShortBranchDto save(BranchDto branchDto) {
+    public ShortResponseBranchDto save(BranchDto branchDto) {
         return mapper.mapToShortBranchDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(branchDto.getFullName()), () -> repository.save(
                         mapper.mapToBranch(branchDto
@@ -36,7 +36,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public ShortBranchDto update(BranchDto branchDto) {
+    public ShortResponseBranchDto update(BranchDto branchDto) {
         if (repository.existsById(branchDto.getId())) {
             return mapper.mapToShortBranchDto(
                     repository.save(mapper.mapToBranch(branchDto
@@ -51,12 +51,12 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public FullBranchDto get(Long id) {
+    public ResponseBranchDto get(Long id) {
         return mapper.mapToBranchDto(getById(id));
     }
 
     @Override
-    public List<ShortBranchDto> getAll(Long id) {
+    public List<ShortResponseBranchDto> getAll(Long id) {
         return repository.findAllByOrganization(id)
                          .stream()
                          .map(mapper::mapToShortBranchDto)

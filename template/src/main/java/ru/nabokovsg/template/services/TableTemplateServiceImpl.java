@@ -2,7 +2,7 @@ package ru.nabokovsg.template.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
+import ru.nabokovsg.template.dto.table.ResponseTableTemplateDto;
 import ru.nabokovsg.template.dto.table.TableTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.TableTemplateMapper;
@@ -24,7 +24,7 @@ public class TableTemplateServiceImpl extends ConverterToEnum implements TableTe
     private final ProtocolTemplateService protocolTemplateService;
 
     @Override
-    public FullTableTemplateDto save(TableTemplateDto tableDto) {
+    public ResponseTableTemplateDto save(TableTemplateDto tableDto) {
         DocumentPartType type = convertToDocumentPartType(tableDto.getDocumentPartType());
         Long id = tableDto.getDocumentPartId();
         TableTemplate table = exists(type,id, tableDto.getTableName(), tableDto.getSequentialNumber());
@@ -41,7 +41,7 @@ public class TableTemplateServiceImpl extends ConverterToEnum implements TableTe
     }
 
     @Override
-    public FullTableTemplateDto update(TableTemplateDto tableDto) {
+    public ResponseTableTemplateDto update(TableTemplateDto tableDto) {
         if (repository.existsById(tableDto.getId())) {
             return mapper.mapToFullTableTemplateDto(repository.save(mapper.mapToTableTemplate(
                                                                 tableDto
@@ -54,7 +54,7 @@ public class TableTemplateServiceImpl extends ConverterToEnum implements TableTe
     }
 
     @Override
-    public FullTableTemplateDto get(Long id) {
+    public ResponseTableTemplateDto get(Long id) {
         return mapper.mapToFullTableTemplateDto(getById(id));
     }
 

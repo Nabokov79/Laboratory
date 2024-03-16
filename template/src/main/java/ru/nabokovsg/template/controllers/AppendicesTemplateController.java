@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.template.dto.appendices.AppendicesTemplateDto;
-import ru.nabokovsg.template.dto.appendices.FullAppendicesTemplateDto;
+import ru.nabokovsg.template.dto.appendices.ResponseAppendicesTemplateDto;
 import ru.nabokovsg.template.services.AppendicesTemplateService;
 
 @RestController
@@ -27,14 +27,14 @@ public class AppendicesTemplateController {
 
     @Operation(summary = "Сохранить новое приложение для документа")
     @PostMapping
-    public ResponseEntity<FullAppendicesTemplateDto> save(
+    public ResponseEntity<ResponseAppendicesTemplateDto> save(
                                     @RequestBody @Parameter(name = "Приложение") AppendicesTemplateDto appendicesDto) {
         return ResponseEntity.ok().body(service.save(appendicesDto));
     }
 
     @Operation(summary = "Изменение данных приложения документа")
     @PatchMapping
-    public ResponseEntity<FullAppendicesTemplateDto> update(
+    public ResponseEntity<ResponseAppendicesTemplateDto> update(
                                     @RequestBody @Parameter(name = "Приложение") AppendicesTemplateDto appendicesDto) {
         return ResponseEntity.ok().body(service.update(appendicesDto));
     }

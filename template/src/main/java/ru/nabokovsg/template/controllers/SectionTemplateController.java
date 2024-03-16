@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.template.dto.section.SectionDataTemplateDto;
-import ru.nabokovsg.template.dto.section.FullSectionTemplateDto;
+import ru.nabokovsg.template.dto.section.ResponseSectionTemplateDto;
 import ru.nabokovsg.template.dto.section.SectionTemplateDto;
-import ru.nabokovsg.template.dto.section.ShortSectionTemplateDto;
+import ru.nabokovsg.template.dto.section.ShortResponseSectionTemplateDto;
 import ru.nabokovsg.template.services.SectionTemplateService;
 
 import java.util.List;
@@ -29,28 +29,28 @@ public class SectionTemplateController {
 
     @Operation(summary = "Добавить новые разделы")
     @PostMapping
-    public ResponseEntity<List<ShortSectionTemplateDto>> save(
+    public ResponseEntity<List<ShortResponseSectionTemplateDto>> save(
             @RequestBody @Parameter(description = "Данные шаблона разделов") SectionDataTemplateDto sectionsDto) {
         return ResponseEntity.ok().body(service.save(sectionsDto));
     }
 
     @Operation(summary = "Изменение данных разделов")
     @PatchMapping
-    public ResponseEntity<List<ShortSectionTemplateDto>> update(
+    public ResponseEntity<List<ShortResponseSectionTemplateDto>> update(
             @RequestBody @Parameter(description = "Данные шаблона разделов") List<SectionTemplateDto> sectionsDto) {
         return ResponseEntity.ok().body(service.update(sectionsDto));
     }
 
     @Operation(summary = "Получить раздел")
     @GetMapping("/{id}")
-    public ResponseEntity<FullSectionTemplateDto> get(@PathVariable
+    public ResponseEntity<ResponseSectionTemplateDto> get(@PathVariable
                                                       @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить разделы отчета")
     @GetMapping("/all/report/{id}")
-    public ResponseEntity<List<ShortSectionTemplateDto>> getAll(
+    public ResponseEntity<List<ShortResponseSectionTemplateDto>> getAll(
                                              @PathVariable @Parameter(description = "Индентификатор отчета") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

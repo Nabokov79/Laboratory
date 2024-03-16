@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.protocolReport.FullProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.dto.protocolReport.ProtocolReportTemplateDto;
-import ru.nabokovsg.template.dto.protocolReport.ShortProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ShortResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.services.ProtocolReportTemplateService;
 
 import java.util.List;
@@ -30,28 +30,28 @@ public class ProtocolReportTemplateController {
 
     @Operation(summary = "Шаблон нового протокола")
     @PostMapping
-    public ResponseEntity<ShortProtocolReportTemplateDto> save(
+    public ResponseEntity<ShortResponseProtocolReportTemplateDto> save(
             @RequestBody @Parameter(name = "Шаблон протокола в составе отчета") ProtocolReportTemplateDto protocolDto) {
         return ResponseEntity.ok().body(service.save(protocolDto));
     }
 
     @Operation(summary = "Изменение шаблона протокола")
     @PatchMapping
-    public ResponseEntity<ShortProtocolReportTemplateDto> update(
+    public ResponseEntity<ShortResponseProtocolReportTemplateDto> update(
             @RequestBody @Parameter(name = "Шаблон протокола в составе отчета") ProtocolReportTemplateDto protocolDto) {
         return ResponseEntity.ok().body(service.update(protocolDto));
     }
 
     @Operation(summary = "Получить шаюлон протоколов")
     @GetMapping("/{id}")
-    public ResponseEntity<FullProtocolReportTemplateDto> get(
+    public ResponseEntity<ResponseProtocolReportTemplateDto> get(
                                                     @PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить краткие данные протоколов")
     @GetMapping("/all/section/{id}")
-    public ResponseEntity<List<ShortProtocolReportTemplateDto>> getAll(
+    public ResponseEntity<List<ShortResponseProtocolReportTemplateDto>> getAll(
                                             @PathVariable @Parameter(description = "Индентификатор раздела") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

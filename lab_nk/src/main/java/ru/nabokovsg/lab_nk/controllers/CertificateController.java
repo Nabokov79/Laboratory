@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.lab_nk.dto.certificate.CertificateDto;
-import ru.nabokovsg.lab_nk.dto.certificate.FullCertificateDto;
+import ru.nabokovsg.lab_nk.dto.certificate.ResponseCertificateDto;
 import ru.nabokovsg.lab_nk.services.CertificateService;
 
 import java.util.List;
@@ -27,21 +27,21 @@ public class CertificateController {
 
     @Operation(summary = "Добавление данных сертификатов сотрудника")
     @PostMapping
-    public ResponseEntity<FullCertificateDto> save(
+    public ResponseEntity<ResponseCertificateDto> save(
                @RequestBody @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
         return ResponseEntity.ok().body(service.save(certificateDto));
     }
 
     @Operation(summary = "Изменение данных аттестации сотрудника")
     @PatchMapping
-    public ResponseEntity<FullCertificateDto> update(
+    public ResponseEntity<ResponseCertificateDto> update(
                 @RequestBody @Parameter(description = "Список сертификатов сотрудника") CertificateDto certificateDto) {
         return ResponseEntity.ok().body(service.update(certificateDto));
     }
 
     @Operation(summary = "Получение данных сертификатов сотрудников")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<FullCertificateDto>> getAll(
+    public ResponseEntity<List<ResponseCertificateDto>> getAll(
                         @PathVariable @Parameter(description = "Индентификатор сотрудника") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

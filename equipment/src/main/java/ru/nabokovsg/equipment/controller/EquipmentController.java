@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.equipment.dto.equipments.EquipmentDto;
-import ru.nabokovsg.equipment.dto.equipments.FullEquipmentDto;
+import ru.nabokovsg.equipment.dto.equipments.ResponseEquipmentDto;
 import ru.nabokovsg.equipment.service.EquipmentService;
 
 import java.util.List;
@@ -27,27 +27,27 @@ public class EquipmentController {
 
     @Operation(summary = "Добавление данных оборудования")
     @PostMapping
-    public ResponseEntity<FullEquipmentDto> save(@RequestBody
+    public ResponseEntity<ResponseEquipmentDto> save(@RequestBody
                                                  @Parameter(description = "Оборудование") EquipmentDto equipmentDto) {
         return ResponseEntity.ok().body(service.save(equipmentDto));
     }
 
     @Operation(summary = "Изменение данных оборудования")
     @PatchMapping
-    public ResponseEntity<FullEquipmentDto> update(@RequestBody
+    public ResponseEntity<ResponseEquipmentDto> update(@RequestBody
                                                    @Parameter(description = "Оборудование") EquipmentDto equipmentDto) {
         return ResponseEntity.ok().body(service.update(equipmentDto));
     }
 
     @Operation(summary = "Получить оборудование")
     @GetMapping("/{id}")
-    public ResponseEntity<FullEquipmentDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseEquipmentDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить все оборудование котельной, ЦТП")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<FullEquipmentDto>> getAll(@PathVariable
+    public ResponseEntity<List<ResponseEquipmentDto>> getAll(@PathVariable
                                                     @Parameter(description = "Индентификатор котельной, ЦТП") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

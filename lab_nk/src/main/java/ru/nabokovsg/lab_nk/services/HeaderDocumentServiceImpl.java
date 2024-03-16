@@ -3,7 +3,7 @@ package ru.nabokovsg.lab_nk.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.dto.headerDocument.HeaderDocumentDto;
-import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
+import ru.nabokovsg.lab_nk.dto.headerDocument.ResponseHeaderDocumentDto;
 import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.HeaderDocumentMapper;
@@ -22,7 +22,7 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
     private final HeaderDocumentMapper mapper;
 
     @Override
-    public FullHeaderDocumentDto save(HeaderDocumentDto headerDocumentDto) {
+    public ResponseHeaderDocumentDto save(HeaderDocumentDto headerDocumentDto) {
         TypeDocument typeDocument = convertToTypeDocument(headerDocumentDto.getTypeDocument());
         return mapper.mapToFullHeaderDocumentDto(
                 Objects.requireNonNullElseGet(
@@ -34,7 +34,7 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
     }
 
     @Override
-    public FullHeaderDocumentDto update(HeaderDocumentDto headerDocumentDto) {
+    public ResponseHeaderDocumentDto update(HeaderDocumentDto headerDocumentDto) {
         if (repository.existsById(headerDocumentDto.getId())) {
             return mapper.mapToFullHeaderDocumentDto(
                     repository.save(mapper.mapToHeaderDocument(headerDocumentDto
@@ -46,12 +46,12 @@ public class HeaderDocumentServiceImpl implements HeaderDocumentService {
     }
 
     @Override
-    public FullHeaderDocumentDto get(Long id) {
+    public ResponseHeaderDocumentDto get(Long id) {
         return mapper.mapToFullHeaderDocumentDto(getById(id));
     }
 
     @Override
-    public List<FullHeaderDocumentDto> getAll() {
+    public List<ResponseHeaderDocumentDto> getAll() {
         return repository.findAll()
                          .stream()
                          .map(mapper::mapToFullHeaderDocumentDto)

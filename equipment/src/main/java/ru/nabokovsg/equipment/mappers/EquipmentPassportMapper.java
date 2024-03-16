@@ -2,7 +2,7 @@ package ru.nabokovsg.equipment.mappers;
 
 import org.mapstruct.Mapping;
 import ru.nabokovsg.equipment.dto.passport.EquipmentPassportDto;
-import ru.nabokovsg.equipment.dto.passport.FullEquipmentPassportDto;
+import ru.nabokovsg.equipment.dto.passport.ResponseEquipmentPassportDto;
 import ru.nabokovsg.equipment.models.Equipment;
 import ru.nabokovsg.equipment.models.EquipmentPassport;
 
@@ -15,5 +15,5 @@ public interface EquipmentPassportMapper {
     @Mapping(source = "passportDto.id", target = "id")
     EquipmentPassport mapToEquipmentPassport(EquipmentPassportDto passportDto, Equipment equipment);
 
-    FullEquipmentPassportDto mapToFullEquipmentPassportDto(EquipmentPassport passport);
+    ResponseEquipmentPassportDto mapToFullEquipmentPassportDto(EquipmentPassport passport);
 }

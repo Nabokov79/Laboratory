@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.client.LadNKClient;
-import ru.nabokovsg.lab_nk.dto.employees.FullLaboratoryEmployeeDto;
-import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ResponseLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ShortResponseLaboratoryEmployeeDto;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.LaboratoryEmployeeMapper;
 import ru.nabokovsg.lab_nk.models.LaboratoryEmployee;
@@ -23,7 +23,7 @@ public class LaboratoryEmployeeServiceImpl implements LaboratoryEmployeeService 
     private final LadNKClient client;
 
     @Override
-    public List<ShortLaboratoryEmployeeDto> copy(Long id, String divisionType) {
+    public List<ShortResponseLaboratoryEmployeeDto> copy(Long id, String divisionType) {
         List<LaboratoryEmployee> laboratoryEmployees = client.getAllEmployee(id, divisionType)
                                                              .stream()
                                                              .map(mapper::mapToLaboratoryEmployee)
@@ -39,12 +39,12 @@ public class LaboratoryEmployeeServiceImpl implements LaboratoryEmployeeService 
     }
 
     @Override
-    public FullLaboratoryEmployeeDto get(Long id) {
+    public ResponseLaboratoryEmployeeDto get(Long id) {
         return mapper.mapToFullLaboratoryEmployeeDto(getById(id));
     }
 
     @Override
-    public List<ShortLaboratoryEmployeeDto> getAll() {
+    public List<ShortResponseLaboratoryEmployeeDto> getAll() {
         return repository.findAll()
                          .stream()
                          .map(mapper::mapToShortLaboratoryEmployeeDto)

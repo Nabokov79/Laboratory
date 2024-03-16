@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.lab_nk.dto.taskJournal.FullTaskJournalDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskSearchParameters;
 import ru.nabokovsg.lab_nk.services.TaskJournalService;
@@ -29,7 +29,7 @@ public class TaskJournalController {
 
     @Operation(summary = "Добавление данных новой задачи на выполнение работы")
     @PostMapping
-    public ResponseEntity<FullTaskJournalDto> save(
+    public ResponseEntity<ResponseTaskJournalDto> save(
             @RequestBody
             @Parameter(description = "Задача на выполнение работы") TaskJournalDto taskJournalDto) {
         return ResponseEntity.ok().body(service.save(taskJournalDto));
@@ -37,7 +37,7 @@ public class TaskJournalController {
 
     @Operation(summary = "Изменение данных задачи на выполнение работы")
     @PatchMapping
-    public ResponseEntity<FullTaskJournalDto> update(
+    public ResponseEntity<ResponseTaskJournalDto> update(
             @RequestBody
             @Parameter(description = "Задача на выполнение работы") TaskJournalDto taskJournalDto) {
         return ResponseEntity.ok().body(service.update(taskJournalDto));
@@ -45,13 +45,13 @@ public class TaskJournalController {
 
     @Operation(summary = "Получение задачи")
     @GetMapping("/{id}")
-    public ResponseEntity<FullTaskJournalDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseTaskJournalDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение данных задачи на выполнение работы")
     @GetMapping("/all")
-    public ResponseEntity<List<FullTaskJournalDto>> getAll(
+    public ResponseEntity<List<ResponseTaskJournalDto>> getAll(
               @RequestParam(value = "employeeId", required = false)
               @Parameter(description = "Индентификатор сотрудника") Long employeeId
             , @RequestParam(value = "status", required = false)

@@ -1,14 +1,14 @@
 package ru.nabokovsg.document.service;
 
-import ru.nabokovsg.document.dto.remark.FullRemarkDto;
+import ru.nabokovsg.document.dto.remark.ResponseRemarkDto;
 import ru.nabokovsg.document.dto.remark.RemarkDto;
 import java.util.List;
 
 public interface RemarkService {
 
-    FullRemarkDto save(RemarkDto remarkDto);
+    ResponseRemarkDto save(RemarkDto remarkDto);
 
-    FullRemarkDto update(RemarkDto remarkDto);
+    ResponseRemarkDto update(RemarkDto remarkDto);
 
-    List<FullRemarkDto> getAll(Long id, Boolean inspector);
+    List<ResponseRemarkDto> getAll(Long id, Boolean inspector);
 }

@@ -3,7 +3,7 @@ package ru.nabokovsg.lab_nk.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.lab_nk.dto.certificate.CertificateDto;
-import ru.nabokovsg.lab_nk.dto.certificate.FullCertificateDto;
+import ru.nabokovsg.lab_nk.dto.certificate.ResponseCertificateDto;
 import ru.nabokovsg.lab_nk.models.Certificate;
 import ru.nabokovsg.lab_nk.models.LaboratoryEmployee;
 
@@ -22,5 +22,5 @@ public interface CertificateMapper {
     @Mapping(source = "certificateDto.id", target = "id")
     Certificate mapToCertificate(CertificateDto certificateDto, LaboratoryEmployee employee);
 
-    FullCertificateDto mapToFullCertificateDto(Certificate certificate);
+    ResponseCertificateDto mapToFullCertificateDto(Certificate certificate);
 }

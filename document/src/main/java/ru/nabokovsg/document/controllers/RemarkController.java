@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.document.dto.remark.FullRemarkDto;
+import ru.nabokovsg.document.dto.remark.ResponseRemarkDto;
 import ru.nabokovsg.document.dto.remark.RemarkDto;
 import ru.nabokovsg.document.service.RemarkService;
 import java.util.List;
@@ -26,21 +26,21 @@ public class RemarkController {
 
     @Operation(summary = "Добавление данных нового замечания к документу или чертежу")
     @PostMapping
-    public ResponseEntity<FullRemarkDto> save(
+    public ResponseEntity<ResponseRemarkDto> save(
             @RequestBody @Parameter(description = "Замечание") RemarkDto remarkDto) {
         return ResponseEntity.ok().body(service.save(remarkDto));
     }
 
     @Operation(summary = "Изменение данных замечания к документу или чертежу")
     @PatchMapping
-    public ResponseEntity<FullRemarkDto> update(
+    public ResponseEntity<ResponseRemarkDto> update(
             @RequestBody @Parameter(description = "Замечание") RemarkDto remarkDto) {
         return ResponseEntity.ok().body(service.update(remarkDto));
     }
 
     @Operation(summary = "Получение замечаний к документу и чертежу")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<FullRemarkDto>> getAll(
+    public ResponseEntity<List<ResponseRemarkDto>> getAll(
                                  @PathVariable
                                  @Parameter(description = "Индентификатор сотрудника") Long id,
                                  @RequestParam(name = "inspector") Boolean inspector) {

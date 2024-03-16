@@ -3,9 +3,9 @@ package ru.nabokovsg.template.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.template.dto.section.SectionDataTemplateDto;
-import ru.nabokovsg.template.dto.section.FullSectionTemplateDto;
+import ru.nabokovsg.template.dto.section.ResponseSectionTemplateDto;
 import ru.nabokovsg.template.dto.section.SectionTemplateDto;
-import ru.nabokovsg.template.dto.section.ShortSectionTemplateDto;
+import ru.nabokovsg.template.dto.section.ShortResponseSectionTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.SectionTemplateMapper;
 import ru.nabokovsg.template.models.ProtocolReportTemplate;
@@ -25,7 +25,7 @@ public class SectionTemplateServiceImpl implements SectionTemplateService {
     private final ReportTemplateService reportService;
 
     @Override
-    public List<ShortSectionTemplateDto> save(SectionDataTemplateDto sectionsDataDto) {
+    public List<ShortResponseSectionTemplateDto> save(SectionDataTemplateDto sectionsDataDto) {
         Set<SectionTemplate> sections = repository.findAllSection(sectionsDataDto.getHeaderDocumentId(), sectionsDataDto.getEquipmentTypeId());
         List<SectionTemplateDto> sectionsDto = new ArrayList<>();
         if (!sections.isEmpty()) {
@@ -35,19 +35,19 @@ public class SectionTemplateServiceImpl implements SectionTemplateService {
         if (sectionsDto.isEmpty()) {
             return sections.stream()
                              .map(mapper::mapToShortSectionTemplateDto)
-                             .sorted(Comparator.comparing(ShortSectionTemplateDto::getId))
+                             .sorted(Comparator.comparing(ShortResponseSectionTemplateDto::getId))
                              .toList();
         }
         sections.addAll(repository.saveAll(sectionsDto.stream().map(mapper::mapToSectionTemplate).toList()));
         reportService.addSectionTemplate(sectionsDataDto.getHeaderDocumentId(), sectionsDataDto.getEquipmentTypeId(), sections);
         return sections.stream()
                 .map(mapper::mapToShortSectionTemplateDto)
-                .sorted(Comparator.comparing(ShortSectionTemplateDto::getId))
+                .sorted(Comparator.comparing(ShortResponseSectionTemplateDto::getId))
                 .toList();
     }
 
     @Override
-    public List<ShortSectionTemplateDto> update(List<SectionTemplateDto> sectionsDto) {
+    public List<ShortResponseSectionTemplateDto> update(List<SectionTemplateDto> sectionsDto) {
         validateIds(sectionsDto.stream().map(SectionTemplateDto::getId).toList());
         return repository.saveAll(sectionsDto.stream()
                         .map(mapper::mapToSectionTemplate)
@@ -58,12 +58,12 @@ public class SectionTemplateServiceImpl implements SectionTemplateService {
     }
 
     @Override
-    public FullSectionTemplateDto get(Long id) {
+    public ResponseSectionTemplateDto get(Long id) {
         return mapper.mapToFullSectionTemplateDto(getById(id));
     }
 
     @Override
-    public List<ShortSectionTemplateDto> getAll(Long id) {
+    public List<ShortResponseSectionTemplateDto> getAll(Long id) {
         return repository.findAllByReportIdOrderById(id)
                          .stream()
                          .map(mapper::mapToShortSectionTemplateDto)

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.template.dto.subsection.FullSubsectionTemplateDto;
+import ru.nabokovsg.template.dto.subsection.ResponseSubsectionTemplateDto;
 import ru.nabokovsg.template.dto.subsection.SubsectionTemplateDto;
 import ru.nabokovsg.template.services.SubsectionTemplateService;
 
@@ -25,21 +25,21 @@ public class SubsectionTemplateController {
 
     @Operation(summary = "Добавление нового шаблона подраздела раздела")
     @PostMapping
-    public ResponseEntity<FullSubsectionTemplateDto> save(
+    public ResponseEntity<ResponseSubsectionTemplateDto> save(
                     @RequestBody @Parameter(description = "Шаблон подраздела") SubsectionTemplateDto subsectionsDto) {
         return ResponseEntity.ok().body(service.save(subsectionsDto));
     }
 
     @Operation(summary = "Изменение данных шаблона подраздела")
     @PatchMapping
-    public ResponseEntity<FullSubsectionTemplateDto> update(
+    public ResponseEntity<ResponseSubsectionTemplateDto> update(
                      @RequestBody @Parameter(description = "Шаблон подраздела") SubsectionTemplateDto subsectionsDto) {
         return ResponseEntity.ok().body(service.update(subsectionsDto));
     }
 
     @Operation(summary = "Получить данные шаблона подраздела")
     @GetMapping("/{id}")
-    public ResponseEntity<FullSubsectionTemplateDto> get(@PathVariable
+    public ResponseEntity<ResponseSubsectionTemplateDto> get(@PathVariable
                                                          @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }

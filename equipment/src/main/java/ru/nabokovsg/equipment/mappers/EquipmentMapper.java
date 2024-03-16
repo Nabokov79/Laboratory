@@ -3,7 +3,7 @@ package ru.nabokovsg.equipment.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.equipment.dto.equipments.EquipmentDto;
-import ru.nabokovsg.equipment.dto.equipments.FullEquipmentDto;
+import ru.nabokovsg.equipment.dto.equipments.ResponseEquipmentDto;
 import ru.nabokovsg.equipment.models.Equipment;
 import ru.nabokovsg.equipment.models.EquipmentType;
 
@@ -19,5 +19,5 @@ public interface EquipmentMapper {
     @Mapping(source = "equipmentDto.id", target = "id")
     Equipment mapToEquipment(EquipmentDto equipmentDto, EquipmentType equipmentType);
 
-    FullEquipmentDto mapToFullEquipmentDto(Equipment equipment);
+    ResponseEquipmentDto mapToFullEquipmentDto(Equipment equipment);
 }

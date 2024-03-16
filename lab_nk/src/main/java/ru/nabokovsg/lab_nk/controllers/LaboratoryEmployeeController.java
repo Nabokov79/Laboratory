@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.lab_nk.dto.employees.FullLaboratoryEmployeeDto;
-import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ResponseLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ShortResponseLaboratoryEmployeeDto;
 import ru.nabokovsg.lab_nk.services.LaboratoryEmployeeService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class LaboratoryEmployeeController {
 
     @Operation(summary = "Добавление данных нового подр")
     @GetMapping("/copy/{id}")
-    public ResponseEntity<List<ShortLaboratoryEmployeeDto>> copy(
+    public ResponseEntity<List<ShortResponseLaboratoryEmployeeDto>> copy(
               @PathVariable
               @Parameter(description = "Индентификатор структурного подразделения") Long id
             , @RequestParam(name = "divisionType")
@@ -39,14 +39,14 @@ public class LaboratoryEmployeeController {
 
     @Operation(summary = "Получение данных сотрудника")
     @GetMapping("/{id}")
-    public ResponseEntity<FullLaboratoryEmployeeDto> get(@PathVariable
+    public ResponseEntity<ResponseLaboratoryEmployeeDto> get(@PathVariable
                                                          @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение данных всех сотрудников")
     @GetMapping("/all")
-    public ResponseEntity<List<ShortLaboratoryEmployeeDto>> getAll() {
+    public ResponseEntity<List<ShortResponseLaboratoryEmployeeDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 

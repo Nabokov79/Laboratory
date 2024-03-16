@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.equipment.dto.equipments.EquipmentDto;
-import ru.nabokovsg.equipment.dto.equipmentType.FullEquipmentTypeDto;
+import ru.nabokovsg.equipment.dto.equipmentType.ResponseEquipmentTypeDto;
 import ru.nabokovsg.equipment.mappers.EquipmentTypeMapper;
 import ru.nabokovsg.equipment.models.EquipmentType;
 import ru.nabokovsg.equipment.models.QEquipmentType;
@@ -31,7 +31,7 @@ public class EquipmentTypeServiceImpl implements EquipmentTypeService {
     }
 
     @Override
-    public List<FullEquipmentTypeDto> getAll() {
+    public List<ResponseEquipmentTypeDto> getAll() {
         return repository.findAll()
                          .stream()
                          .map(mapper::mapFullEquipmentTypeDto)

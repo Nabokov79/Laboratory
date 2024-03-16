@@ -3,7 +3,7 @@ package ru.nabokovsg.document.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import ru.nabokovsg.document.dto.LaboratoryEmployeeDto;
+import ru.nabokovsg.document.dto.document.LaboratoryEmployeeDto;
 import ru.nabokovsg.document.mapper.SubscriberMapper;
 import ru.nabokovsg.document.models.Subscriber;
 import ru.nabokovsg.document.repository.SubscriberRepository;

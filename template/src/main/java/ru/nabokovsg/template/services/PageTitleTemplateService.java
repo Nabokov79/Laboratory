@@ -1,16 +1,16 @@
 package ru.nabokovsg.template.services;
 
-import ru.nabokovsg.template.dto.pageTitle.FullPageTitleTemplateDto;
+import ru.nabokovsg.template.dto.pageTitle.ResponsePageTitleTemplateDto;
 import ru.nabokovsg.template.dto.pageTitle.PageTitleTemplateDto;
-import ru.nabokovsg.template.dto.pageTitle.ShortPageTitleTemplateDto;
+import ru.nabokovsg.template.dto.pageTitle.ShortResponsePageTitleTemplateDto;
 
 import java.util.List;
 
 public interface PageTitleTemplateService {
 
-    FullPageTitleTemplateDto save(PageTitleTemplateDto pageTitleDto);
+    ResponsePageTitleTemplateDto save(PageTitleTemplateDto pageTitleDto);
 
-    FullPageTitleTemplateDto update(PageTitleTemplateDto pageTitleDto);
+    ResponsePageTitleTemplateDto update(PageTitleTemplateDto pageTitleDto);
 
-    List<ShortPageTitleTemplateDto> getAll();
+    List<ShortResponsePageTitleTemplateDto> getAll();
 }

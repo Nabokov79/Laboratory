@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.company.dto.organization.FullOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ResponseOrganizationDto;
 import ru.nabokovsg.company.dto.organization.OrganizationDto;
-import ru.nabokovsg.company.dto.organization.ShortOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ShortResponseOrganizationDto;
 import ru.nabokovsg.company.services.OrganizationService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class OrganizationController {
 
     @Operation(summary = "Добавление данных организации")
     @PostMapping
-    public ResponseEntity<ShortOrganizationDto> save(@RequestBody
+    public ResponseEntity<ShortResponseOrganizationDto> save(@RequestBody
                                               @Parameter(description = "Организация") OrganizationDto organizationDto) {
         return ResponseEntity.ok().body(service.save(organizationDto));
     }
 
     @Operation(summary = "Изменение данных организации")
     @PatchMapping
-    public ResponseEntity<ShortOrganizationDto> update(@RequestBody
+    public ResponseEntity<ShortResponseOrganizationDto> update(@RequestBody
                                               @Parameter(description = "Организация") OrganizationDto organizationDto) {
         return ResponseEntity.ok().body(service.update(organizationDto));
     }
 
     @Operation(summary = "Получение полных данных организации")
     @GetMapping("/{id}")
-    public ResponseEntity<FullOrganizationDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseOrganizationDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение кратких сведений об организациях")
     @GetMapping
-    public ResponseEntity<List<ShortOrganizationDto>> getAll() {
+    public ResponseEntity<List<ShortResponseOrganizationDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 

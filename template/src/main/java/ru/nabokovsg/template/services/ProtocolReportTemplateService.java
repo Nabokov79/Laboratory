@@ -1,8 +1,8 @@
 package ru.nabokovsg.template.services;
 
-import ru.nabokovsg.template.dto.protocolReport.FullProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.dto.protocolReport.ProtocolReportTemplateDto;
-import ru.nabokovsg.template.dto.protocolReport.ShortProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ShortResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.models.ConclusionTemplate;
 import ru.nabokovsg.template.models.SubsectionTemplate;
 import ru.nabokovsg.template.models.TableTemplate;
@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface ProtocolReportTemplateService {
 
-    ShortProtocolReportTemplateDto save(ProtocolReportTemplateDto protocolDto);
+    ShortResponseProtocolReportTemplateDto save(ProtocolReportTemplateDto protocolDto);
 
-    ShortProtocolReportTemplateDto update(ProtocolReportTemplateDto protocolDto);
+    ShortResponseProtocolReportTemplateDto update(ProtocolReportTemplateDto protocolDto);
 
-    FullProtocolReportTemplateDto get(Long id);
+    ResponseProtocolReportTemplateDto get(Long id);
 
-    List<ShortProtocolReportTemplateDto> getAll(Long id);
+    List<ShortResponseProtocolReportTemplateDto> getAll(Long id);
 
     void delete(Long id);
 

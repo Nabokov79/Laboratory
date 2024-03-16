@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.lab_nk.dto.documentation.DocumentationDto;
-import ru.nabokovsg.lab_nk.dto.documentation.FullDocumentationDto;
+import ru.nabokovsg.lab_nk.dto.documentation.ResponseDocumentationDto;
 import ru.nabokovsg.lab_nk.services.DocumentationService;
 
 import java.util.List;
@@ -27,21 +27,21 @@ public class DocumentationController {
 
     @Operation(summary = "Добавление данных документа")
     @PostMapping
-    public ResponseEntity<FullDocumentationDto> save(
+    public ResponseEntity<ResponseDocumentationDto> save(
             @RequestBody @Parameter(description = "Документ") DocumentationDto documentationDto) {
         return ResponseEntity.ok().body(service.save(documentationDto));
     }
 
     @Operation(summary = "Изменение данных документа")
     @PatchMapping
-    public ResponseEntity<FullDocumentationDto> update(
+    public ResponseEntity<ResponseDocumentationDto> update(
             @RequestBody @Parameter(description = "Документ") DocumentationDto documentationDto) {
         return ResponseEntity.ok().body(service.update(documentationDto));
     }
 
     @Operation(summary = "Получение данных документов")
     @GetMapping("/all")
-    public ResponseEntity<List<FullDocumentationDto>> getAll(
+    public ResponseEntity<List<ResponseDocumentationDto>> getAll(
                                                 @RequestParam(name = "id", required = false)
                                                 @Parameter(description = "Индентификаторы документов") List<Long> ids,
                                                 @RequestParam(name = "number", required = false)

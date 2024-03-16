@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.dto.documentation.DocumentationDto;
-import ru.nabokovsg.lab_nk.dto.documentation.FullDocumentationDto;
+import ru.nabokovsg.lab_nk.dto.documentation.ResponseDocumentationDto;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.DocumentationMapper;
 import ru.nabokovsg.lab_nk.models.QDocumentation;
@@ -24,7 +24,7 @@ public class DocumentationServiceImpl implements DocumentationService {
     private final EntityManager em;
 
     @Override
-    public FullDocumentationDto save(DocumentationDto documentationDto) {
+    public ResponseDocumentationDto save(DocumentationDto documentationDto) {
         return mapper.mapToFullDocumentationDto(
                 Objects.requireNonNullElseGet(repository.findByTitle(documentationDto.getTitle())
                         , () -> repository.save(mapper.mapToDocumentation(documentationDto)))
@@ -32,7 +32,7 @@ public class DocumentationServiceImpl implements DocumentationService {
     }
 
     @Override
-    public FullDocumentationDto update(DocumentationDto documentationDto) {
+    public ResponseDocumentationDto update(DocumentationDto documentationDto) {
         if (repository.existsById(documentationDto.getId())) {
             return mapper.mapToFullDocumentationDto(repository.save(mapper.mapToDocumentation(documentationDto)));
         }
@@ -42,7 +42,7 @@ public class DocumentationServiceImpl implements DocumentationService {
     }
 
     @Override
-    public List<FullDocumentationDto> getAll(List<Long> ids, String number, String title) {
+    public List<ResponseDocumentationDto> getAll(List<Long> ids, String number, String title) {
         QDocumentation documentation = QDocumentation.documentation;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         if (ids != null && !ids.isEmpty()) {

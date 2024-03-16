@@ -6,7 +6,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.address.AddressDto;
-import ru.nabokovsg.company.dto.address.FullAddressDto;
+import ru.nabokovsg.company.dto.address.ResponseAddressDto;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.AddressMapper;
 import ru.nabokovsg.company.models.QAddress;
@@ -25,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
     private final EntityManager em;
 
     @Override
-    public FullAddressDto save(AddressDto addressDto) {
+    public ResponseAddressDto save(AddressDto addressDto) {
         return mapper.mapToFullAddressDto(
                 Objects.requireNonNullElseGet(getByPredicate(addressDto)
                                             , () -> repository.save(mapper.mapToAddress(addressDto)))
@@ -33,7 +33,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public FullAddressDto update(AddressDto addressDto) {
+    public ResponseAddressDto update(AddressDto addressDto) {
         if (repository.existsById(addressDto.getId())) {
             return mapper.mapToFullAddressDto(repository.save(mapper.mapToAddress(addressDto)));
         }
@@ -47,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<FullAddressDto> getAll() {
+    public List<ResponseAddressDto> getAll() {
         return repository.findAll()
                          .stream()
                          .map(mapper::mapToFullAddressDto)

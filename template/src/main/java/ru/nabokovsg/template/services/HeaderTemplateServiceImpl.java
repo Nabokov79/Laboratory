@@ -2,7 +2,7 @@ package ru.nabokovsg.template.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.template.dto.header.FullHeaderTemplateDto;
+import ru.nabokovsg.template.dto.header.ResponseHeaderTemplateDto;
 import ru.nabokovsg.template.dto.header.HeaderTemplateDto;
 import ru.nabokovsg.template.exceptions.BadRequestException;
 import ru.nabokovsg.template.exceptions.NotFoundException;
@@ -21,7 +21,7 @@ public class HeaderTemplateServiceImpl extends ConverterToEnum implements Header
     private final DivisionDataService divisionDataService;
 
     @Override
-    public FullHeaderTemplateDto save(HeaderTemplateDto headerDto) {
+    public ResponseHeaderTemplateDto save(HeaderTemplateDto headerDto) {
         HeaderTemplate headerTemplate;
         switch (convertToDivisionType(headerDto.getDivisionType())) {
             case ORGANIZATION ->
@@ -62,7 +62,7 @@ public class HeaderTemplateServiceImpl extends ConverterToEnum implements Header
     }
 
     @Override
-    public FullHeaderTemplateDto update(HeaderTemplateDto headerDto) {
+    public ResponseHeaderTemplateDto update(HeaderTemplateDto headerDto) {
         HeaderTemplate headerTemplate = getById(headerDto.getId());
         switch (convertToDivisionType(headerDto.getDivisionType())) {
             case ORGANIZATION -> headerTemplate = mapper.mapOrganizationWithHeaderTemplate(headerDto.getId()
@@ -84,7 +84,7 @@ public class HeaderTemplateServiceImpl extends ConverterToEnum implements Header
     }
 
     @Override
-    public FullHeaderTemplateDto get(Long id) {
+    public ResponseHeaderTemplateDto get(Long id) {
         return mapper.mapToFullHeaderTemplateDto(getById(id));
     }
 

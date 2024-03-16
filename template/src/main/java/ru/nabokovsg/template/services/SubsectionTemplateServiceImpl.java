@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.nabokovsg.template.client.CompanyClient;
 import ru.nabokovsg.template.client.LNKClient;
 import ru.nabokovsg.template.dto.subsection.DivisionDataDto;
-import ru.nabokovsg.template.dto.subsection.FullSubsectionTemplateDto;
+import ru.nabokovsg.template.dto.subsection.ResponseSubsectionTemplateDto;
 import ru.nabokovsg.template.dto.subsection.SubsectionTemplateDto;
 import ru.nabokovsg.template.exceptions.NotFoundException;
 import ru.nabokovsg.template.mappers.SubsectionTemplateMapper;
@@ -35,7 +35,7 @@ public class SubsectionTemplateServiceImpl extends ConverterToEnum implements Su
     private final ProtocolTemplateService protocolService;
 
     @Override
-    public FullSubsectionTemplateDto save(SubsectionTemplateDto subsectionDto) {
+    public ResponseSubsectionTemplateDto save(SubsectionTemplateDto subsectionDto) {
         TemplateType type = convertToTemplateType(subsectionDto.getTemplateType());
         SubsectionTemplate subsection = exists(type, subsectionDto.getTemplateId(), subsectionDto.getSubsectionName());
         if (subsection == null) {
@@ -50,7 +50,7 @@ public class SubsectionTemplateServiceImpl extends ConverterToEnum implements Su
     }
 
     @Override
-    public FullSubsectionTemplateDto update(SubsectionTemplateDto subsectionDto) {
+    public ResponseSubsectionTemplateDto update(SubsectionTemplateDto subsectionDto) {
         if (repository.existsById(subsectionDto.getId())) {
             return mapper.mapToFullSubsectionTemplateDto(setSubsectionData(
                                                     mapper.mapToSubsectionTemplate(subsectionDto), subsectionDto));
@@ -61,7 +61,7 @@ public class SubsectionTemplateServiceImpl extends ConverterToEnum implements Su
     }
 
     @Override
-    public FullSubsectionTemplateDto get(Long id) {
+    public ResponseSubsectionTemplateDto get(Long id) {
         return mapper.mapToFullSubsectionTemplateDto(getById(id));
     }
 

@@ -1,20 +1,20 @@
 package ru.nabokovsg.lab_nk.services;
 
 import ru.nabokovsg.lab_nk.dto.headerDocument.HeaderDocumentDto;
-import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
+import ru.nabokovsg.lab_nk.dto.headerDocument.ResponseHeaderDocumentDto;
 import ru.nabokovsg.lab_nk.models.HeaderDocument;
 
 import java.util.List;
 
 public interface HeaderDocumentService {
 
-    FullHeaderDocumentDto save(HeaderDocumentDto headerDocumentDto);
+    ResponseHeaderDocumentDto save(HeaderDocumentDto headerDocumentDto);
 
-    FullHeaderDocumentDto update(HeaderDocumentDto headerDocumentDto);
+    ResponseHeaderDocumentDto update(HeaderDocumentDto headerDocumentDto);
 
-    FullHeaderDocumentDto get(Long id);
+    ResponseHeaderDocumentDto get(Long id);
 
-    List<FullHeaderDocumentDto> getAll();
+    List<ResponseHeaderDocumentDto> getAll();
 
     void delete(Long id);
 

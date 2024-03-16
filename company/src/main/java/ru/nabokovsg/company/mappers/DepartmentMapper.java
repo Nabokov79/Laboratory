@@ -3,8 +3,8 @@ package ru.nabokovsg.company.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.company.dto.department.DepartmentDto;
-import ru.nabokovsg.company.dto.department.FullDepartmentDto;
-import ru.nabokovsg.company.dto.department.ShortDepartmentDto;
+import ru.nabokovsg.company.dto.department.ResponseDepartmentDto;
+import ru.nabokovsg.company.dto.department.ShortResponseDepartmentDto;
 import ru.nabokovsg.company.models.Address;
 import ru.nabokovsg.company.models.Branch;
 import ru.nabokovsg.company.models.Department;
@@ -22,7 +22,7 @@ public interface DepartmentMapper {
     Department mapToDepartment(DepartmentDto departmentDto, DivisionContact divisionContact
                                 , Address address, Branch branch);
 
-    FullDepartmentDto mapToFullDepartmentDto(Department department);
+    ResponseDepartmentDto mapToFullDepartmentDto(Department department);
 
-    ShortDepartmentDto mapToShortDepartmentDto(Department department);
+    ShortResponseDepartmentDto mapToShortDepartmentDto(Department department);
 }

@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.document.dto.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.TaskJournalDto;
 import ru.nabokovsg.document.dto.document.DocumentSearchParam;
-import ru.nabokovsg.document.dto.document.FullDocumentDto;
+import ru.nabokovsg.document.dto.document.ResponseDocumentDto;
 import ru.nabokovsg.document.service.DocumentService;
 
 import java.time.LocalDate;
@@ -35,13 +35,13 @@ public class DocumentController {
 
     @Operation(summary = "Получение данных отчетного документа")
     @GetMapping("/{id}")
-    public ResponseEntity<FullDocumentDto> get(
+    public ResponseEntity<ResponseDocumentDto> get(
             @PathVariable @Parameter(description = "Индентификатор записи в журнале задач") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
     @Operation(summary = "Получение данных отчетных документов")
     @GetMapping("/all")
-    public ResponseEntity<List<FullDocumentDto>> getAll(
+    public ResponseEntity<List<ResponseDocumentDto>> getAll(
            @RequestParam(value = "equipmentId", required = false)
            @Parameter(description = "Индентификатор записи в журнале") Long taskJournalId,
            @RequestParam(value = "chiefId", required = false)

@@ -3,13 +3,13 @@ package ru.nabokovsg.company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.department.DepartmentDto;
-import ru.nabokovsg.company.dto.department.ShortDepartmentDto;
+import ru.nabokovsg.company.dto.department.ShortResponseDepartmentDto;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.models.Department;
 import ru.nabokovsg.company.models.Licenses;
 import ru.nabokovsg.company.mappers.DepartmentMapper;
 import ru.nabokovsg.company.repository.DepartmentRepository;
-import ru.nabokovsg.company.dto.department.FullDepartmentDto;
+import ru.nabokovsg.company.dto.department.ResponseDepartmentDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +25,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final EmployeeService employeeService;
 
     @Override
-    public ShortDepartmentDto save(DepartmentDto departmentDto) {
+    public ShortResponseDepartmentDto save(DepartmentDto departmentDto) {
         return mapper.mapToShortDepartmentDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(departmentDto.getFullName())
                         , () -> repository.save(
@@ -36,7 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public ShortDepartmentDto update(DepartmentDto departmentDto) {
+    public ShortResponseDepartmentDto update(DepartmentDto departmentDto) {
         if (repository.existsById(departmentDto.getId())) {
             return mapper.mapToShortDepartmentDto(
                     repository.save(
@@ -51,7 +51,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public FullDepartmentDto get(Long id) {
+    public ResponseDepartmentDto get(Long id) {
         return mapper.mapToFullDepartmentDto(getById(id));
     }
 
@@ -62,7 +62,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<ShortDepartmentDto> getAll(Long branchId) {
+    public List<ShortResponseDepartmentDto> getAll(Long branchId) {
         return repository.findByBranch(branchId)
                          .stream()
                          .map(mapper::mapToShortDepartmentDto)

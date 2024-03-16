@@ -1,18 +1,18 @@
 package ru.nabokovsg.lab_nk.services;
 
-import ru.nabokovsg.lab_nk.dto.employees.FullLaboratoryEmployeeDto;
-import ru.nabokovsg.lab_nk.dto.employees.ShortLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ResponseLaboratoryEmployeeDto;
+import ru.nabokovsg.lab_nk.dto.employees.ShortResponseLaboratoryEmployeeDto;
 import ru.nabokovsg.lab_nk.models.LaboratoryEmployee;
 
 import java.util.List;
 
 public interface LaboratoryEmployeeService {
 
-    List<ShortLaboratoryEmployeeDto> copy(Long id, String divisionType);
+    List<ShortResponseLaboratoryEmployeeDto> copy(Long id, String divisionType);
 
-    FullLaboratoryEmployeeDto get(Long id);
+    ResponseLaboratoryEmployeeDto get(Long id);
 
-    List<ShortLaboratoryEmployeeDto> getAll();
+    List<ShortResponseLaboratoryEmployeeDto> getAll();
 
     void delete(Long id);
 

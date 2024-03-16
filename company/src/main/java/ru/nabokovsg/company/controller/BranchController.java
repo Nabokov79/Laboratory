@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.company.dto.branch.BranchDto;
-import ru.nabokovsg.company.dto.branch.FullBranchDto;
-import ru.nabokovsg.company.dto.branch.ShortBranchDto;
+import ru.nabokovsg.company.dto.branch.ResponseBranchDto;
+import ru.nabokovsg.company.dto.branch.ShortResponseBranchDto;
 import ru.nabokovsg.company.services.BranchService;
 
 import java.util.List;
@@ -28,25 +28,25 @@ public class BranchController {
 
     @Operation(summary = "Добавление данных филиала")
     @PostMapping
-    public ResponseEntity<ShortBranchDto> save(@RequestBody @Parameter(description = "Филиал") BranchDto branchDto) {
+    public ResponseEntity<ShortResponseBranchDto> save(@RequestBody @Parameter(description = "Филиал") BranchDto branchDto) {
         return ResponseEntity.ok().body(service.save(branchDto));
     }
 
     @Operation(summary = "Изменение данных филиала")
     @PatchMapping
-    public ResponseEntity<ShortBranchDto> update(@RequestBody @Parameter(description = "Филиал") BranchDto branchDto) {
+    public ResponseEntity<ShortResponseBranchDto> update(@RequestBody @Parameter(description = "Филиал") BranchDto branchDto) {
         return ResponseEntity.ok().body(service.update(branchDto));
     }
 
     @Operation(summary = "Получение данных филиала")
     @GetMapping("/{id}")
-    public ResponseEntity<FullBranchDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseBranchDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение сведений о филиалах")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortBranchDto>> getAll(@PathVariable
+    public ResponseEntity<List<ShortResponseBranchDto>> getAll(@PathVariable
                                                        @Parameter(description = "Индентификатор организации") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

@@ -2,7 +2,7 @@ package ru.nabokovsg.template.mappers;
 
 import org.mapstruct.Mapper;
 import ru.nabokovsg.template.dto.subsection.DivisionDataDto;
-import ru.nabokovsg.template.dto.subsection.FullSubsectionTemplateDto;
+import ru.nabokovsg.template.dto.subsection.ResponseSubsectionTemplateDto;
 import ru.nabokovsg.template.dto.subsection.SubsectionTemplateDto;
 import ru.nabokovsg.template.models.SubsectionTemplate;
 
@@ -13,5 +13,5 @@ public interface SubsectionTemplateMapper {
 
     DivisionDataDto mapToDivisionDataDto(SubsectionTemplateDto subsectionDto);
 
-    FullSubsectionTemplateDto mapToFullSubsectionTemplateDto(SubsectionTemplate subsection);
+    ResponseSubsectionTemplateDto mapToFullSubsectionTemplateDto(SubsectionTemplate subsection);
 }

@@ -3,7 +3,7 @@ package ru.nabokovsg.lab_nk.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import ru.nabokovsg.lab_nk.dto.taskJournal.FullTaskJournalDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskJournalDto;
 import ru.nabokovsg.lab_nk.models.TasksJournal;
 
@@ -15,5 +15,5 @@ public interface TaskJournalMapper {
     @Mapping(source = "documentId", target = "taskJournal.documentId")
     TasksJournal mapDocumentIdWithTaskJournal(@MappingTarget TasksJournal taskJournal, Long documentId);
 
-    FullTaskJournalDto mapToFullTasksJournalDto(TasksJournal tasksJournal);
+    ResponseTaskJournalDto mapToFullTasksJournalDto(TasksJournal tasksJournal);
 }

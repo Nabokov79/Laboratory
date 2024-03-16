@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.client.dto.BranchDto;
 import ru.nabokovsg.lab_nk.client.dto.EquipmentDto;
 import ru.nabokovsg.lab_nk.client.dto.ShortEmployeeDto;
-import ru.nabokovsg.lab_nk.dto.taskJournal.FullTaskJournalDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class LadNKClient {
         return equipmentClient.getEquipment(String.join(DELIMITER, API_PREFIX_EQUIPMENT, String.valueOf(id)));
     }
 
-    public Long createDocumentData(FullTaskJournalDto taskJournalDto) {
+    public Long createDocumentData(ResponseTaskJournalDto taskJournalDto) {
         return documentClient.createDocumentData(API_PREFIX_DOCUMENT, taskJournalDto);
     }
 }

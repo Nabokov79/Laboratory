@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.lab_nk.dto.measuringTool.FullMeasuringToolDto;
+import ru.nabokovsg.lab_nk.dto.measuringTool.ResponseMeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.MeasuringToolDto;
 import ru.nabokovsg.lab_nk.dto.measuringTool.SearchParameters;
 import ru.nabokovsg.lab_nk.services.MeasuringToolService;
@@ -29,7 +29,7 @@ public class MeasuringToolController {
 
     @Operation(summary = "Добавление данных нового интструмента(прибора)")
     @PostMapping
-    public ResponseEntity<FullMeasuringToolDto> save(
+    public ResponseEntity<ResponseMeasuringToolDto> save(
                               @RequestBody
                               @Parameter(description = "Инструмент(прибор)") MeasuringToolDto measuringToolDto) {
         return ResponseEntity.ok().body(service.save(measuringToolDto));
@@ -37,7 +37,7 @@ public class MeasuringToolController {
 
     @Operation(summary = "Изменение данных инструмента(прибора)")
     @PatchMapping
-    public ResponseEntity<FullMeasuringToolDto> update(
+    public ResponseEntity<ResponseMeasuringToolDto> update(
                            @RequestBody
                            @Parameter(description = "Инструмент(прибор)") MeasuringToolDto measuringToolDto) {
         return ResponseEntity.ok().body(service.update(measuringToolDto));
@@ -45,7 +45,7 @@ public class MeasuringToolController {
 
     @Operation(summary = "Получение инструментов(приборов) по заданным параметрам")
     @GetMapping
-    public ResponseEntity<List<FullMeasuringToolDto>> getAll(
+    public ResponseEntity<List<ResponseMeasuringToolDto>> getAll(
             @RequestParam(name = "id", required = false)
             @Parameter(description = "Индентификаторы документов") List<Long> ids,
      @RequestParam(required = false) @Parameter(description = "Название") String toll,

@@ -6,8 +6,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import ru.nabokovsg.document.dto.LaboratoryEmployeeDto;
-import ru.nabokovsg.document.dto.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.LaboratoryEmployeeDto;
+import ru.nabokovsg.document.dto.document.TaskJournalDto;
 import ru.nabokovsg.document.dto.document.DocumentSearchParam;
 import ru.nabokovsg.document.mapper.DocumentMapper;
 import ru.nabokovsg.document.models.Document;
@@ -16,7 +16,7 @@ import ru.nabokovsg.document.models.QSubscriber;
 import ru.nabokovsg.document.models.Subscriber;
 import ru.nabokovsg.document.models.enums.DocumentStatus;
 import ru.nabokovsg.document.repository.DocumentRepository;
-import ru.nabokovsg.document.dto.document.FullDocumentDto;
+import ru.nabokovsg.document.dto.document.ResponseDocumentDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,7 +57,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public FullDocumentDto get(Long id) {
+    public ResponseDocumentDto get(Long id) {
         return mapper.mapToFullDocumentDto(repository.findByTaskJournalId(id));
     }
 
@@ -68,7 +68,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<FullDocumentDto> getAll(DocumentSearchParam param) {
+    public List<ResponseDocumentDto> getAll(DocumentSearchParam param) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QDocument document = QDocument.document;
         if (param.getTaskJournalId() != null && param.getTaskJournalId() > 0) {

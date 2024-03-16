@@ -2,9 +2,9 @@ package ru.nabokovsg.company.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.company.dto.heatSupplyArea.FullHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ResponseHeatSupplyAreaDto;
 import ru.nabokovsg.company.dto.heatSupplyArea.HeatSupplyAreaDto;
-import ru.nabokovsg.company.dto.heatSupplyArea.ShortHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ShortResponseHeatSupplyAreaDto;
 import ru.nabokovsg.company.models.Branch;
 import ru.nabokovsg.company.models.DivisionContact;
 import ru.nabokovsg.company.models.HeatSupplyArea;
@@ -21,7 +21,7 @@ public interface HeatSupplyAreaMapper {
                                     , Branch branch
                                     , DivisionContact divisionContact);
 
-    FullHeatSupplyAreaDto mapToFullHeatSupplyAreaDto(HeatSupplyArea heatSupplyArea);
+    ResponseHeatSupplyAreaDto mapToFullHeatSupplyAreaDto(HeatSupplyArea heatSupplyArea);
 
-    ShortHeatSupplyAreaDto mapToShortHeatSupplyAreaDto(HeatSupplyArea heatSupplyArea);
+    ShortResponseHeatSupplyAreaDto mapToShortHeatSupplyAreaDto(HeatSupplyArea heatSupplyArea);
 }

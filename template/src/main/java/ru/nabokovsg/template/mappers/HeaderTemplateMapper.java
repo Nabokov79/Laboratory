@@ -2,7 +2,7 @@ package ru.nabokovsg.template.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.template.dto.header.FullHeaderTemplateDto;
+import ru.nabokovsg.template.dto.header.ResponseHeaderTemplateDto;
 import ru.nabokovsg.template.models.DivisionData;
 import ru.nabokovsg.template.models.HeaderTemplate;
 
@@ -29,5 +29,5 @@ public interface HeaderTemplateMapper {
     @Mapping(source = "id", target = "id")
     HeaderTemplate mapExploitationRegionWithHeaderTemplate(Long id, DivisionData divisionData);
 
-    FullHeaderTemplateDto mapToFullHeaderTemplateDto(HeaderTemplate headerTemplate);
+    ResponseHeaderTemplateDto mapToFullHeaderTemplateDto(HeaderTemplate headerTemplate);
 }

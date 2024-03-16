@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.company.dto.building.BuildingDto;
-import ru.nabokovsg.company.dto.building.FullBuildingDto;
-import ru.nabokovsg.company.dto.building.ShortBuildingDto;
+import ru.nabokovsg.company.dto.building.ResponseBuildingDto;
+import ru.nabokovsg.company.dto.building.ShortResponseBuildingDto;
 import ru.nabokovsg.company.services.BuildingService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class BuildingController {
 
     @Operation(summary = "Добавление новой информации о котельной(цтп)")
     @PostMapping
-    public ResponseEntity<ShortBuildingDto> save(@RequestBody
+    public ResponseEntity<ShortResponseBuildingDto> save(@RequestBody
                                                  @Parameter(description = "Строение") BuildingDto buildingDto) {
         return ResponseEntity.ok().body(service.save(buildingDto));
     }
 
     @Operation(summary = "Изменение данных котельной(цтп)")
     @PatchMapping
-    public ResponseEntity<ShortBuildingDto> update(@RequestBody
+    public ResponseEntity<ShortResponseBuildingDto> update(@RequestBody
                                                    @Parameter(description = "Строение") BuildingDto buildingDto) {
         return ResponseEntity.ok().body(service.update(buildingDto));
     }
 
     @Operation(summary = "Получение данных всех котельных(цтп)")
     @GetMapping("/{id}")
-    public ResponseEntity<FullBuildingDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseBuildingDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение данных всех котельных(цтп)")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortBuildingDto>> getAll(
+    public ResponseEntity<List<ShortResponseBuildingDto>> getAll(
                     @PathVariable @Parameter(description = "Индентификатор эксплуатационного участка") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

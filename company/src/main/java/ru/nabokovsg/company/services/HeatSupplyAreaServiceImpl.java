@@ -3,8 +3,8 @@ package ru.nabokovsg.company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.heatSupplyArea.HeatSupplyAreaDto;
-import ru.nabokovsg.company.dto.heatSupplyArea.ShortHeatSupplyAreaDto;
-import ru.nabokovsg.company.dto.heatSupplyArea.FullHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ShortResponseHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ResponseHeatSupplyAreaDto;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.HeatSupplyAreaMapper;
 import ru.nabokovsg.company.models.HeatSupplyArea;
@@ -22,7 +22,7 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
     private final EmployeeService employeeService;
     private final BranchService branchService;
     @Override
-    public ShortHeatSupplyAreaDto save(HeatSupplyAreaDto areaDto) {
+    public ShortResponseHeatSupplyAreaDto save(HeatSupplyAreaDto areaDto) {
         return mapper.mapToShortHeatSupplyAreaDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(areaDto.getFullName())
                         , () -> repository.save(mapper.mapToHeatSupplyArea(areaDto
@@ -32,7 +32,7 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
     }
 
     @Override
-    public ShortHeatSupplyAreaDto update(HeatSupplyAreaDto areaDto) {
+    public ShortResponseHeatSupplyAreaDto update(HeatSupplyAreaDto areaDto) {
         if (repository.existsById(areaDto.getId())) {
             return mapper.mapToShortHeatSupplyAreaDto(
                     repository.save(mapper.mapToHeatSupplyArea(areaDto
@@ -45,7 +45,7 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
     }
 
     @Override
-    public FullHeatSupplyAreaDto get(Long id) {
+    public ResponseHeatSupplyAreaDto get(Long id) {
         return mapper.mapToFullHeatSupplyAreaDto(getById(id));
     }
 
@@ -57,7 +57,7 @@ public class HeatSupplyAreaServiceImpl implements HeatSupplyAreaService {
     }
 
     @Override
-    public List<ShortHeatSupplyAreaDto> getAll(Long branchId) {
+    public List<ShortResponseHeatSupplyAreaDto> getAll(Long branchId) {
         return repository.findAllByBranchId(branchId)
                          .stream()
                          .map(mapper::mapToShortHeatSupplyAreaDto)

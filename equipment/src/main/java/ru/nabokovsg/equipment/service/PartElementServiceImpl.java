@@ -2,9 +2,9 @@ package ru.nabokovsg.equipment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.equipment.dto.partElement.FullPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ResponsePartElementDto;
 import ru.nabokovsg.equipment.dto.partElement.PartElementDto;
-import ru.nabokovsg.equipment.dto.partElement.ShortPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ShortResponsePartElementDto;
 import ru.nabokovsg.equipment.exceptions.NotFoundException;
 import ru.nabokovsg.equipment.mappers.PartElementMapper;
 import ru.nabokovsg.equipment.models.PartElement;
@@ -22,7 +22,7 @@ public class PartElementServiceImpl implements PartElementService {
     private final StandardSizeService standardSizeService;
 
     @Override
-    public FullPartElementDto save(PartElementDto partElementDto) {
+    public ResponsePartElementDto save(PartElementDto partElementDto) {
         PartElement partElement = repository.findByElementIdAndPartName(partElementDto.getElementId()
                 , partElementDto.getPartName());
         if (partElement == null) {
@@ -39,7 +39,7 @@ public class PartElementServiceImpl implements PartElementService {
     }
 
     @Override
-    public FullPartElementDto update(PartElementDto partElementDto) {
+    public ResponsePartElementDto update(PartElementDto partElementDto) {
         if (repository.existsById(partElementDto.getId())) {
             PartElement partElement = mapper.mapToPartElement(partElementDto
                     , elementService.getById(partElementDto.getElementId()));
@@ -55,7 +55,7 @@ public class PartElementServiceImpl implements PartElementService {
     }
 
     @Override
-    public FullPartElementDto get(Long id) {
+    public ResponsePartElementDto get(Long id) {
         return mapper.mapToFullPartElementDto(
                 repository.findById(id)
                         .orElseThrow(() -> new NotFoundException(String.format("PartElement with id=%s not found", id)))
@@ -63,7 +63,7 @@ public class PartElementServiceImpl implements PartElementService {
     }
 
     @Override
-    public List<ShortPartElementDto> getAll(Long id) {
+    public List<ShortResponsePartElementDto> getAll(Long id) {
         return repository.findAllByElementId(id)
                          .stream()
                          .map(mapper::mapToShortPartElementDto)

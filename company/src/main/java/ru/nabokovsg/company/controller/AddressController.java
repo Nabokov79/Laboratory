@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.company.dto.address.AddressDto;
-import ru.nabokovsg.company.dto.address.FullAddressDto;
+import ru.nabokovsg.company.dto.address.ResponseAddressDto;
 import ru.nabokovsg.company.services.AddressService;
 
 import java.util.List;
@@ -27,19 +27,19 @@ public class AddressController {
 
     @Operation(summary = "Добавление нового адреса")
     @PostMapping
-    public ResponseEntity<FullAddressDto> save(@RequestBody @Parameter(description = "Адрес") AddressDto addressDto) {
+    public ResponseEntity<ResponseAddressDto> save(@RequestBody @Parameter(description = "Адрес") AddressDto addressDto) {
         return ResponseEntity.ok().body(service.save(addressDto));
     }
 
     @Operation(summary = "Изменение данных адреса")
     @PatchMapping
-    public ResponseEntity<FullAddressDto> update(@RequestBody @Parameter(description = "Адрес") AddressDto addressDto) {
+    public ResponseEntity<ResponseAddressDto> update(@RequestBody @Parameter(description = "Адрес") AddressDto addressDto) {
         return ResponseEntity.ok().body(service.update(addressDto));
     }
 
     @Operation(summary = "Получение всех адресов")
     @GetMapping
-    public ResponseEntity<List<FullAddressDto>> getAll() {
+    public ResponseEntity<List<ResponseAddressDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 

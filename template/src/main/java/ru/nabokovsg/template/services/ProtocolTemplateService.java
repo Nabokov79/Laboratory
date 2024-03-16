@@ -1,8 +1,8 @@
 package ru.nabokovsg.template.services;
 
-import ru.nabokovsg.template.dto.protocol.FullProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ResponseProtocolTemplateDto;
 import ru.nabokovsg.template.dto.protocol.ProtocolTemplateDto;
-import ru.nabokovsg.template.dto.protocol.ShortProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ShortResponseProtocolTemplateDto;
 import ru.nabokovsg.template.models.AppendicesTemplate;
 import ru.nabokovsg.template.models.ConclusionTemplate;
 import ru.nabokovsg.template.models.SubsectionTemplate;
@@ -12,13 +12,13 @@ import java.util.List;
 
 public interface ProtocolTemplateService {
 
-    ShortProtocolTemplateDto save(ProtocolTemplateDto protocolDto);
+    ShortResponseProtocolTemplateDto save(ProtocolTemplateDto protocolDto);
 
-    ShortProtocolTemplateDto update(ProtocolTemplateDto protocolDto);
+    ShortResponseProtocolTemplateDto update(ProtocolTemplateDto protocolDto);
 
-    FullProtocolTemplateDto get(Long id);
+    ResponseProtocolTemplateDto get(Long id);
 
-    List<ShortProtocolTemplateDto> getAll();
+    List<ShortResponseProtocolTemplateDto> getAll();
 
     void addTable(Long id, TableTemplate table);
 

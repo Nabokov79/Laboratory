@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.company.dto.heatSupplyArea.FullHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ResponseHeatSupplyAreaDto;
 import ru.nabokovsg.company.dto.heatSupplyArea.HeatSupplyAreaDto;
-import ru.nabokovsg.company.dto.heatSupplyArea.ShortHeatSupplyAreaDto;
+import ru.nabokovsg.company.dto.heatSupplyArea.ShortResponseHeatSupplyAreaDto;
 import ru.nabokovsg.company.services.HeatSupplyAreaService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class HeatSupplyAreaController {
 
     @Operation(summary = "Добавление данных района теплоснабжения")
     @PostMapping
-    public ResponseEntity<ShortHeatSupplyAreaDto> save(@RequestBody
+    public ResponseEntity<ShortResponseHeatSupplyAreaDto> save(@RequestBody
                                            @Parameter(description = "Район теплоснабжения") HeatSupplyAreaDto areaDto) {
         return ResponseEntity.ok().body(service.save(areaDto));
     }
 
     @Operation(summary = "Изменение данных района теплоснабжения")
     @PatchMapping
-    public ResponseEntity<ShortHeatSupplyAreaDto> update(@RequestBody
+    public ResponseEntity<ShortResponseHeatSupplyAreaDto> update(@RequestBody
                                        @Parameter(description = "Район теплоснабжения") HeatSupplyAreaDto areaDto) {
         return ResponseEntity.ok().body(service.update(areaDto));
     }
 
     @Operation(summary = "Получение данных района теплоснабжения")
     @GetMapping("/{id}")
-    public ResponseEntity<FullHeatSupplyAreaDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseHeatSupplyAreaDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение кратких сведений о всех района теплоснабжения")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortHeatSupplyAreaDto>> getAll(@PathVariable
+    public ResponseEntity<List<ShortResponseHeatSupplyAreaDto>> getAll(@PathVariable
                                                            @Parameter(description = "Индентификатор филиала") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

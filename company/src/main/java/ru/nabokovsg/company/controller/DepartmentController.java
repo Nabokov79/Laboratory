@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.company.dto.department.DepartmentDto;
-import ru.nabokovsg.company.dto.department.FullDepartmentDto;
-import ru.nabokovsg.company.dto.department.ShortDepartmentDto;
+import ru.nabokovsg.company.dto.department.ResponseDepartmentDto;
+import ru.nabokovsg.company.dto.department.ShortResponseDepartmentDto;
 import ru.nabokovsg.company.services.DepartmentService;
 
 import java.util.List;
@@ -28,27 +28,27 @@ public class DepartmentController {
 
     @Operation(summary = "Добавление данных подразделения филиала организации")
     @PostMapping
-    public ResponseEntity<ShortDepartmentDto> save(@RequestBody
+    public ResponseEntity<ShortResponseDepartmentDto> save(@RequestBody
                                                 @Parameter(description = "Подразделение") DepartmentDto departmentDto) {
         return ResponseEntity.ok().body(service.save(departmentDto));
     }
 
     @Operation(summary = "Изменение данных подразделения филиала организации")
     @PatchMapping
-    public ResponseEntity<ShortDepartmentDto> update(@RequestBody
+    public ResponseEntity<ShortResponseDepartmentDto> update(@RequestBody
                                                 @Parameter(description = "Подразделение") DepartmentDto departmentDto) {
         return ResponseEntity.ok().body(service.update(departmentDto));
     }
 
     @Operation(summary = "Получение данных подразделения филиала организации")
     @GetMapping("/{id}")
-    public ResponseEntity<FullDepartmentDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseDepartmentDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение кратких сведений о подразделении филиала")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortDepartmentDto>> getAll(@PathVariable
+    public ResponseEntity<List<ShortResponseDepartmentDto>> getAll(@PathVariable
                                                @Parameter(description = "Индентификатор филиала") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

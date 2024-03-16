@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.client.LadNKClient;
 import ru.nabokovsg.lab_nk.client.dto.*;
-import ru.nabokovsg.lab_nk.dto.taskJournal.FullTaskJournalDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskSearchParameters;
 import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
@@ -39,7 +39,7 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     private final LaboratoryEmployeeService employeeService;
 
     @Override
-    public FullTaskJournalDto save(TaskJournalDto taskJournalDto) {
+    public ResponseTaskJournalDto save(TaskJournalDto taskJournalDto) {
         TasksJournal task = repository.findByDateAndEquipmentId(taskJournalDto.getDate(),
                 taskJournalDto.getEquipmentId());
         if (task == null) {
@@ -55,7 +55,7 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     }
 
     @Override
-    public FullTaskJournalDto update(TaskJournalDto taskJournalDto) {
+    public ResponseTaskJournalDto update(TaskJournalDto taskJournalDto) {
         TasksJournal taskJournal = getById(taskJournalDto.getId());
         if (taskJournal.getDocumentId() == null) {
             return mapper.mapToFullTasksJournalDto(repository.save(getTasksJournalData(taskJournalDto)));
@@ -66,12 +66,12 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     }
 
     @Override
-    public FullTaskJournalDto get(Long id) {
+    public ResponseTaskJournalDto get(Long id) {
         return mapper.mapToFullTasksJournalDto(getById(id));
     }
 
     @Override
-    public List<FullTaskJournalDto> getAll(TaskSearchParameters parameters) {
+    public List<ResponseTaskJournalDto> getAll(TaskSearchParameters parameters) {
         QTasksJournal tasksJournal = QTasksJournal.tasksJournal;
         return new JPAQueryFactory(em).from(tasksJournal)
                                       .select(tasksJournal)

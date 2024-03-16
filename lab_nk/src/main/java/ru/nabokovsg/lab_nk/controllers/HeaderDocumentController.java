@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
+import ru.nabokovsg.lab_nk.dto.headerDocument.ResponseHeaderDocumentDto;
 import ru.nabokovsg.lab_nk.dto.headerDocument.HeaderDocumentDto;
 import ru.nabokovsg.lab_nk.services.HeaderDocumentService;
 
@@ -27,27 +27,27 @@ public class HeaderDocumentController {
 
     @Operation(summary = "Добавление нового вида документа")
     @PostMapping
-    public ResponseEntity<FullHeaderDocumentDto> save(
+    public ResponseEntity<ResponseHeaderDocumentDto> save(
               @RequestBody @Parameter(description = "Вид документа лаборатории") HeaderDocumentDto headerDocumentDto) {
         return ResponseEntity.ok().body(service.save(headerDocumentDto));
     }
 
     @Operation(summary = "Изменение данных вида документа")
     @PatchMapping
-    public ResponseEntity<FullHeaderDocumentDto> update(
+    public ResponseEntity<ResponseHeaderDocumentDto> update(
               @RequestBody @Parameter(description = "Вид документа лаборатории") HeaderDocumentDto headerDocumentDto) {
         return ResponseEntity.ok().body(service.update(headerDocumentDto));
     }
 
     @Operation(summary = "Получение данных типов отчетных документов")
     @GetMapping("/{id}")
-    public ResponseEntity<FullHeaderDocumentDto> get(@PathVariable Long id) {
+    public ResponseEntity<ResponseHeaderDocumentDto> get(@PathVariable Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получение данных типов отчетных документов")
     @GetMapping
-    public ResponseEntity<List<FullHeaderDocumentDto>> getAll() {
+    public ResponseEntity<List<ResponseHeaderDocumentDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 

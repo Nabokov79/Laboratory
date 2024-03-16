@@ -3,8 +3,8 @@ package ru.nabokovsg.company.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.company.dto.branch.BranchDto;
-import ru.nabokovsg.company.dto.branch.FullBranchDto;
-import ru.nabokovsg.company.dto.branch.ShortBranchDto;
+import ru.nabokovsg.company.dto.branch.ResponseBranchDto;
+import ru.nabokovsg.company.dto.branch.ShortResponseBranchDto;
 import ru.nabokovsg.company.models.Address;
 import ru.nabokovsg.company.models.Branch;
 import ru.nabokovsg.company.models.DivisionContact;
@@ -21,7 +21,7 @@ public interface BranchMapper {
     @Mapping(source = "branchDto.id", target = "id")
     Branch mapToBranch(BranchDto branchDto, DivisionContact divisionContact, Address address, Organization organization);
 
-    FullBranchDto mapToBranchDto(Branch branch);
+    ResponseBranchDto mapToBranchDto(Branch branch);
 
-    ShortBranchDto mapToShortBranchDto(Branch branch);
+    ShortResponseBranchDto mapToShortBranchDto(Branch branch);
 }

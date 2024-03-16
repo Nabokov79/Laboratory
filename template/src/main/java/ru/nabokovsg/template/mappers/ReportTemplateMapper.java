@@ -2,7 +2,7 @@ package ru.nabokovsg.template.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.template.dto.report.ReportTemplateDto;
+import ru.nabokovsg.template.dto.report.ResponseReportTemplateDto;
 import ru.nabokovsg.template.models.PageTitleTemplate;
 import ru.nabokovsg.template.models.ReportTemplate;
 import ru.nabokovsg.template.models.SectionTemplate;
@@ -30,5 +30,5 @@ public interface ReportTemplateMapper {
                                                       , Long equipmentTypeId
                                                       , Set<SectionTemplate> sections);
 
-    ReportTemplateDto mapToReportTemplateDto(ReportTemplate reportTemplate);
+    ResponseReportTemplateDto mapToReportTemplateDto(ReportTemplate reportTemplate);
 }

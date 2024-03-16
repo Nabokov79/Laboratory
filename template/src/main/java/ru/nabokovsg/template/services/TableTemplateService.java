@@ -1,15 +1,15 @@
 package ru.nabokovsg.template.services;
 
-import ru.nabokovsg.template.dto.table.FullTableTemplateDto;
+import ru.nabokovsg.template.dto.table.ResponseTableTemplateDto;
 import ru.nabokovsg.template.dto.table.TableTemplateDto;
 
 public interface TableTemplateService {
 
-    FullTableTemplateDto save(TableTemplateDto tableDto);
+    ResponseTableTemplateDto save(TableTemplateDto tableDto);
 
-    FullTableTemplateDto update(TableTemplateDto tableDto);
+    ResponseTableTemplateDto update(TableTemplateDto tableDto);
 
-    FullTableTemplateDto get(Long id);
+    ResponseTableTemplateDto get(Long id);
 
     void delete(Long id);
 }

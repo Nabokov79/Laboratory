@@ -1,20 +1,20 @@
 package ru.nabokovsg.equipment.service;
 
-import ru.nabokovsg.equipment.dto.partElement.FullPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ResponsePartElementDto;
 import ru.nabokovsg.equipment.dto.partElement.PartElementDto;
-import ru.nabokovsg.equipment.dto.partElement.ShortPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ShortResponsePartElementDto;
 
 import java.util.List;
 
 public interface PartElementService {
 
-    FullPartElementDto save(PartElementDto partElementDto);
+    ResponsePartElementDto save(PartElementDto partElementDto);
 
-    FullPartElementDto update(PartElementDto partElementDto);
+    ResponsePartElementDto update(PartElementDto partElementDto);
 
-    FullPartElementDto get(Long id);
+    ResponsePartElementDto get(Long id);
 
-    List<ShortPartElementDto> getAll(Long id);
+    List<ShortResponsePartElementDto> getAll(Long id);
 
     void delete(Long id);
 }

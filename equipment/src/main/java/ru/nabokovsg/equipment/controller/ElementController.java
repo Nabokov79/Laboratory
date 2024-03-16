@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.equipment.dto.element.ElementDto;
-import ru.nabokovsg.equipment.dto.element.FullElementDto;
-import ru.nabokovsg.equipment.dto.element.ShortElementDto;
+import ru.nabokovsg.equipment.dto.element.ResponseElementDto;
+import ru.nabokovsg.equipment.dto.element.ShortResponseElementDto;
 import ru.nabokovsg.equipment.service.ElementService;
 
 
@@ -29,27 +29,27 @@ public class ElementController {
 
     @Operation(summary = "Добавление нового элемента")
     @PostMapping
-    public ResponseEntity<ShortElementDto> save(
+    public ResponseEntity<ShortResponseElementDto> save(
                                             @RequestBody @Parameter(description = "Элемент") ElementDto elementDto) {
         return ResponseEntity.ok().body(service.save(elementDto));
     }
 
     @Operation(summary = "Изменение данных элемента")
     @PatchMapping
-    public ResponseEntity<ShortElementDto> update(
+    public ResponseEntity<ShortResponseElementDto> update(
                                               @RequestBody @Parameter(description = "Элемент") ElementDto elementDto) {
         return ResponseEntity.ok().body(service.update(elementDto));
     }
 
     @Operation(summary = "Получить элемент")
     @GetMapping("/{id}")
-    public ResponseEntity<FullElementDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
+    public ResponseEntity<ResponseElementDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));
     }
 
     @Operation(summary = "Получить все элементы оборудования")
     @GetMapping("/all/{id}")
-    public ResponseEntity<List<ShortElementDto>> getAll(
+    public ResponseEntity<List<ShortResponseElementDto>> getAll(
                                 @PathVariable @Parameter(description = "Индентификатор оборудования") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }

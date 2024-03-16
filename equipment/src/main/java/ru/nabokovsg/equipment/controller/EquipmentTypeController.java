@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.nabokovsg.equipment.dto.equipmentType.FullEquipmentTypeDto;
+import ru.nabokovsg.equipment.dto.equipmentType.ResponseEquipmentTypeDto;
 import ru.nabokovsg.equipment.service.EquipmentTypeService;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class EquipmentTypeController {
 
     @Operation(summary = "Получить все оборудование котельной, ЦТП")
     @GetMapping("/all")
-    public ResponseEntity<List<FullEquipmentTypeDto>> getAll() {
+    public ResponseEntity<List<ResponseEquipmentTypeDto>> getAll() {
         return ResponseEntity.ok().body(service.getAll());
     }
 }

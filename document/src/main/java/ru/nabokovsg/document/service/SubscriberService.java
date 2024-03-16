@@ -1,6 +1,6 @@
 package ru.nabokovsg.document.service;
 
-import ru.nabokovsg.document.dto.LaboratoryEmployeeDto;
+import ru.nabokovsg.document.dto.document.LaboratoryEmployeeDto;
 import ru.nabokovsg.document.models.Subscriber;
 
 import java.util.List;

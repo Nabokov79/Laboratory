@@ -2,7 +2,7 @@ package ru.nabokovsg.lab_nk.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.lab_nk.dto.headerDocument.FullHeaderDocumentDto;
+import ru.nabokovsg.lab_nk.dto.headerDocument.ResponseHeaderDocumentDto;
 import ru.nabokovsg.lab_nk.dto.headerDocument.HeaderDocumentDto;
 import ru.nabokovsg.lab_nk.models.HeaderDocument;
 import ru.nabokovsg.lab_nk.models.enums.TypeDocument;
@@ -14,5 +14,5 @@ public interface HeaderDocumentMapper {
     @Mapping(source = "headerDocumentDto.id", target = "id")
     HeaderDocument mapToHeaderDocument(HeaderDocumentDto headerDocumentDto, TypeDocument typeDocument);
 
-    FullHeaderDocumentDto mapToFullHeaderDocumentDto(HeaderDocument headerDocument);
+    ResponseHeaderDocumentDto mapToFullHeaderDocumentDto(HeaderDocument headerDocument);
 }

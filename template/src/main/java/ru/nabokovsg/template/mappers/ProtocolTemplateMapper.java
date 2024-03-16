@@ -3,9 +3,9 @@ package ru.nabokovsg.template.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.template.client.dto.HeaderDocumentDto;
-import ru.nabokovsg.template.dto.protocol.FullProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ResponseProtocolTemplateDto;
 import ru.nabokovsg.template.dto.protocol.ProtocolTemplateDto;
-import ru.nabokovsg.template.dto.protocol.ShortProtocolTemplateDto;
+import ru.nabokovsg.template.dto.protocol.ShortResponseProtocolTemplateDto;
 import ru.nabokovsg.template.models.HeaderTemplate;
 import ru.nabokovsg.template.models.ProtocolTemplate;
 
@@ -22,7 +22,7 @@ public interface ProtocolTemplateMapper {
                                          , HeaderDocumentDto headerDocumentDto
                                          , HeaderTemplate header);
 
-    ShortProtocolTemplateDto mapToShortProtocolTemplateDto(ProtocolTemplate protocolTemplate);
+    ShortResponseProtocolTemplateDto mapToShortProtocolTemplateDto(ProtocolTemplate protocolTemplate);
 
-    FullProtocolTemplateDto mapToFullProtocolTemplateDto(ProtocolTemplate protocolTemplate);
+    ResponseProtocolTemplateDto mapToFullProtocolTemplateDto(ProtocolTemplate protocolTemplate);
 }

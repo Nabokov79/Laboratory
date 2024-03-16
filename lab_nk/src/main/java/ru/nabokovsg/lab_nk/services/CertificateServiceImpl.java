@@ -3,7 +3,7 @@ package ru.nabokovsg.lab_nk.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.lab_nk.dto.certificate.CertificateDto;
-import ru.nabokovsg.lab_nk.dto.certificate.FullCertificateDto;
+import ru.nabokovsg.lab_nk.dto.certificate.ResponseCertificateDto;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.CertificateMapper;
 import ru.nabokovsg.lab_nk.models.Certificate;
@@ -20,7 +20,7 @@ public class CertificateServiceImpl implements CertificateService {
     private final LaboratoryEmployeeService employeeService;
 
     @Override
-    public FullCertificateDto save(CertificateDto certificateDto) {
+    public ResponseCertificateDto save(CertificateDto certificateDto) {
         Certificate certificate = repository.findByControlTypeAndEmployeeId(certificateDto.getControlType()
                 , certificateDto.getEmployeeId());
         if (certificate == null) {
@@ -31,7 +31,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public FullCertificateDto update(CertificateDto certificateDto) {
+    public ResponseCertificateDto update(CertificateDto certificateDto) {
         if (repository.existsById(certificateDto.getId())) {
             return mapper.mapToFullCertificateDto(repository.save(mapper.mapToCertificate(certificateDto
                     , employeeService.getById(certificateDto.getEmployeeId()))));
@@ -42,7 +42,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<FullCertificateDto> getAll(Long id) {
+    public List<ResponseCertificateDto> getAll(Long id) {
         return repository.findAllByEmployeeId(id)
                 .stream()
                 .map(mapper::mapToFullCertificateDto)

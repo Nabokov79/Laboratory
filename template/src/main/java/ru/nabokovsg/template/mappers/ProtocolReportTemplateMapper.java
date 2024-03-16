@@ -3,9 +3,9 @@ package ru.nabokovsg.template.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.template.client.dto.HeaderDocumentDto;
-import ru.nabokovsg.template.dto.protocolReport.FullProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.dto.protocolReport.ProtocolReportTemplateDto;
-import ru.nabokovsg.template.dto.protocolReport.ShortProtocolReportTemplateDto;
+import ru.nabokovsg.template.dto.protocolReport.ShortResponseProtocolReportTemplateDto;
 import ru.nabokovsg.template.models.ProtocolReportTemplate;
 
 @Mapper(componentModel = "spring")
@@ -20,7 +20,7 @@ public interface ProtocolReportTemplateMapper {
     ProtocolReportTemplate mapToProtocolReportTemplate(ProtocolReportTemplateDto protocolDto
                                                      , HeaderDocumentDto headerDocumentDto);
 
-    FullProtocolReportTemplateDto mapToFullProtocolReportTemplateDto(ProtocolReportTemplate protocol);
+    ResponseProtocolReportTemplateDto mapToFullProtocolReportTemplateDto(ProtocolReportTemplate protocol);
 
-    ShortProtocolReportTemplateDto mapToShortProtocolReportTemplateDto(ProtocolReportTemplate protocol);
+    ShortResponseProtocolReportTemplateDto mapToShortProtocolReportTemplateDto(ProtocolReportTemplate protocol);
 }

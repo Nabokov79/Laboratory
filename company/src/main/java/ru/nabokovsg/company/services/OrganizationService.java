@@ -1,23 +1,23 @@
 package ru.nabokovsg.company.services;
 
-import ru.nabokovsg.company.dto.organization.FullOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ResponseOrganizationDto;
 import ru.nabokovsg.company.dto.organization.OrganizationDto;
-import ru.nabokovsg.company.dto.organization.ShortOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ShortResponseOrganizationDto;
 import ru.nabokovsg.company.models.Licenses;
 import ru.nabokovsg.company.models.Organization;
 import java.util.List;
 
 public interface OrganizationService {
 
-    ShortOrganizationDto save(OrganizationDto organizationDto);
+    ShortResponseOrganizationDto save(OrganizationDto organizationDto);
 
-    ShortOrganizationDto update(OrganizationDto organizationDto);
+    ShortResponseOrganizationDto update(OrganizationDto organizationDto);
 
-    FullOrganizationDto get(Long id);
+    ResponseOrganizationDto get(Long id);
 
     Organization getById(Long id);
 
-    List<ShortOrganizationDto> getAll();
+    List<ShortResponseOrganizationDto> getAll();
 
     void addLicense(Long id, Licenses license);
 

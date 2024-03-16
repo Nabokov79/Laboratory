@@ -3,9 +3,9 @@ package ru.nabokovsg.template.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.nabokovsg.template.client.dto.HeaderDocumentDto;
-import ru.nabokovsg.template.dto.pageTitle.FullPageTitleTemplateDto;
+import ru.nabokovsg.template.dto.pageTitle.ResponsePageTitleTemplateDto;
 import ru.nabokovsg.template.dto.pageTitle.PageTitleTemplateDto;
-import ru.nabokovsg.template.dto.pageTitle.ShortPageTitleTemplateDto;
+import ru.nabokovsg.template.dto.pageTitle.ShortResponsePageTitleTemplateDto;
 import ru.nabokovsg.template.models.HeaderTemplate;
 import ru.nabokovsg.template.models.PageTitleTemplate;
 
@@ -25,7 +25,7 @@ public interface PageTitleTemplateMapper {
     PageTitleTemplate mapToPageTitleTemplate(PageTitleTemplateDto pageTitleDto, HeaderTemplate header
             , HeaderDocumentDto headerDocumentDto, String post, String employee);
 
-    FullPageTitleTemplateDto mapToFullPageTitleTemplateDto(PageTitleTemplate pageTitle);
+    ResponsePageTitleTemplateDto mapToFullPageTitleTemplateDto(PageTitleTemplate pageTitle);
 
-    ShortPageTitleTemplateDto mapToShortPageTitleTemplateDto(PageTitleTemplate pageTitle);
+    ShortResponsePageTitleTemplateDto mapToShortPageTitleTemplateDto(PageTitleTemplate pageTitle);
 }

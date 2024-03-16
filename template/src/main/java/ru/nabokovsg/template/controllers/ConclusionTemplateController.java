@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.template.dto.conclusion.ConclusionTemplateDto;
-import ru.nabokovsg.template.dto.conclusion.FullConclusionTemplateDto;
+import ru.nabokovsg.template.dto.conclusion.ResponseConclusionTemplateDto;
 import ru.nabokovsg.template.services.ConclusionTemplateService;
 
 @RestController
@@ -25,14 +25,14 @@ public class ConclusionTemplateController {
 
     @Operation(summary = "Данные шаблона новых заключений протокола отчета")
     @PostMapping
-    public ResponseEntity<FullConclusionTemplateDto> save(
+    public ResponseEntity<ResponseConclusionTemplateDto> save(
             @RequestBody @Parameter(name = "Шаблон заключений") ConclusionTemplateDto conclusionDto) {
         return ResponseEntity.ok().body(service.save(conclusionDto));
     }
 
     @Operation(summary = "Изменение данных шаблона заключений")
     @PatchMapping
-    public ResponseEntity<FullConclusionTemplateDto> update(
+    public ResponseEntity<ResponseConclusionTemplateDto> update(
             @RequestBody @Parameter(name = "Шаблон заключений") ConclusionTemplateDto conclusionDto) {
         return ResponseEntity.ok().body(service.update(conclusionDto));
     }

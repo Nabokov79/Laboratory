@@ -2,14 +2,14 @@ package ru.nabokovsg.company.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.company.dto.organization.FullOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ResponseOrganizationDto;
 import ru.nabokovsg.company.dto.organization.OrganizationDto;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.OrganizationMapper;
 import ru.nabokovsg.company.models.Licenses;
 import ru.nabokovsg.company.models.Organization;
 import ru.nabokovsg.company.repository.OrganizationRepository;
-import ru.nabokovsg.company.dto.organization.ShortOrganizationDto;
+import ru.nabokovsg.company.dto.organization.ShortResponseOrganizationDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final EmployeeService employeeService;
 
     @Override
-    public ShortOrganizationDto save(OrganizationDto organizationDto) {
+    public ShortResponseOrganizationDto save(OrganizationDto organizationDto) {
         return mapper.mapToShortOrganizationDto(
                 Objects.requireNonNullElseGet(repository.findByFullName(organizationDto.getFullName())
                         , () -> repository.save(mapper.mapToOrganization(organizationDto
@@ -34,7 +34,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public ShortOrganizationDto update(OrganizationDto organizationDto) {
+    public ShortResponseOrganizationDto update(OrganizationDto organizationDto) {
         if (repository.existsById(organizationDto.getId())) {
             return mapper.mapToShortOrganizationDto(
                     repository.save(
@@ -48,12 +48,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public FullOrganizationDto get(Long id) {
+    public ResponseOrganizationDto get(Long id) {
         return mapper.mapToOrganizationDto(getById(id));
     }
 
     @Override
-    public List<ShortOrganizationDto> getAll() {
+    public List<ShortResponseOrganizationDto> getAll() {
         return repository.findAllOrganization().stream()
                                                .map(mapper::mapToShortOrganizationDto)
                                                .toList();

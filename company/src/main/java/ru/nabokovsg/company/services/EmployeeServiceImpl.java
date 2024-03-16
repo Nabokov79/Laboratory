@@ -3,8 +3,8 @@ package ru.nabokovsg.company.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.company.dto.employee.EmployeeDto;
-import ru.nabokovsg.company.dto.employee.FullEmployeeDto;
-import ru.nabokovsg.company.dto.employee.ShortEmployeeDto;
+import ru.nabokovsg.company.dto.employee.ResponseEmployeeDto;
+import ru.nabokovsg.company.dto.employee.ShortResponseEmployeeDto;
 import ru.nabokovsg.company.exceptions.BadRequestException;
 import ru.nabokovsg.company.exceptions.NotFoundException;
 import ru.nabokovsg.company.mappers.EmployeeMapper;
@@ -27,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PlaceWorkService placeWorkService;
 
     @Override
-    public ShortEmployeeDto save(EmployeeDto employeeDto) {
+    public ShortResponseEmployeeDto save(EmployeeDto employeeDto) {
         Employee employee = repository.findByNameAndPatronymicAndSurname(employeeDto.getName()
                                                                        , employeeDto.getPatronymic()
                                                                        , employeeDto.getSurname());
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ShortEmployeeDto update(EmployeeDto employeeDto) {
+    public ShortResponseEmployeeDto update(EmployeeDto employeeDto) {
         if (repository.existsById(employeeDto.getId())) {
             Employee employee = mapper.mapToEmployee(employeeDto);
             employee.setPlaceWork(placeWorkService.update(employeeDto.getPlaceWork()));
@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public FullEmployeeDto get(Long id) {
+    public ResponseEmployeeDto get(Long id) {
         return mapper.mapToFullEmployeeDto(getById(id));
     }
 
@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<ShortEmployeeDto> getAll(Long id, String divisionType) {
+    public List<ShortResponseEmployeeDto> getAll(Long id, String divisionType) {
         Set<Employee> employees = null;
         switch (convert(divisionType)) {
             case ORGANIZATION -> employees = repository.findAllByOrganizationId(id);

@@ -2,9 +2,9 @@ package ru.nabokovsg.equipment.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.equipment.dto.partElement.FullPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ResponsePartElementDto;
 import ru.nabokovsg.equipment.dto.partElement.PartElementDto;
-import ru.nabokovsg.equipment.dto.partElement.ShortPartElementDto;
+import ru.nabokovsg.equipment.dto.partElement.ShortResponsePartElementDto;
 import ru.nabokovsg.equipment.models.Element;
 import ru.nabokovsg.equipment.models.PartElement;
 import ru.nabokovsg.equipment.models.StandardSize;
@@ -17,8 +17,8 @@ public interface PartElementMapper {
     @Mapping(target = "standardSize", ignore = true)
     @Mapping(source = "partElementDto.id", target = "id")
     PartElement mapToPartElement(PartElementDto partElementDto, Element element);
-    ShortPartElementDto mapToShortPartElementDto(PartElement partElement);
-    FullPartElementDto mapToFullPartElementDto(PartElement partElement);
+    ShortResponsePartElementDto mapToShortPartElementDto(PartElement partElement);
+    ResponsePartElementDto mapToFullPartElementDto(PartElement partElement);
 
     @Mapping(source = "partElement.partName", target = "partName")
     @Mapping(source = "standardSize", target = "standardSize")

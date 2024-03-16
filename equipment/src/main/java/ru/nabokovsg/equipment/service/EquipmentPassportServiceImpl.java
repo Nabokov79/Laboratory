@@ -3,7 +3,7 @@ package ru.nabokovsg.equipment.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.equipment.dto.passport.EquipmentPassportDto;
-import ru.nabokovsg.equipment.dto.passport.FullEquipmentPassportDto;
+import ru.nabokovsg.equipment.dto.passport.ResponseEquipmentPassportDto;
 import ru.nabokovsg.equipment.exceptions.NotFoundException;
 import ru.nabokovsg.equipment.mappers.EquipmentPassportMapper;
 import ru.nabokovsg.equipment.models.EquipmentPassport;
@@ -18,7 +18,7 @@ public class EquipmentPassportServiceImpl implements EquipmentPassportService {
     private final EquipmentService equipmentService;
 
     @Override
-    public FullEquipmentPassportDto save(EquipmentPassportDto passportDto) {
+    public ResponseEquipmentPassportDto save(EquipmentPassportDto passportDto) {
         EquipmentPassport passport = repository.findByHeaderAndEquipmentId(passportDto.getHeader()
                                                                          , passportDto.getEquipmentId());
         if (passport == null)  {
@@ -29,7 +29,7 @@ public class EquipmentPassportServiceImpl implements EquipmentPassportService {
     }
 
     @Override
-    public FullEquipmentPassportDto update(EquipmentPassportDto passportDto) {
+    public ResponseEquipmentPassportDto update(EquipmentPassportDto passportDto) {
         if (repository.existsById(passportDto.getId())) {
             return mapper.mapToFullEquipmentPassportDto(repository.save(mapper.mapToEquipmentPassport(passportDto
                     , equipmentService.getById(passportDto.getEquipmentId()))));

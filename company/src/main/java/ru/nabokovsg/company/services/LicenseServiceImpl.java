@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nabokovsg.company.dto.licenses.FullLicenseDto;
+import ru.nabokovsg.company.dto.licenses.ResponseLicenseDto;
 import ru.nabokovsg.company.dto.licenses.LicenseDto;
 import ru.nabokovsg.company.exceptions.BadRequestException;
 import ru.nabokovsg.company.exceptions.NotFoundException;
@@ -28,7 +28,7 @@ public class LicenseServiceImpl implements LicenseService {
     private final DepartmentService departmentService;
 
     @Override
-    public FullLicenseDto save(LicenseDto licenseDto) {
+    public ResponseLicenseDto save(LicenseDto licenseDto) {
         Licenses license = Objects.requireNonNullElseGet(
                 getByPredicate(licenseDto), () -> repository.save(mapper.mapToNewLicenses(licenseDto
                                                         , organizationService.getById(licenseDto.getIssuedLicenseId())))
@@ -38,7 +38,7 @@ public class LicenseServiceImpl implements LicenseService {
     }
 
     @Override
-    public FullLicenseDto update(LicenseDto licenseDto) {
+    public ResponseLicenseDto update(LicenseDto licenseDto) {
         if (repository.existsById(licenseDto.getId())) {
             return mapper.mapToFullLicenseDto(repository.save(mapper.mapToUpdateLicenses(licenseDto
                                                       , organizationService.getById(licenseDto.getIssuedLicenseId()))));
@@ -47,7 +47,7 @@ public class LicenseServiceImpl implements LicenseService {
     }
 
     @Override
-    public List<FullLicenseDto> getAll(Long id, String divisionType) {
+    public List<ResponseLicenseDto> getAll(Long id, String divisionType) {
         Set<Licenses> licenses = new HashSet<>();
         switch (convert(divisionType)) {
             case ORGANIZATION -> licenses = repository.findAllByOrganizationId(id);
