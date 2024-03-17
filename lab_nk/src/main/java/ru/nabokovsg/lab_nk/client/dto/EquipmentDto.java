@@ -13,6 +13,8 @@ public class EquipmentDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
+    @Schema(description = "Тип оборудования")
+    private EquipmentTypeDto equipmentType;
     @Schema(description = "Полное наименование")
     private String fullName;
     @Schema(description = "Стационарный номер")

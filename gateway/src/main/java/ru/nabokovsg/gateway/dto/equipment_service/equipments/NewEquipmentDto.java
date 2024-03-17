@@ -27,6 +27,8 @@ public class NewEquipmentDto {
     private Integer stationaryNumber;
     @Schema(description = "Объем")
     private Integer volume;
+    @Schema(description = "Старый или новый бак-аккумулятор")
+    private Boolean old;
     @Schema(description = "Модель")
     private String model;
     @Schema(description = "Высота")

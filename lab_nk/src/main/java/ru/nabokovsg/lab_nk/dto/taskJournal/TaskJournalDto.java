@@ -25,6 +25,8 @@ public class TaskJournalDto {
     private Long addressId;
     @Schema(description = "Индентификатор оборудования")
     private Long equipmentId;
+    @Schema(description = "Старое или новое оборудование(относиться к бакам-аккумуляторам для рассчета данных геодезии)")
+    private Boolean equipmentOld;
     @Schema(description = "Индентификаторы сотрудник руководителя работ")
     private Long chiefId;
     @Schema(description = "Индентификаторы сотрудников")

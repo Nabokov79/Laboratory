@@ -38,7 +38,7 @@ public class BranchController {
         return ResponseEntity.ok().body(service.update(branchDto));
     }
 
-    @Operation(summary = "Получение данных филиала")
+    @Operation(summary = "Получить данные филиала во его индентификатору")
     @GetMapping("/{id}")
     public ResponseEntity<ResponseBranchDto> get(@PathVariable @Parameter(description = "Индентификатор") Long id) {
         return ResponseEntity.ok().body(service.get(id));

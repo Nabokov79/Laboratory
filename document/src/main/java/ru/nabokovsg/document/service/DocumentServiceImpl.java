@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import ru.nabokovsg.document.dto.document.LaboratoryEmployeeDto;
-import ru.nabokovsg.document.dto.document.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.DocumentDto;
 import ru.nabokovsg.document.dto.document.DocumentSearchParam;
 import ru.nabokovsg.document.mapper.DocumentMapper;
 import ru.nabokovsg.document.models.Document;
@@ -36,24 +36,24 @@ public class DocumentServiceImpl implements DocumentService {
     private final SubscriberService subscriberService;
 
     @Override
-    public Long save(TaskJournalDto taskJournalDto) {
-        taskJournalDto.getEmployees().add(taskJournalDto.getChief());
+    public void save(DocumentDto documentDto) {
+        documentDto.getEmployees().add(documentDto.getChief());
         Map<Long, Subscriber> subscribers = subscriberService.save(
-                taskJournalDto.getEmployees()).stream().collect(Collectors.toMap(Subscriber::getEmployeeId, s -> s)
+                documentDto.getEmployees()).stream().collect(Collectors.toMap(Subscriber::getEmployeeId, s -> s)
         );
-        Document document = mapper.mapToDocument(taskJournalDto
-                                               , subscribers.get(taskJournalDto.getChief().getId())
+        Document document = mapper.mapToDocument(documentDto
+                                               , subscribers.get(documentDto.getChief().getId())
                                                , getDocumentNumber()
                                                , DocumentStatus.NO_DOCUMENT
                                                , DocumentStatus.NO_DRAWING);
-        List<Long> inspectorIds = taskJournalDto.getEmployees().stream()
+        List<Long> inspectorIds = documentDto.getEmployees().stream()
                                                                .map(LaboratoryEmployeeDto::getId)
                                                                .toList();
         document.setInspectors(subscribers.values()
                                           .stream()
                                           .filter(s -> inspectorIds.contains(s.getEmployeeId()))
                                           .collect(Collectors.toSet()));
-        return repository.save(document).getId();
+        repository.save(document);
     }
 
     @Override
@@ -65,6 +65,11 @@ public class DocumentServiceImpl implements DocumentService {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Document with id=%s not found", id))
                 );
+    }
+
+    @Override
+    public void updateStatus(Long documentId, DocumentStatus status) {
+
     }
 
     @Override

@@ -32,10 +32,14 @@ public class TasksJournal {
     private Long addressId;
     @Column(name = "address")
     private String address;
+    @Column(name = "equipment_type_id")
+    private Long equipmentTypeId;
     @Column(name = "equipment_id")
     private Long equipmentId;
     @Column(name = "equipment")
     private String equipment;
+    @Column(name = "old")
+    private Boolean equipmentOld;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "chief_id",  nullable = false)
     private LaboratoryEmployee chief;
@@ -53,8 +57,6 @@ public class TasksJournal {
     private String taskSource;
     @Column(name = "comment")
     private String comment;
-    @Column(name = "document_id")
-    private Long documentId;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "header_document_id",  nullable = false)
     private HeaderDocument headerDocument;

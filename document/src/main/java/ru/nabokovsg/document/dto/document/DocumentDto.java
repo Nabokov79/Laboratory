@@ -12,10 +12,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные работы в жернале задач")
-public class TaskJournalDto {
+public class DocumentDto {
 
     @Schema(description = "Индентификатор")
-    private long id;
+    private Long id;
     @Schema(description = "Дата выполнения работы")
     private LocalDate date;
     @Schema(description = "Адрес места проведения работы")

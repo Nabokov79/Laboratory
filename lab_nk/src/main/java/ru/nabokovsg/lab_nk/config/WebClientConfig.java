@@ -14,8 +14,11 @@ public class WebClientConfig {
     @Value("${equipment-server.url}")
     private String equipmentUrl;
 
-    @Value("${document-server.ur}")
+    @Value("${document-server.url}")
     private String documentUrl;
+
+    @Value("${result-server.url}")
+    private String resultUrl;
 
     @Bean
     public WebClient webClientCompany() {
@@ -35,6 +38,13 @@ public class WebClientConfig {
     public WebClient webClientDocument() {
         return WebClient.builder()
                 .baseUrl(documentUrl)
+                .build();
+    }
+
+    @Bean
+    public WebClient webClientResult() {
+        return WebClient.builder()
+                .baseUrl(resultUrl)
                 .build();
     }
 }

@@ -30,6 +30,8 @@ public class Equipment {
     private Integer stationaryNumber;
     @Column(name = "volume")
     private Integer volume;
+    @Column(name = "old")
+    private Boolean old;
     @Column(name = "model")
     private String model;
     @Column(name = "height")

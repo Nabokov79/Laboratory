@@ -10,6 +10,7 @@ import ru.nabokovsg.lab_nk.client.dto.*;
 import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskJournalDto;
 import ru.nabokovsg.lab_nk.dto.taskJournal.TaskSearchParameters;
+import ru.nabokovsg.lab_nk.dto.taskJournal.TasksJournalDataDto;
 import ru.nabokovsg.lab_nk.exceptions.BadRequestException;
 import ru.nabokovsg.lab_nk.exceptions.NotFoundException;
 import ru.nabokovsg.lab_nk.mappers.TaskJournalMapper;
@@ -44,12 +45,11 @@ public class TaskJournalServiceImpl implements TaskJournalService {
                 taskJournalDto.getEquipmentId());
         if (task == null) {
             task = repository.save(getTasksJournalData(taskJournalDto));
-            if (task.getDate() != null) {
-                client.createDocumentData(mapper.mapToFullTasksJournalDto(task));
+            if (taskJournalDto.getDate() != null) {
+                TasksJournalDataDto tasksJournalDataDto = mapper.mapToTasksJournalDataDto(task);
+                client.createDocumentData(tasksJournalDataDto);
+                client.createEquipmentDiagnosed(tasksJournalDataDto);
             }
-        }
-        if (task.getDate() != null) {
-            client.createDocumentData(mapper.mapToFullTasksJournalDto(task));
         }
         return mapper.mapToFullTasksJournalDto(task);
     }
@@ -57,11 +57,12 @@ public class TaskJournalServiceImpl implements TaskJournalService {
     @Override
     public ResponseTaskJournalDto update(TaskJournalDto taskJournalDto) {
         TasksJournal taskJournal = getById(taskJournalDto.getId());
-        if (taskJournal.getDocumentId() == null) {
+        if (taskJournal.getDate() == null) {
             return mapper.mapToFullTasksJournalDto(repository.save(getTasksJournalData(taskJournalDto)));
         }
         throw new NotFoundException(
-                String.format("The task cannot be updated, a document with an ID = %s has been created for this task", taskJournal.getDocumentId())
+                String.format("The task cannot be changed, the document is expected to be issued, date=%s"
+                                                                                                , taskJournal.getDate())
         );
     }
 
@@ -132,6 +133,7 @@ public class TaskJournalServiceImpl implements TaskJournalService {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toMap(BuildingDto::getId, b -> b))
                 .get(taskJournal.getBranchId())));
+        taskJournal.setEquipmentTypeId(equipment.getEquipmentType().getId());
         taskJournal.setEquipment(builderService.getStringEquipment(equipment));
         taskJournal.setChief(employees.get(taskJournalDto.getChiefId()));
         taskJournal.setEmployees(employees.values()

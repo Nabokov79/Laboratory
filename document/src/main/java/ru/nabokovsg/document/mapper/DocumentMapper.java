@@ -2,7 +2,7 @@ package ru.nabokovsg.document.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.nabokovsg.document.dto.document.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.DocumentDto;
 import ru.nabokovsg.document.dto.document.ResponseDocumentDto;
 import ru.nabokovsg.document.models.Document;
 import ru.nabokovsg.document.models.Subscriber;
@@ -22,7 +22,7 @@ public interface DocumentMapper {
     @Mapping(source = "drawingStatus", target = "drawingStatus")
     @Mapping(source = "documentNumber", target = "documentNumber")
     @Mapping(target = "id", ignore = true)
-    Document mapToDocument(TaskJournalDto taskJournalDto
+    Document mapToDocument(DocumentDto taskJournalDto
                          , Subscriber chief
                          , Integer documentNumber
                          , DocumentStatus documentStatus

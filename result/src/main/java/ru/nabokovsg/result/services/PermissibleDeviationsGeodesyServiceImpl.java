@@ -6,6 +6,8 @@ import org.webjars.NotFoundException;
 import ru.nabokovsg.result.dto.geodesy.FullPermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.dto.geodesy.PermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.mappers.PermissibleDeviationsGeodesyMapper;
+import ru.nabokovsg.result.models.EquipmentDiagnosed;
+import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.repository.PermissibleDeviationsGeodesyRepository;
 
 import java.util.List;
@@ -43,6 +45,21 @@ public class PermissibleDeviationsGeodesyServiceImpl implements  PermissibleDevi
     @Override
     public List<FullPermissibleDeviationsGeodesyDto> getAll(Long id) {
         return null;
+    }
+
+    @Override
+    public PermissibleDeviationsGeodesy getByParameters(EquipmentDiagnosed equipmentDiagnosed) {
+        PermissibleDeviationsGeodesy geodesy = repository.findByEquipmentTypeIdAndFullAndOld(
+                                                                                 equipmentDiagnosed.getEquipmentTypeId()
+                                                                               , equipmentDiagnosed.getFull()
+                                                                               , equipmentDiagnosed.getEquipmentOld());
+        if (geodesy == null) {
+            throw new NotFoundException(
+                    String.format("Permissible deviations geodesy by param: equipmentTypeId=%s not found for delete"
+                                                                              , equipmentDiagnosed.getEquipmentTypeId())
+            );
+        }
+        return geodesy;
     }
 
     @Override

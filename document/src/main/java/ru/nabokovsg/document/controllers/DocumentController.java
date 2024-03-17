@@ -4,10 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.document.dto.document.TaskJournalDto;
+import ru.nabokovsg.document.dto.document.DocumentDto;
 import ru.nabokovsg.document.dto.document.DocumentSearchParam;
 import ru.nabokovsg.document.dto.document.ResponseDocumentDto;
 import ru.nabokovsg.document.service.DocumentService;
@@ -29,8 +30,9 @@ public class DocumentController {
 
     @Operation(summary = "Добавление данных отчетного документа")
     @PostMapping
-    public ResponseEntity<Long> save(TaskJournalDto taskJournalDto) {
-        return ResponseEntity.ok().body(service.save(taskJournalDto));
+    public ResponseEntity<HttpStatus> save(DocumentDto documentDto) {
+        service.save(documentDto);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Получение данных отчетного документа")

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.nabokovsg.lab_nk.dto.taskJournal.ResponseTaskJournalDto;
+import ru.nabokovsg.lab_nk.dto.taskJournal.TasksJournalDataDto;
 
 @Component
 public class DocumentClient {
@@ -16,12 +16,9 @@ public class DocumentClient {
         this.client = client;
     }
 
-    public Long createDocumentData(String path, ResponseTaskJournalDto taskJournalDto) {
-        return client.post()
-                .uri(path)
-                .bodyValue(taskJournalDto)
-                .retrieve()
-                .bodyToFlux(Long.class)
-                .blockFirst();
+    public void createDocumentData(String path, TasksJournalDataDto task) {
+        client.post()
+              .uri(path)
+              .bodyValue(task);
     }
 }

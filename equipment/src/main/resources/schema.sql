@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS EQUIPMENTS
     stationary_number INTEGER,
     model             VARCHAR,
     volume            INTEGER,
+    old               BOOLEAN,
     height            INTEGER,
     length            INTEGER,
     width             INTEGER,

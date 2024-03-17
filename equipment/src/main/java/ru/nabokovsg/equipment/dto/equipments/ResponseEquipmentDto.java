@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.nabokovsg.equipment.dto.equipmentType.ResponseEquipmentTypeDto;
 
 @Setter
 @Getter
@@ -13,6 +14,8 @@ public class ResponseEquipmentDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
+    @Schema(description = "Тип оборудования")
+    private ResponseEquipmentTypeDto equipmentType;
     @Schema(description = "Полное наименование")
     private String fullName;
     @Schema(description = "Стационарный номер")
