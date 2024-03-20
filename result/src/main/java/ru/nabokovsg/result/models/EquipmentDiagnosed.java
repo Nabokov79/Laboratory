@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -46,5 +47,25 @@ public class EquipmentDiagnosed {
                 ", geodesicMeasurements=" + geodesicMeasurements +
                 ", calculatingGeodesicMeasurements=" + calculatingGeodesicMeasurements +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EquipmentDiagnosed that = (EquipmentDiagnosed) o;
+        return Objects.equals(id, that.id) && Objects.equals(taskJournalId, that.taskJournalId)
+                && Objects.equals(equipmentTypeId, that.equipmentTypeId)
+                && Objects.equals(equipmentId, that.equipmentId)
+                && Objects.equals(full, that.full)
+                && Objects.equals(equipmentOld, that.equipmentOld)
+                && Objects.equals(geodesicMeasurements, that.geodesicMeasurements)
+                && Objects.equals(calculatingGeodesicMeasurements, that.calculatingGeodesicMeasurements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, taskJournalId, equipmentTypeId, equipmentId, full, equipmentOld
+                            , geodesicMeasurements, calculatingGeodesicMeasurements);
     }
 }

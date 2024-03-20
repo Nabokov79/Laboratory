@@ -26,5 +26,4 @@ public class ControlPointMeasurement {
     private Set<ControlPoint> controlPoints;
     @OneToMany(mappedBy = "controlPointMeasurement", fetch = FetchType.LAZY)
     private Set<PointDifference> pointDifferences;
-
 }

@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface ReferencePointRepository extends JpaRepository<ReferencePoint, Long> {
 
-    Set<ReferencePoint> getAlByEquipmentDiagnosedId(Long equipmentDiagnosedId);
+    Set<ReferencePoint> getAllByEquipmentDiagnosedId(Long equipmentDiagnosedId);
 }

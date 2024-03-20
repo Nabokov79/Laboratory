@@ -1,37 +1,16 @@
 package ru.nabokovsg.result.services;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.nabokovsg.result.models.EquipmentDiagnosed;
+import org.springframework.stereotype.Component;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
+@Component
 public class CalculatingGeodesicMeasurementServiceImpl implements CalculatingGeodesicMeasurementService {
-    private final ReferencePointService referencePointService;
-    private final ControlPointService controlPointService;
 
     @Override
-    public void save(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements) {
-        List<GeodesicMeasurement> geodesicMeasurements = recalculateMeasurements(measurements);
-        referencePointService.save(equipmentDiagnosed, geodesicMeasurements);
-        controlPointService.save(geodesicMeasurements);
-    }
-
-    @Override
-    public void update(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements) {
-        List<GeodesicMeasurement> geodesicMeasurements = recalculateMeasurements(measurements);
-        referencePointService.update(equipmentDiagnosed, geodesicMeasurements);
-        controlPointService.update(geodesicMeasurements);
-    }
-
-    private List<GeodesicMeasurement> recalculateMeasurements(Set<GeodesicMeasurement> geodesicMeasurements) {
+    public List<GeodesicMeasurement> recalculateMeasurements(List<GeodesicMeasurement> geodesicMeasurements) {
         int delta = 0;
         Map<Integer, GeodesicMeasurement> measurements = geodesicMeasurements.stream()
                                            .collect(Collectors.toMap(GeodesicMeasurement::getSequentialNumber, g -> g));

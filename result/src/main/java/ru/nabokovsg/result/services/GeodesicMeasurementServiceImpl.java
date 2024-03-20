@@ -13,9 +13,7 @@ import ru.nabokovsg.result.models.GeodesicMeasurement;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.repository.GeodesicMeasurementRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,73 +23,64 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
     private final GeodesicMeasurementRepository repository;
     private final GeodesicMeasurementMapper mapper;
     private final EquipmentDiagnosedService equipmentDiagnosedService;
-    private final CalculatingGeodesicMeasurementService calculateService;
+    private final ReferencePointService referencePointService;
+    private final ControlPointService controlPointService;
     private final PermissibleDeviationsGeodesyService geodesyService;
+    private final CalculatingGeodesicMeasurementService calculatingService;
 
     @Override
     public List<ResponseGeodesicMeasurementDto> save(GeodeticMeasurementEquipmentDto measurementsDto) {
         Map<Integer, GeodesicMeasurement> measurements = repository.findAllByTaskJournalId(
-                measurementsDto.getId()).stream()
-                                    .collect(Collectors.toMap(GeodesicMeasurement::getNumberMeasurementLocation, g -> g)
-                                  );
+                        measurementsDto.getId()).stream()
+                .collect(Collectors.toMap(GeodesicMeasurement::getNumberMeasurementLocation, g -> g)
+                );
         if (measurements.size() != measurementsDto.getMeasurements().size() || measurements.isEmpty()) {
             measurementsDto.setMeasurements(measurementsDto.getMeasurements()
                     .stream()
                     .filter(m -> !measurements.containsKey(m.getNumberMeasurementLocation()))
                     .toList());
-           if (!measurementsDto.getMeasurements().isEmpty()) {
-               EquipmentDiagnosed equipmentDiagnosed =
-                       equipmentDiagnosedService.getEquipmentDiagnosedData(measurementsDto.getId()
-                               , measurementsDto.getEquipmentId()
-                               , measurementsDto.getFull()
-                       );
-               repository.saveAll(measurementsDto.getMeasurements()
-                       .stream()
-                       .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
-                       .toList())
-                       .forEach(m-> measurements.put(m.getNumberMeasurementLocation(), m));
-               PermissibleDeviationsGeodesy permissibleDeviationsGeodesy = geodesyService.getByParameters(
-                       equipmentDiagnosed.getEquipmentTypeId()
-                       , measurementsDto.getFull()
-                       , equipmentDiagnosed.getEquipmentOld());
-               if (measurements.size() == permissibleDeviationsGeodesy.getNumberMeasurements()) {
-                   calculateService.save(equipmentDiagnosed, new HashSet<>(measurements.values()));
-               }
-           }
+            if (!measurementsDto.getMeasurements().isEmpty()) {
+                EquipmentDiagnosed equipmentDiagnosed =
+                        equipmentDiagnosedService.getEquipmentDiagnosedData(measurementsDto.getId()
+                                , measurementsDto.getEquipmentId()
+                                , measurementsDto.getFull()
+                        );
+                repository.saveAll(measurementsDto.getMeasurements()
+                                .stream()
+                                .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
+                                .toList())
+                        .forEach(m -> measurements.put(m.getNumberMeasurementLocation(), m));
+                countingMeasurementPoints(equipmentDiagnosed, new ArrayList<>(measurements.values()), true);
+            }
         } else {
-            throw new  BadRequestException(
+            throw new BadRequestException(
                     String.format("Geodetic measurement equipment by TaskJournal with id=%s found. Update the results"
                             , measurementsDto.getId())
             );
         }
         return measurements.values()
-                           .stream()
-                           .map(mapper::mapToResponseGeodesicMeasurementDto)
-                           .toList();
+                .stream()
+                .map(mapper::mapToResponseGeodesicMeasurementDto)
+                .toList();
     }
 
 
     @Override
     public List<ResponseGeodesicMeasurementDto> update(List<GeodesicMeasurementDto> measurementsDto) {
         List<Long> ids = measurementsDto.stream()
-                                        .map(GeodesicMeasurementDto::getId)
-                                        .toList();
+                .map(GeodesicMeasurementDto::getId)
+                .toList();
         List<GeodesicMeasurement> measurements = repository.findAllById(ids);
         EquipmentDiagnosed equipmentDiagnosed = measurements.stream()
-                .map(GeodesicMeasurement::getEquipmentDiagnosed).collect(Collectors.toSet())
+                .map(GeodesicMeasurement::getEquipmentDiagnosed)
+                .collect(Collectors.toSet())
                 .iterator()
                 .next();
-        PermissibleDeviationsGeodesy permissibleDeviationsGeodesy = geodesyService.getByParameters(
-                equipmentDiagnosed.getEquipmentTypeId()
-                , equipmentDiagnosed.getFull()
-                , equipmentDiagnosed.getEquipmentOld());
         if (measurementsDto.size() == measurements.size()) {
             measurements = repository.saveAll(measurementsDto.stream()
                     .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
                     .toList());
-            if (measurements.size() == permissibleDeviationsGeodesy.getNumberMeasurements()) {
-                calculateService.update(equipmentDiagnosed, new HashSet<>(measurements));
-            }
+            countingMeasurementPoints(equipmentDiagnosed, measurements, false);
             return measurements.stream()
                     .map(mapper::mapToResponseGeodesicMeasurementDto)
                     .toList();
@@ -100,20 +89,37 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
                 String.format("Geodetic measurement equipment by ids=%s not found for update", ids));
     }
 
-        @Override
-        public List<ResponseGeodesicMeasurementDto> getAll(Long id){
-            return repository.findAllByTaskJournalId(id)
-                    .stream()
-                    .map(mapper::mapToResponseGeodesicMeasurementDto)
-                    .toList();
-        }
+    @Override
+    public List<ResponseGeodesicMeasurementDto> getAll(Long id) {
+        return repository.findAllByTaskJournalId(id)
+                .stream()
+                .map(mapper::mapToResponseGeodesicMeasurementDto)
+                .toList();
+    }
 
-        @Override
-        public void delete(Long id){
-            if (repository.existsById(id)) {
-                repository.deleteById(id);
-                return;
+    @Override
+    public void delete(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return;
+        }
+        throw new NotFoundException(String.format("GeodesicMeasurement with id=%s not found for delete", id));
+    }
+
+    private void countingMeasurementPoints(EquipmentDiagnosed equipmentDiagnosed, List<GeodesicMeasurement> measurements, boolean flag) {
+        PermissibleDeviationsGeodesy permissibleDeviations = geodesyService.getByParameters(
+                                                                              equipmentDiagnosed.getEquipmentTypeId()
+                                                                            , equipmentDiagnosed.getFull()
+                                                                            , equipmentDiagnosed.getEquipmentOld());
+        if (measurements.size() == permissibleDeviations.getNumberMeasurements()) {
+            List<GeodesicMeasurement> geodesicMeasurements = calculatingService.recalculateMeasurements(measurements);
+            if (flag) {
+                referencePointService.save(equipmentDiagnosed, geodesicMeasurements, permissibleDeviations);
+                controlPointService.save(geodesicMeasurements, permissibleDeviations);
+            } else {
+                referencePointService.update(equipmentDiagnosed, geodesicMeasurements, permissibleDeviations);
+                controlPointService.update(geodesicMeasurements, permissibleDeviations);
             }
-            throw new NotFoundException(String.format("GeodesicMeasurement with id=%s not found for delete", id));
         }
     }
+}
