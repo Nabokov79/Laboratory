@@ -25,7 +25,7 @@ public class EquipmentDiagnosed {
     private Long equipmentTypeId;
     @Column(name = "equipment_id")
     private Long equipmentId;
-    @Column(name = "full")
+    @Column(name = "equipment_full")
     private Boolean full;
     @Column(name = "equipment_old")
     private Boolean equipmentOld;
@@ -33,4 +33,18 @@ public class EquipmentDiagnosed {
     private List<GeodesicMeasurement> geodesicMeasurements;
     @OneToMany(mappedBy = "equipmentDiagnosed", fetch = FetchType.LAZY)
     private List<ReferencePoint> calculatingGeodesicMeasurements;
+
+    @Override
+    public String toString() {
+        return "EquipmentDiagnosed{" +
+                "id=" + id +
+                ", taskJournalId=" + taskJournalId +
+                ", equipmentTypeId=" + equipmentTypeId +
+                ", equipmentId=" + equipmentId +
+                ", full=" + full +
+                ", equipmentOld=" + equipmentOld +
+                ", geodesicMeasurements=" + geodesicMeasurements +
+                ", calculatingGeodesicMeasurements=" + calculatingGeodesicMeasurements +
+                '}';
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ControlPointService {
 
     void save(List<GeodesicMeasurement> measurements);
+
+    void update(List<GeodesicMeasurement> measurements);
 }

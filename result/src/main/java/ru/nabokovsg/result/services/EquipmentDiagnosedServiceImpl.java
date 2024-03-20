@@ -3,13 +3,10 @@ package ru.nabokovsg.result.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.result.dto.equipmentDiagnosed.EquipmentDiagnosedDto;
-import ru.nabokovsg.result.dto.geodesic.GeodeticMeasurementEquipmentDto;
 import ru.nabokovsg.result.exceptions.NotFoundException;
 import ru.nabokovsg.result.mappers.EquipmentDiagnosedMapper;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.repository.EquipmentDiagnosedRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,22 +17,26 @@ public class EquipmentDiagnosedServiceImpl implements EquipmentDiagnosedService 
 
     @Override
     public void save(EquipmentDiagnosedDto equipmentDto) {
-        if (getByParameters(equipmentDto.getId(), equipmentDto.getEquipmentId()).isPresent()) {
-            repository.save(mapper.mapToEquipmentDiagnosed(equipmentDto));
+        if (get(equipmentDto.getId(), equipmentDto.getEquipmentId()) == null) {
+            EquipmentDiagnosed equipmentDiagnosed = mapper.mapToEquipmentDiagnosed(equipmentDto);
+            repository.save(equipmentDiagnosed);
         }
     }
 
     @Override
-    public EquipmentDiagnosed addGeodeticMeasurementData(GeodeticMeasurementEquipmentDto equipmentDto) {
-        EquipmentDiagnosed equipmentDiagnosed = getByParameters(equipmentDto.getEquipmentDiagnose().getId()
-                , equipmentDto.getEquipmentDiagnose().getEquipmentId()).orElseThrow(() -> new NotFoundException(
-                String.format("EquipmentDiagnosed by parameters taskJournalId=%s and equipmentId=%s not found"
-                        , equipmentDto.getEquipmentDiagnose().getId(), equipmentDto.getEquipmentDiagnose().getEquipmentId())));
-        equipmentDiagnosed.setFull(equipmentDto.getFull());
-        return repository.save(equipmentDiagnosed);
+    public EquipmentDiagnosed getEquipmentDiagnosedData(Long taskJournalId, Long equipmentId, Boolean full) {
+        EquipmentDiagnosed equipmentDiagnosed = get(taskJournalId, equipmentId);
+        if (equipmentDiagnosed != null) {
+            return repository.save(mapper.mapToParamFull(get(taskJournalId, equipmentId), full));
+        }
+        throw new NotFoundException(
+                String.format("EquipmentDiagnosed by parameters taskJournalId=%s, equipmentId=%s", taskJournalId
+                        , equipmentId));
+
+
     }
 
-    private Optional<EquipmentDiagnosed> getByParameters(Long taskJournalId, Long equipmentId) {
-        return repository.findByTaskJournalIdAndEquipmentId(taskJournalId, equipmentId);
+    private EquipmentDiagnosed get(Long taskJournalId, Long equipmentId) {
+       return repository.findByTaskJournalIdAndEquipmentId(taskJournalId, equipmentId);
     }
 }

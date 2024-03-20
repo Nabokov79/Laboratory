@@ -4,59 +4,70 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
-import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
-import ru.nabokovsg.result.repository.CalculatingGeodesicMeasurementRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CalculatingGeodesicMeasurementServiceImpl implements CalculatingGeodesicMeasurementService {
-
-    private final CalculatingGeodesicMeasurementRepository repository;
-    private final PermissibleDeviationsGeodesyService geodesyService;
     private final ReferencePointService referencePointService;
     private final ControlPointService controlPointService;
 
     @Override
-    public void calculate(EquipmentDiagnosed equipmentDiagnosed, List<GeodesicMeasurement> geodesicMeasurements) {
-        PermissibleDeviationsGeodesy permissibleDeviationsGeodesy = geodesyService.getByParameters(equipmentDiagnosed);
-        List<GeodesicMeasurement> measurements = recalculate(geodesicMeasurements);
-        referencePointService.save(measurements);
-        controlPointService.save(measurements);
+    public void save(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements) {
+        List<GeodesicMeasurement> geodesicMeasurements = recalculateMeasurements(measurements);
+        referencePointService.save(equipmentDiagnosed, geodesicMeasurements);
+        controlPointService.save(geodesicMeasurements);
     }
 
-    private List<GeodesicMeasurement> recalculate(List<GeodesicMeasurement> geodesicMeasurements) {
-        Integer transitionValue = 0;
+    @Override
+    public void update(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements) {
+        List<GeodesicMeasurement> geodesicMeasurements = recalculateMeasurements(measurements);
+        referencePointService.update(equipmentDiagnosed, geodesicMeasurements);
+        controlPointService.update(geodesicMeasurements);
+    }
+
+    private List<GeodesicMeasurement> recalculateMeasurements(Set<GeodesicMeasurement> geodesicMeasurements) {
+        int delta = 0;
         Map<Integer, GeodesicMeasurement> measurements = geodesicMeasurements.stream()
                                            .collect(Collectors.toMap(GeodesicMeasurement::getSequentialNumber, g -> g));
-        for (int i = 1;  i == measurements.size() + 1; i++) {
+        for (int i = 1;  i <= measurements.size(); i++) {
             GeodesicMeasurement measurement = measurements.get(i);
-            if (transitionValue != 0) {
-                measurement.setReferencePointValue(sum(transitionValue, measurement.getReferencePointValue()));
-                measurement.setControlPointValue(sum(transitionValue,measurement.getControlPointValue()));
+            if (delta != 0) {
+                if (measurement.getReferencePointValue() != null) {
+                    measurement.setReferencePointValue(getNewMeasurementValue(measurement.getReferencePointValue(), delta));
+                }
+                measurement.setControlPointValue(getNewMeasurementValue(measurement.getControlPointValue(), delta));
                 measurements.put(measurement.getSequentialNumber(), measurement);
-            }
-            if (measurement.getTransitionValue() != null) {
-                transitionValue = sum(transitionValue, measurement.getTransitionValue());
-            }
 
+            }
+            delta = getDelta(measurement, delta);
         }
         return new ArrayList<>(measurements.values());
     }
 
-    private void calculatingReferencePoint(List<GeodesicMeasurement> geodesicMeasurements) {
-
+    private Integer getDelta(GeodesicMeasurement measurement, Integer delta) {
+        Integer measurementValue;
+        if (measurement.getReferencePointValue() == null) {
+            measurementValue = measurement.getControlPointValue();
+        } else {
+            measurementValue = measurement.getReferencePointValue();
+        }
+        if (measurement.getTransitionValue() != null) {
+            if (delta > 0) {
+                return measurementValue - measurement.getTransitionValue() + delta;
+            }
+            return measurementValue - measurement.getTransitionValue();
+        }
+        return delta;
     }
 
-    private void calculatingControlPoint(List<GeodesicMeasurement> geodesicMeasurements) {
 
-    }
-
-    private Integer sum(Integer transitionValue, Integer measuredValue) {
-        return transitionValue + measuredValue;
+        private Integer getNewMeasurementValue(int measurementValue, int delta) {
+        return measurementValue + delta;
     }
 }

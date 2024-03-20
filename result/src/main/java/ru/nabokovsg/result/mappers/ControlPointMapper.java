@@ -10,6 +10,9 @@ public interface ControlPointMapper {
     @Mapping(source = "placeNumber", target = "placeNumber")
     @Mapping(source = "calculatedHeight", target = "calculatedHeight")
     @Mapping(source = "deviation", target = "deviation")
-    @Mapping(target = "id", ignore = true)
-    ControlPoint mapToControlPoint(Integer placeNumber, Integer calculatedHeight, Integer deviation);
+    @Mapping(source = "id", target = "id")
+    ControlPoint mapToControlPoint(Long id
+                                 , Integer placeNumber
+                                 , Integer calculatedHeight
+                                 , Integer deviation);
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.nabokovsg.result.mappers.PointDifferenceMapper;
 import ru.nabokovsg.result.models.ControlPoint;
 import ru.nabokovsg.result.models.PointDifference;
+import ru.nabokovsg.result.models.enums.GeodesicPointType;
 import ru.nabokovsg.result.repository.PointDifferenceRepository;
 
 import java.util.List;
@@ -21,31 +22,48 @@ public class PointDifferenceServiceImpl implements PointDifferenceService {
 
     @Override
     public void save(List<ControlPoint> controlPoints) {
-        calculatedNeighboringPoints(controlPoints);
-        repository.saveAll(calculatedDiametricalPoints(controlPoints));
+        Map<Integer, ControlPoint> points = controlPoints.stream()
+                .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
+        repository.saveAll(calculatedNeighboringPoints(points));
+        repository.saveAll(calculatedDiametricalPoints(points));
     }
 
-    private void calculatedNeighboringPoints(List<ControlPoint> controlPoints) {
+    @Override
+    public void update(List<ControlPoint> controlPoints) {
         Map<Integer, ControlPoint> points = controlPoints.stream()
-                                                       .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
-        Map<Integer, Integer> neighboringPoints = identifyNeighboringPoints(points.keySet());
+                .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
+        repository.saveAll(calculatedNeighboringPoints(points));
+        repository.saveAll(calculatedDiametricalPoints(points));
     }
 
-    private List<PointDifference> calculatedDiametricalPoints(List<ControlPoint> controlPoints) {
-        Map<Integer, ControlPoint> points = controlPoints.stream()
-                                                       .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
-        Map<Integer, Integer> diametricalPoints = identifyDiametricalPoints(points.keySet());
-        return diametricalPoints.keySet()
+    private List<PointDifference> calculatedNeighboringPoints(Map<Integer, ControlPoint> points) {
+        int size = points.size();
+        Map<Integer, Integer> neighboringPoints = points.keySet()
+                                                 .stream()
+                                                 .collect(Collectors.toMap(p -> p, p -> getNeighboringPoints(p, size)));
+        return neighboringPoints.keySet()
                                 .stream()
-                                .map(p -> calculatedDifference(points.get(p), points.get(diametricalPoints.get(p))))
+                                .map(p -> mapping(GeodesicPointType.NEIGHBORING, points.get(p)
+                                                , points.get(neighboringPoints.get(p))))
                                 .toList();
     }
 
-    private Map<Integer, Integer> identifyNeighboringPoints(Set<Integer> placeNumbers) {
-
+    private Integer getNeighboringPoints(Integer firstPlace, int size) {
+        if (firstPlace != size) {
+            return ++firstPlace;
+        }
+       return 1;
     }
 
-    private Map<Integer, Integer> identifyDiametricalPoints(Set<Integer> placeNumbers) {
+    private List<PointDifference> calculatedDiametricalPoints(Map<Integer, ControlPoint> points) {
+        Map<Integer, Integer> diametricalPoints = getDiametricalPoints(points.keySet());
+        return diametricalPoints.keySet()
+                .stream()
+                .map(p -> mapping(GeodesicPointType.DIAMETRICAL, points.get(p), points.get(diametricalPoints.get(p))))
+                .toList();
+    }
+
+    private Map<Integer, Integer> getDiametricalPoints(Set<Integer> placeNumbers) {
         int difference = (int) Math.floor(placeNumbers.stream().max(Integer::compare).orElse(0) / 2.0);
         if (difference == 0) {
             throw new RuntimeException(
@@ -53,12 +71,15 @@ public class PointDifferenceServiceImpl implements PointDifferenceService {
             );
         }
         return placeNumbers.stream()
-                           .filter(i -> i <= difference)
-                           .collect(Collectors.toMap(i -> i, i -> i + difference));
+                .filter(i -> i <= difference)
+                .collect(Collectors.toMap(i -> i, i -> i + difference));
     }
 
-    private PointDifference calculatedDifference(ControlPoint firstPlace, ControlPoint secondPlace) {
-        return mapper.mapToPointDifference(firstPlace.getPlaceNumber()
+    private PointDifference mapping(GeodesicPointType geodesicPointType
+                                  , ControlPoint firstPlace
+                                  , ControlPoint secondPlace) {
+        return mapper.mapToPointDifference(geodesicPointType
+                                         , firstPlace.getPlaceNumber()
                                          , secondPlace.getPlaceNumber()
                                          , firstPlace.getDeviation() - secondPlace.getDeviation());
     }

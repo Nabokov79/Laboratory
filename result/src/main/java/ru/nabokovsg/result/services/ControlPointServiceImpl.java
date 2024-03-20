@@ -19,17 +19,26 @@ public class ControlPointServiceImpl implements ControlPointService {
 
     @Override
     public void save(List<GeodesicMeasurement> measurements) {
-        pointDifferenceService.save(repository.saveAll(calculatedDeviation(measurements)));
+        Integer min = getMinMeasurement(measurements);
+        List<ControlPoint> points = measurements.stream()
+                                                .map(m -> mapper.mapToControlPoint(m.getId()
+                                                                                 , m.getNumberMeasurementLocation()
+                                                                                 , m.getControlPointValue()
+                                                                                 , sum(min, m.getControlPointValue())))
+                                                .toList();
+        pointDifferenceService.save(repository.saveAll(points));
     }
 
-    private List<ControlPoint> calculatedDeviation(List<GeodesicMeasurement> measurements) {
+    @Override
+    public void update(List<GeodesicMeasurement> measurements) {
         Integer min = getMinMeasurement(measurements);
-        return measurements.stream()
-                .map(m -> mapper.mapToControlPoint(m.getNumberMeasurementLocation()
-                                                 , m.getControlPointValue()
-                                                 , sum(min, m.getControlPointValue()))
-                )
+        List<ControlPoint> points = measurements.stream()
+                .map(m -> mapper.mapToControlPoint(m.getId()
+                        , m.getNumberMeasurementLocation()
+                        , m.getControlPointValue()
+                        , sum(min, m.getControlPointValue())))
                 .toList();
+        pointDifferenceService.update(repository.saveAll(points));
     }
 
     private Integer getMinMeasurement(List<GeodesicMeasurement> measurements) {

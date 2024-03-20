@@ -10,7 +10,7 @@ public interface GeodesicMeasurementService {
 
     List<ResponseGeodesicMeasurementDto> save(GeodeticMeasurementEquipmentDto measurementsDto);
 
-    ResponseGeodesicMeasurementDto update(GeodesicMeasurementDto measurementDto);
+    List<ResponseGeodesicMeasurementDto> update(List<GeodesicMeasurementDto> measurementsDto);
 
     List<ResponseGeodesicMeasurementDto> getAll(Long id);
 

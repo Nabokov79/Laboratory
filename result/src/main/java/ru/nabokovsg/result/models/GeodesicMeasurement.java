@@ -30,4 +30,16 @@ public class GeodesicMeasurement {
     private Integer controlPointValue;
     @Column(name = "transition_value")
     private Integer transitionValue;
+
+    @Override
+    public String toString() {
+        return "GeodesicMeasurement{" +
+                "id=" + id +
+                ", sequentialNumber=" + sequentialNumber +
+                ", numberMeasurementLocation=" + numberMeasurementLocation +
+                ", referencePointValue=" + referencePointValue +
+                ", controlPointValue=" + controlPointValue +
+                ", transitionValue=" + transitionValue +
+                '}';
+    }
 }

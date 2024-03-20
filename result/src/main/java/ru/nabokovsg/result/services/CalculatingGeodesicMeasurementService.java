@@ -3,9 +3,10 @@ package ru.nabokovsg.result.services;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CalculatingGeodesicMeasurementService {
 
-    void calculate(EquipmentDiagnosed equipmentDiagnosed, List<GeodesicMeasurement> geodesicMeasurements);
+    void save(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements);
+    void update(EquipmentDiagnosed equipmentDiagnosed, Set<GeodesicMeasurement> measurements);
 }

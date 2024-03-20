@@ -22,7 +22,7 @@ public class ReferencePoint {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_diagnosed_id",  nullable = false)
     private EquipmentDiagnosed equipmentDiagnosed;
-    @Column(name = "peplace_number")
+    @Column(name = "place_number")
     private Integer placeNumber;
     @Column(name = "calculated_height")
     private Integer calculatedHeight;
@@ -30,8 +30,22 @@ public class ReferencePoint {
     private Integer deviation;
     @Column(name = "precipitation")
     private Integer precipitation;
-    @OneToMany(mappedBy = "calculatingGeodesicMeasurement", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "referencePoint", fetch = FetchType.LAZY)
     private List<DeviationYear> deviationYeas;
-    @Column(name = "acceptableValue")
+    @Column(name = "acceptable_value")
     private Boolean acceptableValue;
+
+    @Override
+    public String toString() {
+        return "ReferencePoint{" +
+                "id=" + id +
+                ", equipmentDiagnosed=" + equipmentDiagnosed +
+                ", placeNumber=" + placeNumber +
+                ", calculatedHeight=" + calculatedHeight +
+                ", deviation=" + deviation +
+                ", precipitation=" + precipitation +
+                ", deviationYeas=" + deviationYeas +
+                ", acceptableValue=" + acceptableValue +
+                '}';
+    }
 }

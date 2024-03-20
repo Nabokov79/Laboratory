@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "deviation|_years")
+@Table(name = "deviation_years")
 public class DeviationYear {
 
     @Id
@@ -22,6 +22,6 @@ public class DeviationYear {
     @Column(name = "deviation")
     private Integer deviation;
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "calculating_id",  nullable = false)
-    private ReferencePoint calculatingGeodesicMeasurement;
+    @JoinColumn(name = "reference_point_id",  nullable = false)
+    private ReferencePoint referencePoint;
 }

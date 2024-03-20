@@ -7,4 +7,6 @@ import java.util.List;
 public interface PointDifferenceService {
 
     void save(List<ControlPoint> controlPoints);
+
+    void update(List<ControlPoint> controlPoints);
 }

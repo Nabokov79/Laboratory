@@ -21,4 +21,15 @@ public class EquipmentDiagnosedDto {
     private Boolean full;
     @Schema(description = "Старое или новое оборудование(относиться к бакам-аккумуляторам для рассчета данных геодезии)")
     private Boolean equipmentOld;
+
+    @Override
+    public String toString() {
+        return "EquipmentDiagnosedDto{" +
+                "id=" + id +
+                ", equipmentTypeId=" + equipmentTypeId +
+                ", equipmentId=" + equipmentId +
+                ", full=" + full +
+                ", equipmentOld=" + equipmentOld +
+                '}';
+    }
 }
