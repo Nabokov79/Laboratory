@@ -1,13 +1,14 @@
 package ru.nabokovsg.result.services;
 
+import ru.nabokovsg.result.models.ControlPoint;
+import ru.nabokovsg.result.models.ControlPointMeasurement;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
-import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 
 import java.util.List;
 
 public interface ControlPointService {
 
-    void save(List<GeodesicMeasurement> measurements, PermissibleDeviationsGeodesy permissibleDeviations);
+    List<ControlPoint> save(ControlPointMeasurement controlPointMeasurement, List<GeodesicMeasurement> measurements);
 
-    void update(List<GeodesicMeasurement> measurements, PermissibleDeviationsGeodesy permissibleDeviations);
+    List<ControlPoint> update(ControlPointMeasurement controlPointMeasurement, List<GeodesicMeasurement> measurements);
 }

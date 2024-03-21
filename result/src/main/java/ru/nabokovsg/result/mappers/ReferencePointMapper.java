@@ -3,6 +3,7 @@ package ru.nabokovsg.result.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import ru.nabokovsg.result.dto.referencePoint.ReferencePointDto;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.ReferencePoint;
 
@@ -30,4 +31,6 @@ public interface ReferencePointMapper {
     ReferencePoint mapToUpdateReferencePoint(Long id, EquipmentDiagnosed equipmentDiagnosed
             , Integer placeNumber
             , Integer calculatedHeight);
+
+    ReferencePointDto mapToReferencePointDto(ReferencePoint point);
 }

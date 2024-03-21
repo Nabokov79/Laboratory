@@ -11,6 +11,7 @@ import ru.nabokovsg.result.mappers.GeodesicMeasurementMapper;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
+import ru.nabokovsg.result.models.builders.MeasurementBuilder;
 import ru.nabokovsg.result.repository.GeodesicMeasurementRepository;
 
 import java.util.*;
@@ -23,8 +24,8 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
     private final GeodesicMeasurementRepository repository;
     private final GeodesicMeasurementMapper mapper;
     private final EquipmentDiagnosedService equipmentDiagnosedService;
-    private final ReferencePointService referencePointService;
-    private final ControlPointService controlPointService;
+    private final ReferencePointMeasurementService referencePointService;
+    private final ControlPointMeasurementService controlPointMeasurementService;
     private final PermissibleDeviationsGeodesyService geodesyService;
     private final CalculatingGeodesicMeasurementService calculatingService;
 
@@ -107,18 +108,19 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
     }
 
     private void countingMeasurementPoints(EquipmentDiagnosed equipmentDiagnosed, List<GeodesicMeasurement> measurements, boolean flag) {
-        PermissibleDeviationsGeodesy permissibleDeviations = geodesyService.getByParameters(
-                                                                              equipmentDiagnosed.getEquipmentTypeId()
-                                                                            , equipmentDiagnosed.getFull()
-                                                                            , equipmentDiagnosed.getEquipmentOld());
+        PermissibleDeviationsGeodesy permissibleDeviations = geodesyService.getByParameters(equipmentDiagnosed);
         if (measurements.size() == permissibleDeviations.getNumberMeasurements()) {
-            List<GeodesicMeasurement> geodesicMeasurements = calculatingService.recalculateMeasurements(measurements);
+            MeasurementBuilder builder = new MeasurementBuilder.Builder()
+                                        .equipmentDiagnosed(equipmentDiagnosed)
+                                        .geodesicMeasurements(calculatingService.recalculateMeasurements(measurements))
+                                        .permissibleDeviations(permissibleDeviations)
+                                        .build();
             if (flag) {
-                referencePointService.save(equipmentDiagnosed, geodesicMeasurements, permissibleDeviations);
-                controlPointService.save(geodesicMeasurements, permissibleDeviations);
+                referencePointService.save(builder);
+                controlPointMeasurementService.save(builder);
             } else {
-                referencePointService.update(equipmentDiagnosed, geodesicMeasurements, permissibleDeviations);
-                controlPointService.update(geodesicMeasurements, permissibleDeviations);
+                referencePointService.update(builder);
+                controlPointMeasurementService.update(builder);
             }
         }
     }

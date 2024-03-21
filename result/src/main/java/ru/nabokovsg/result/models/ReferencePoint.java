@@ -32,8 +32,10 @@ public class ReferencePoint {
     private Integer precipitation;
     @OneToMany(mappedBy = "referencePoint", fetch = FetchType.LAZY)
     private List<DeviationYear> deviationYeas;
-    @Column(name = "acceptable_value")
-    private Boolean acceptableValue;
+    @Column(name = "acceptable_deviation")
+    private Boolean acceptableDeviation;
+    @Column(name = "acceptable_precipitation")
+    private Boolean acceptablePrecipitation;
 
     @Override
     public String toString() {
@@ -45,7 +47,8 @@ public class ReferencePoint {
                 ", deviation=" + deviation +
                 ", precipitation=" + precipitation +
                 ", deviationYeas=" + deviationYeas +
-                ", acceptableValue=" + acceptableValue +
+                ", acceptableDeviation=" + acceptableDeviation +
+                ", acceptablePrecipitation=" + acceptablePrecipitation +
                 '}';
     }
 }

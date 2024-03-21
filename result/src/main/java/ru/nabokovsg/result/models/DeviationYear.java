@@ -1,10 +1,7 @@
 package ru.nabokovsg.result.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
@@ -24,4 +21,14 @@ public class DeviationYear {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "reference_point_id",  nullable = false)
     private ReferencePoint referencePoint;
+
+    @Override
+    public String toString() {
+        return "DeviationYear{" +
+                "id=" + id +
+                ", year=" + year +
+                ", deviation=" + deviation +
+                ", referencePoint=" + referencePoint +
+                '}';
+    }
 }

@@ -6,6 +6,7 @@ import org.webjars.NotFoundException;
 import ru.nabokovsg.result.dto.geodesy.FullPermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.dto.geodesy.PermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.mappers.PermissibleDeviationsGeodesyMapper;
+import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.repository.PermissibleDeviationsGeodesyRepository;
 
@@ -47,14 +48,16 @@ public class PermissibleDeviationsGeodesyServiceImpl implements  PermissibleDevi
     }
 
     @Override
-    public PermissibleDeviationsGeodesy getByParameters(Long equipmentTypeId, Boolean full, Boolean old) {
-        PermissibleDeviationsGeodesy geodesy = repository.findByEquipmentTypeIdAndFullAndOld(equipmentTypeId
-                                                                                           , full
-                                                                                           , old);
+    public PermissibleDeviationsGeodesy getByParameters(EquipmentDiagnosed equipment) {
+        PermissibleDeviationsGeodesy geodesy = repository.findByEquipmentTypeIdAndFullAndOld(equipment.getEquipmentTypeId()
+                                                                                           , equipment.getFull()
+                                                                                           , equipment.getEquipmentOld());
         if (geodesy == null) {
             throw new NotFoundException(
                     String.format("Permissible deviations geodesy by param:" +
-                                " equipmentTypeId=%s, full=%s, old=%s not found", equipmentTypeId, full, old)
+                                " equipmentTypeId=%s, full=%s, old=%s not found", equipment.getEquipmentTypeId()
+                                                                                , equipment.getFull()
+                                                                                , equipment.getEquipmentOld())
             );
         }
         return geodesy;

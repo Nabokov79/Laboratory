@@ -30,10 +30,6 @@ public class EquipmentDiagnosed {
     private Boolean full;
     @Column(name = "equipment_old")
     private Boolean equipmentOld;
-    @OneToMany(mappedBy = "equipmentDiagnosed", fetch = FetchType.LAZY)
-    private List<GeodesicMeasurement> geodesicMeasurements;
-    @OneToMany(mappedBy = "equipmentDiagnosed", fetch = FetchType.LAZY)
-    private List<ReferencePoint> calculatingGeodesicMeasurements;
 
     @Override
     public String toString() {
@@ -44,8 +40,6 @@ public class EquipmentDiagnosed {
                 ", equipmentId=" + equipmentId +
                 ", full=" + full +
                 ", equipmentOld=" + equipmentOld +
-                ", geodesicMeasurements=" + geodesicMeasurements +
-                ", calculatingGeodesicMeasurements=" + calculatingGeodesicMeasurements +
                 '}';
     }
 
@@ -58,14 +52,11 @@ public class EquipmentDiagnosed {
                 && Objects.equals(equipmentTypeId, that.equipmentTypeId)
                 && Objects.equals(equipmentId, that.equipmentId)
                 && Objects.equals(full, that.full)
-                && Objects.equals(equipmentOld, that.equipmentOld)
-                && Objects.equals(geodesicMeasurements, that.geodesicMeasurements)
-                && Objects.equals(calculatingGeodesicMeasurements, that.calculatingGeodesicMeasurements);
+                && Objects.equals(equipmentOld, that.equipmentOld);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskJournalId, equipmentTypeId, equipmentId, full, equipmentOld
-                            , geodesicMeasurements, calculatingGeodesicMeasurements);
+        return Objects.hash(id, taskJournalId, equipmentTypeId, equipmentId, full, equipmentOld);
     }
 }

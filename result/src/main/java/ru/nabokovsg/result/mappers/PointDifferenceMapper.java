@@ -2,6 +2,8 @@ package ru.nabokovsg.result.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import ru.nabokovsg.result.models.ControlPointMeasurement;
 import ru.nabokovsg.result.models.PointDifference;
 import ru.nabokovsg.result.models.enums.GeodesicPointType;
 
@@ -17,4 +19,9 @@ public interface PointDifferenceMapper {
                                        , Integer firstPlaceNumber
                                        , Integer secondPlaceNumber
                                        , Integer difference);
+
+    @Mapping(source = "controlPointMeasurement", target = "controlPointMeasurement")
+    @Mapping(target = "id", ignore = true)
+    PointDifference mapPointDifferenceWithControlPointMeasurement(@MappingTarget PointDifference pointDifference
+                                                                    , ControlPointMeasurement controlPointMeasurement);
 }
