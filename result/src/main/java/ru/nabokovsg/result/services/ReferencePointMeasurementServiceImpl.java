@@ -20,31 +20,32 @@ public class ReferencePointMeasurementServiceImpl implements ReferencePointMeasu
     private final ReferencePointRepository repository;
     private final ReferencePointMapper mapper;
     private final DeviationYearService deviationYearService;
-    private final CalculatingPointMeasurementService calculatingPointService;
+    private final CalculationGeodesyPointsService calculatingPointService;
 
     @Override
     public void save(MeasurementBuilder builder) {
-        Integer min = calculatingPointService.getMinMeasurement(builder.getGeodesicMeasurements().stream().map(GeodesicMeasurement::getReferencePointValue).toList());
+        Integer min = calculatingPointService.getMinMeasurement(builder.getGeodesicMeasurements()
+                                                                       .stream()
+                                                                       .map(GeodesicMeasurement::getReferencePointValue)
+                                                                       .toList());
         int year = LocalDate.now().getYear();
-        List<ReferencePoint> points = repository.saveAll(
-                builder.getGeodesicMeasurements().stream()
-                            .map(m -> mapper.mapToReferencePoint(builder.getEquipmentDiagnosed()
-                                                               , m.getNumberMeasurementLocation()
-                                                               , m.getReferencePointValue()))
-                            .map(m -> {
-                                Integer deviation = calculatingPointService.getDeviation(min, m.getCalculatedHeight());
-                                Integer precipitation = calculatingPointService.getPrecipitation(deviation
-                                                                       , year
-                                                                       , m.getDeviationYeas());
-                                return mapper.mapToReferencePointData(m, deviation, precipitation);
-                            })
-                            .toList());
+        List<ReferencePoint> points = repository.saveAll(builder.getGeodesicMeasurements()
+                                                                .stream()
+                                                                .filter(m -> m.getReferencePointValue() != null)
+                                                                .map(m -> getReferencePoint(m
+                                                                        , builder.getEquipmentDiagnosed()
+                                                                        , min
+                                                                        , year))
+                                                                .toList());
         deviationYearService.save(points, year);
     }
 
     @Override
     public void update(MeasurementBuilder builder) {
-        Integer min = calculatingPointService.getMinMeasurement(builder.getGeodesicMeasurements().stream().map(GeodesicMeasurement::getReferencePointValue).toList());
+        Integer min = calculatingPointService.getMinMeasurement(builder.getGeodesicMeasurements()
+                                                                       .stream()
+                                                                       .map(GeodesicMeasurement::getReferencePointValue)
+                                                                       .toList());
         int year = LocalDate.now().getYear();
         Map<Integer, ReferencePoint> referencePoints = getReferencePoints(builder.getEquipmentDiagnosed().getId())
                 .stream()
@@ -79,5 +80,14 @@ public class ReferencePointMeasurementServiceImpl implements ReferencePointMeasu
 
     private Set<ReferencePoint> getReferencePoints(Long equipmentDiagnosedId) {
         return repository.getAllByEquipmentDiagnosedId(equipmentDiagnosedId);
+    }
+
+    private ReferencePoint getReferencePoint(GeodesicMeasurement measurement, EquipmentDiagnosed equipmentDiagnosed, Integer min, int year) {
+        ReferencePoint point = mapper.mapToReferencePoint(equipmentDiagnosed
+                                                        , measurement.getNumberMeasurementLocation()
+                                                        , measurement.getReferencePointValue());
+        Integer deviation = calculatingPointService.getDeviation(min, point.getCalculatedHeight());
+        Integer precipitation = calculatingPointService.getPrecipitation(deviation, year, point.getDeviationYeas());
+        return mapper.mapToReferencePointData(point, deviation, precipitation);
     }
 }

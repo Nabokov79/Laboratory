@@ -27,7 +27,7 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
     private final ReferencePointMeasurementService referencePointService;
     private final ControlPointMeasurementService controlPointMeasurementService;
     private final PermissibleDeviationsGeodesyService geodesyService;
-    private final CalculatingGeodesicMeasurementService calculatingService;
+    private final CalculationGeodesyPointsService calculatingService;
 
     @Override
     public List<ResponseGeodesicMeasurementDto> save(GeodeticMeasurementEquipmentDto measurementsDto) {
@@ -50,7 +50,7 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
                                 .stream()
                                 .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
                                 .toList())
-                        .forEach(m -> measurements.put(m.getNumberMeasurementLocation(), m));
+                                .forEach(m -> measurements.put(m.getNumberMeasurementLocation(), m));
                 countingMeasurementPoints(equipmentDiagnosed, new ArrayList<>(measurements.values()), true);
             }
         } else {

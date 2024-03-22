@@ -16,15 +16,16 @@ public class ControlPointServiceImpl implements ControlPointService {
 
     private final ControlPointRepository repository;
     private final ControlPointMapper mapper;
-    private final CalculatingPointMeasurementService calculatingPointService;
+    private final CalculationGeodesyPointsService calculatingPointService;
 
     @Override
     public List<ControlPoint> save(ControlPointMeasurement controlPointMeasurement, List<GeodesicMeasurement> measurements) {
-        Integer min = calculatingPointService.getMinMeasurement(measurements.stream().map(GeodesicMeasurement::getControlPointValue).toList());
+        Integer min = calculatingPointService.getMinMeasurement(measurements.stream()
+                                                                         .map(GeodesicMeasurement::getControlPointValue)
+                                                                         .toList());
         return repository.saveAll(measurements.stream()
                                               .map(m -> mapper.mapToControlPoint(
-                                                                            m.getId()
-                                                                            , m.getNumberMeasurementLocation()
+                                                                              m.getNumberMeasurementLocation()
                                                                             , m.getControlPointValue()
                                                                             , calculatingPointService.getDeviation(min
                                                                                     , m.getControlPointValue())
@@ -36,10 +37,10 @@ public class ControlPointServiceImpl implements ControlPointService {
     public List<ControlPoint> update(ControlPointMeasurement controlPointMeasurement, List<GeodesicMeasurement> measurements) {
         Integer min = calculatingPointService.getMinMeasurement(measurements.stream().map(GeodesicMeasurement::getControlPointValue).toList());
         return measurements.stream()
-                           .map(m -> mapper.mapToControlPoint(m.getId()
-                                                , m.getNumberMeasurementLocation()
-                                                , m.getControlPointValue()
-                                                , calculatingPointService.getDeviation(min, m.getControlPointValue())
+                           .map(m -> mapper.mapToControlPoint(m.getNumberMeasurementLocation()
+                                                            , m.getControlPointValue()
+                                                            , calculatingPointService.getDeviation(min
+                                                                                             , m.getControlPointValue())
                            , controlPointMeasurement))
                           .toList();
     }
