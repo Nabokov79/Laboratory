@@ -21,12 +21,12 @@ import ru.nabokovsg.result.services.EquipmentDiagnosedService;
         produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Tag(name="Данные оборудования подлежащего диагностики",
-        description="API для работы с данными оборудования подлежащего диагостики(обследованию)")
+        description="API для работы с данными оборудования подлежащего диагностики(обследованию)")
 public class EquipmentDiagnosedController {
 
     private final EquipmentDiagnosedService service;
 
-    @Operation(summary = "Добавить оборудование подлежащее диагостики(обследованию)")
+    @Operation(summary = "Добавить оборудование подлежащее диагностики(обследованию)")
     @PostMapping
     public ResponseEntity<HttpStatus> save(
             @RequestBody @Parameter(name = "Рекомендация") EquipmentDiagnosedDto equipmentDto) {
