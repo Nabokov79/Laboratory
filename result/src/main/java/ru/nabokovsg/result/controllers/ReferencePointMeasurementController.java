@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nabokovsg.result.dto.referencePoint.ReferencePointDto;
-import ru.nabokovsg.result.services.ReferencePointMeasurementService;
+import ru.nabokovsg.result.services.geodesic.ReferencePointMeasurementService;
 
 import java.util.List;
 

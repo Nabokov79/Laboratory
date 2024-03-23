@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,8 @@ import ru.nabokovsg.result.mappers.ReferencePointMapper;
 import ru.nabokovsg.result.models.*;
 import ru.nabokovsg.result.models.builders.MeasurementBuilder;
 import ru.nabokovsg.result.repository.ReferencePointRepository;
+import ru.nabokovsg.result.services.DeviationYearService;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

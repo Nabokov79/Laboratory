@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import ru.nabokovsg.result.dto.сontrolPoint.ControlPointMeasurementDto;
 import ru.nabokovsg.result.models.builders.MeasurementBuilder;

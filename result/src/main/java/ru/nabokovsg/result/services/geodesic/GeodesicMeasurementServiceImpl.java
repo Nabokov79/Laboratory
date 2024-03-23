@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,8 @@ import ru.nabokovsg.result.models.GeodesicMeasurement;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.models.builders.MeasurementBuilder;
 import ru.nabokovsg.result.repository.GeodesicMeasurementRepository;
+import ru.nabokovsg.result.services.EquipmentDiagnosedService;
+import ru.nabokovsg.result.services.PermissibleDeviationsGeodesyService;
 
 import java.util.*;
 import java.util.stream.Collectors;

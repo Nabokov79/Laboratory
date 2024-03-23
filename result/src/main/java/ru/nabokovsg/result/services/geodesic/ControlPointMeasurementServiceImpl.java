@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,9 +32,12 @@ public class ControlPointMeasurementServiceImpl implements ControlPointMeasureme
                                      new MeasurementBuilder.Builder()
                                                            .equipmentDiagnosed(builder.getEquipmentDiagnosed())
                                                            .build()));
-        pointDifferenceService.save(controlPointMeasurement
-                                  , controlPointService.save(controlPointMeasurement
-                                                           , builder.getGeodesicMeasurements())
+        pointDifferenceService.save(new MeasurementBuilder.Builder()
+                .controlPointMeasurement(builder.getControlPointMeasurement())
+                .controlPointMeasurement(controlPointMeasurement)
+                .controlPoints(controlPointService.save(controlPointMeasurement, builder.getGeodesicMeasurements()))
+                .permissibleDeviations(builder.getPermissibleDeviations())
+                .build()
         );
     }
 
@@ -47,9 +50,12 @@ public class ControlPointMeasurementServiceImpl implements ControlPointMeasureme
                                               new MeasurementBuilder.Builder()
                                                                     .equipmentDiagnosed(builder.getEquipmentDiagnosed())
                                                                     .build()));
-            pointDifferenceService.save(controlPointMeasurement
-                                      , controlPointService.save(controlPointMeasurement
-                                                               , builder.getGeodesicMeasurements())
+            pointDifferenceService.save(new MeasurementBuilder.Builder()
+                    .controlPointMeasurement(builder.getControlPointMeasurement())
+                    .controlPointMeasurement(controlPointMeasurement)
+                    .controlPoints(controlPointService.save(controlPointMeasurement, builder.getGeodesicMeasurements()))
+                    .permissibleDeviations(builder.getPermissibleDeviations())
+                    .build()
             );
         }
         throw new NotFoundException(

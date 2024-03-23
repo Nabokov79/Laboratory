@@ -21,7 +21,9 @@ public interface PointDifferenceMapper {
                                        , Integer difference);
 
     @Mapping(source = "controlPointMeasurement", target = "controlPointMeasurement")
+    @Mapping(source = "acceptableDeviation", target = "acceptableDeviation")
     @Mapping(target = "id", ignore = true)
     PointDifference mapPointDifferenceWithControlPointMeasurement(@MappingTarget PointDifference pointDifference
+                                                                  , Boolean acceptableDeviation
                                                                     , ControlPointMeasurement controlPointMeasurement);
 }

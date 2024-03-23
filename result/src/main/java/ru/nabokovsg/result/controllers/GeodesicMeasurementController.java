@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.result.dto.geodesic.GeodesicMeasurementDto;
 import ru.nabokovsg.result.dto.geodesic.GeodeticMeasurementEquipmentDto;
 import ru.nabokovsg.result.dto.geodesic.ResponseGeodesicMeasurementDto;
-import ru.nabokovsg.result.services.GeodesicMeasurementService;
+import ru.nabokovsg.result.services.geodesic.GeodesicMeasurementService;
 
 import java.util.List;
 

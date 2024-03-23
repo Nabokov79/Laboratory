@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nabokovsg.result.dto.сontrolPoint.ControlPointMeasurementDto;
-import ru.nabokovsg.result.services.ControlPointMeasurementService;
+import ru.nabokovsg.result.services.geodesic.ControlPointMeasurementService;
 
 
 @RestController

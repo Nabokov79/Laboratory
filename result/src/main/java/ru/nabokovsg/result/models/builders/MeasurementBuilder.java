@@ -3,13 +3,14 @@ package ru.nabokovsg.result.models.builders;
 import ru.nabokovsg.result.models.*;
 
 import java.util.List;
+import java.util.Set;
 
 public class MeasurementBuilder {
 
     private final EquipmentDiagnosed equipmentDiagnosed;
     private final List<GeodesicMeasurement> geodesicMeasurements;
     private final PermissibleDeviationsGeodesy permissibleDeviations;
-    private final List<ControlPoint> controlPoints;
+    private final Set<ControlPoint> controlPoints;
     private final ControlPointMeasurement controlPointMeasurement;
 
     public MeasurementBuilder(Builder builder) {
@@ -32,7 +33,7 @@ public class MeasurementBuilder {
         return permissibleDeviations;
     }
 
-    public List<ControlPoint> getControlPoints() {
+    public Set<ControlPoint> getControlPoints() {
         return controlPoints;
     }
 
@@ -45,7 +46,7 @@ public class MeasurementBuilder {
         private EquipmentDiagnosed equipmentDiagnosed;
         private List<GeodesicMeasurement> geodesicMeasurements;
         private PermissibleDeviationsGeodesy permissibleDeviations;
-        private List<ControlPoint> controlPoints;
+        private Set<ControlPoint> controlPoints;
         private ControlPointMeasurement controlPointMeasurement;
 
         public Builder equipmentDiagnosed(EquipmentDiagnosed equipmentDiagnosed) {
@@ -63,7 +64,7 @@ public class MeasurementBuilder {
             return this;
         }
 
-        public Builder controlPoints(List<ControlPoint> controlPoints) {
+        public Builder controlPoints(Set<ControlPoint> controlPoints) {
             this.controlPoints = controlPoints;
             return this;
         }

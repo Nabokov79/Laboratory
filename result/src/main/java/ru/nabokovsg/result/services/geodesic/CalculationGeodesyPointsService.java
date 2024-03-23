@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import ru.nabokovsg.result.models.DeviationYear;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
@@ -11,7 +11,7 @@ public interface CalculationGeodesyPointsService {
 
     Integer getMinMeasurement(List<Integer>  calculatedHeights);
 
-    Integer getDeviation(Integer min, Integer calculatedHeight);
+    Integer getDeviation(Integer firstNumber, Integer secondNumber);
 
     Integer getPrecipitation(Integer newDeviation, int year, List<DeviationYear> deviationYeas);
 }

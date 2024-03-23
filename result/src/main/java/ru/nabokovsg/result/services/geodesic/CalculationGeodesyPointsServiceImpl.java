@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.services;
+package ru.nabokovsg.result.services.geodesic;
 
 import org.springframework.stereotype.Service;
 import ru.nabokovsg.result.models.DeviationYear;
@@ -17,19 +17,22 @@ public class CalculationGeodesyPointsServiceImpl implements CalculationGeodesyPo
                                            .collect(Collectors.toMap(GeodesicMeasurement::getSequentialNumber, g -> g));
         for (int i = 1;  i <= measurements.size(); i++) {
             GeodesicMeasurement measurement = measurements.get(i);
-            if (delta != 0) {
-                if (measurement.getReferencePointValue() != null) {
-                    measurement.setReferencePointValue(
-                            getNewMeasurementValue(measurement.getReferencePointValue(), delta)
-                    );
-                }
-                measurement.setControlPointValue(getNewMeasurementValue(measurement.getControlPointValue(), delta));
-                measurements.put(measurement.getSequentialNumber(), measurement);
-
+            measurements.put(measurement.getSequentialNumber(), getRecalculateMeasurement(measurement, delta));
+            if (measurement.getTransitionValue() != null) {
+                delta = getDelta(measurement.getControlPointValue(), measurement.getTransitionValue());
             }
-            delta = getDelta(measurement, delta);
         }
         return new ArrayList<>(measurements.values());
+    }
+
+    public GeodesicMeasurement getRecalculateMeasurement(GeodesicMeasurement measurement, int delta) {
+        if (measurement.getReferencePointValue() != null) {
+            measurement.setReferencePointValue(
+                    getSumMeasurementAndDelta(measurement.getReferencePointValue(), delta)
+            );
+        }
+        measurement.setControlPointValue(getSumMeasurementAndDelta(measurement.getControlPointValue(), delta));
+        return measurement;
     }
 
     @Override
@@ -45,8 +48,8 @@ public class CalculationGeodesyPointsServiceImpl implements CalculationGeodesyPo
     }
 
     @Override
-    public Integer getDeviation(Integer min, Integer calculatedHeight) {
-        return min - calculatedHeight;
+    public Integer getDeviation(Integer firstNumber, Integer secondNumber) {
+        return firstNumber - secondNumber;
     }
 
     @Override
@@ -60,14 +63,11 @@ public class CalculationGeodesyPointsServiceImpl implements CalculationGeodesyPo
                                             .get(year);
     }
 
-    private Integer getDelta(GeodesicMeasurement measurement, Integer delta) {
-        if (measurement.getTransitionValue() != null) {
-            return measurement.getControlPointValue() - measurement.getTransitionValue() + delta;
-        }
-        return delta;
+    private Integer getDelta(int measurementValue, int transitionValue) {
+        return measurementValue - transitionValue;
     }
 
-        private Integer getNewMeasurementValue(int measurementValue, int delta) {
+        private Integer getSumMeasurementAndDelta(int measurementValue, int delta) {
         return measurementValue + delta;
     }
 }
