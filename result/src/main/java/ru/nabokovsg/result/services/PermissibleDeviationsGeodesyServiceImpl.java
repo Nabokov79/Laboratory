@@ -3,8 +3,8 @@ package ru.nabokovsg.result.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-import ru.nabokovsg.result.dto.geodesy.FullPermissibleDeviationsGeodesyDto;
-import ru.nabokovsg.result.dto.geodesy.PermissibleDeviationsGeodesyDto;
+import ru.nabokovsg.result.dto.permissibleDeviations.ResponsePermissibleDeviationsGeodesyDto;
+import ru.nabokovsg.result.dto.permissibleDeviations.PermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.mappers.PermissibleDeviationsGeodesyMapper;
 import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
@@ -21,7 +21,7 @@ public class PermissibleDeviationsGeodesyServiceImpl implements  PermissibleDevi
     private final PermissibleDeviationsGeodesyMapper mapper;
 
     @Override
-    public FullPermissibleDeviationsGeodesyDto save(PermissibleDeviationsGeodesyDto geodesyDto) {
+    public ResponsePermissibleDeviationsGeodesyDto save(PermissibleDeviationsGeodesyDto geodesyDto) {
         return mapper.mapToFullPermissibleDeviationsGeodesyDto(
                 Objects.requireNonNullElseGet(
                         repository.findByEquipmentTypeIdAndFullAndOld(geodesyDto.getEquipmentTypeId()
@@ -31,7 +31,7 @@ public class PermissibleDeviationsGeodesyServiceImpl implements  PermissibleDevi
     }
 
     @Override
-    public FullPermissibleDeviationsGeodesyDto update(PermissibleDeviationsGeodesyDto geodesyDto) {
+    public ResponsePermissibleDeviationsGeodesyDto update(PermissibleDeviationsGeodesyDto geodesyDto) {
         if (repository.existsById(geodesyDto.getId())) {
             return mapper.mapToFullPermissibleDeviationsGeodesyDto(
                     repository.save(mapper.mapToPermissibleDeviationsGeodesy(geodesyDto))
@@ -43,7 +43,7 @@ public class PermissibleDeviationsGeodesyServiceImpl implements  PermissibleDevi
     }
 
     @Override
-    public List<FullPermissibleDeviationsGeodesyDto> getAll(Long id) {
+    public List<ResponsePermissibleDeviationsGeodesyDto> getAll(Long id) {
         return null;
     }
 

@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.dto.geodesy;
+package ru.nabokovsg.result.dto.permissibleDeviations;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

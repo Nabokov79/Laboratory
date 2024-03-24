@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.dto.geodesy;
+package ru.nabokovsg.result.dto.permissibleDeviations;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные значений норм для проведения геодезии(нивелирования)")
-public class FullPermissibleDeviationsGeodesyDto {
+public class ResponsePermissibleDeviationsGeodesyDto {
 
     @Schema(description = "Индентификатор")
     private long id;

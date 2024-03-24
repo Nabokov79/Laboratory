@@ -19,37 +19,38 @@ import java.util.List;
         consumes = MediaType.ALL_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-@Tag(name="Данные допустимых толщин элементов оборудования",
-        description="API для работы с данными норм для толщин элементов оборудования")
+@Tag(name="Данные допустимых толщин и твердости металла элементов оборудования",
+        description="API для работы с данными норм для " +
+                "минимальных допустимых толщин и твердости металла элементов оборудования")
 public class AcceptableThicknessController {
 
     private final AcceptableThicknessService service;
 
-    @Operation(summary = "Новая рекомендация для раздела отчета")
+    @Operation(summary = "Добавить новые данные допустимых толщин и твердости металла")
     @PostMapping
     public ResponseEntity<FullAcceptableThicknessDto> save(
             @RequestBody @Parameter(name = "Рекомендация") AcceptableThicknessDto thicknessDto) {
         return ResponseEntity.ok().body(service.save(thicknessDto));
     }
 
-    @Operation(summary = "Изменение рекомендации")
+    @Operation(summary = "Изменение данных допустимых толщин и твердости металла")
     @PatchMapping
     public ResponseEntity<FullAcceptableThicknessDto> update(
-            @RequestBody @Parameter(name = "Рекомендация") AcceptableThicknessDto thicknessDto) {
+            @RequestBody @Parameter(name = "Данные толщин и тердости металла") AcceptableThicknessDto thicknessDto) {
         return ResponseEntity.ok().body(service.update(thicknessDto));
     }
 
-    @Operation(summary = "Получить рекомендации по типу объекта")
+    @Operation(summary = "Получить донные допустимых толщин и твердости металла по типу оборудования")
     @GetMapping("/{id}")
     public ResponseEntity<List<FullAcceptableThicknessDto>> getAll(
             @PathVariable @Parameter(name = "Индентификатор типа оборудования") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }
 
-    @Operation(summary = "Удалить рекомендацию")
+    @Operation(summary = "Удалить данные допустимых толщин и твердости металла элементов оборудования")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable @Parameter(name = "Индентификатор") Long id) {
         service.delete(id);
-        return ResponseEntity.ok("Рекомендация успешно удалена.");
+        return ResponseEntity.ok("Данные допустимых толщин и твердости металла успешно удалены.");
     }
 }

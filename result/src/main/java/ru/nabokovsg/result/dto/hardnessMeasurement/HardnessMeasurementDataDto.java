@@ -1,8 +1,9 @@
-package ru.nabokovsg.result.dto.geodesic;
+package ru.nabokovsg.result.dto.hardnessMeasurement;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.List;
 @Setter
 @Getter
 @AllArgsConstructor
-@Schema(description = "Результаты выполнения геодезии(нивелировании)")
-public class GeodeticMeasurementEquipmentDto {
+@NoArgsConstructor
+@Schema(description = "Результаты выполнения измерений твердости металла элементов оборудования")
+public class HardnessMeasurementDataDto {
 
     @Schema(description = "Индентификатор записи журнала задач")
     private Long taskJournalId;
@@ -19,8 +21,6 @@ public class GeodeticMeasurementEquipmentDto {
     private Long equipmentTypeId;
     @Schema(description = "Индентификатор оборудования")
     private Long equipmentId;
-    @Schema(description = "Пустой или полный бак-аккумулятор")
-    private Boolean full;
-    @Schema(description = "Результаты выполнения геодезии(нивелировании)")
-    private List<GeodesicMeasurementDto> measurements;
+    @Schema(description = "Результаты измерения твердости металла")
+    private List<HardnessMeasurementDto> hardnessMeasurements;
 }

@@ -12,6 +12,7 @@ import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.models.builders.MeasurementBuilder;
+import ru.nabokovsg.result.models.builders.SearchParametersBuilder;
 import ru.nabokovsg.result.repository.GeodesicMeasurementRepository;
 import ru.nabokovsg.result.services.EquipmentDiagnosedService;
 import ru.nabokovsg.result.services.PermissibleDeviationsGeodesyService;
@@ -34,7 +35,7 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
     @Override
     public List<ResponseGeodesicMeasurementDto> save(GeodeticMeasurementEquipmentDto measurementsDto) {
         Map<Integer, GeodesicMeasurement> measurements = repository.findAllByTaskJournalId(
-                        measurementsDto.getId()).stream()
+                        measurementsDto.getTaskJournalId()).stream()
                 .collect(Collectors.toMap(GeodesicMeasurement::getNumberMeasurementLocation, g -> g)
                 );
         if (measurements.size() != measurementsDto.getMeasurements().size() || measurements.isEmpty()) {
@@ -43,11 +44,12 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
                     .filter(m -> !measurements.containsKey(m.getNumberMeasurementLocation()))
                     .toList());
             if (!measurementsDto.getMeasurements().isEmpty()) {
-                EquipmentDiagnosed equipmentDiagnosed =
-                        equipmentDiagnosedService.getEquipmentDiagnosedData(measurementsDto.getId()
-                                , measurementsDto.getEquipmentId()
-                                , measurementsDto.getFull()
-                        );
+                EquipmentDiagnosed equipmentDiagnosed = equipmentDiagnosedService.getEquipmentDiagnosedData(
+                        new SearchParametersBuilder.SearchParameters()
+                                                   .taskJournalId(measurementsDto.getTaskJournalId())
+                                                   .equipmentId(measurementsDto.getEquipmentId())
+                                                   .full(measurementsDto.getFull())
+                                                   .build());
                 repository.saveAll(measurementsDto.getMeasurements()
                                 .stream()
                                 .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
@@ -58,7 +60,7 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
         } else {
             throw new BadRequestException(
                     String.format("Geodetic measurement equipment by TaskJournal with id=%s found. Update the results"
-                            , measurementsDto.getId())
+                            , measurementsDto.getTaskJournalId())
             );
         }
         return measurements.values()

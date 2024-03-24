@@ -8,8 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.nabokovsg.result.dto.geodesy.FullPermissibleDeviationsGeodesyDto;
-import ru.nabokovsg.result.dto.geodesy.PermissibleDeviationsGeodesyDto;
+import ru.nabokovsg.result.dto.permissibleDeviations.ResponsePermissibleDeviationsGeodesyDto;
+import ru.nabokovsg.result.dto.permissibleDeviations.PermissibleDeviationsGeodesyDto;
 import ru.nabokovsg.result.services.PermissibleDeviationsGeodesyService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class PermissibleDeviationsGeodesyController {
 
     @Operation(summary = "Новая рекомендация для раздела отчета")
     @PostMapping
-    public ResponseEntity<FullPermissibleDeviationsGeodesyDto> save(
+    public ResponseEntity<ResponsePermissibleDeviationsGeodesyDto> save(
             @RequestBody
             @Parameter(name = "Нормы по геодезии(нивелированию)") PermissibleDeviationsGeodesyDto geodesyDto) {
         return ResponseEntity.ok().body(service.save(geodesyDto));
@@ -37,7 +37,7 @@ public class PermissibleDeviationsGeodesyController {
 
     @Operation(summary = "Изменение рекомендации")
     @PatchMapping
-    public ResponseEntity<FullPermissibleDeviationsGeodesyDto> update(
+    public ResponseEntity<ResponsePermissibleDeviationsGeodesyDto> update(
             @RequestBody
             @Parameter(name = "Нормы по геодезии(нивелированию)") PermissibleDeviationsGeodesyDto geodesyDto) {
         return ResponseEntity.ok().body(service.update(geodesyDto));
@@ -45,7 +45,7 @@ public class PermissibleDeviationsGeodesyController {
 
     @Operation(summary = "Получить рекомендации по типу объекта")
     @GetMapping("/{id}")
-    public ResponseEntity<List<FullPermissibleDeviationsGeodesyDto>> getAll(
+    public ResponseEntity<List<ResponsePermissibleDeviationsGeodesyDto>> getAll(
             @PathVariable @Parameter(name = "Индентификатор типа оборудования") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }
