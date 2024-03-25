@@ -17,4 +17,15 @@ public interface ControlPointMapper {
                                  , Integer calculatedHeight
                                  , Integer deviation
                                  , ControlPointMeasurement controlPointMeasurement);
+
+    @Mapping(source = "placeNumber", target = "placeNumber")
+    @Mapping(source = "calculatedHeight", target = "calculatedHeight")
+    @Mapping(source = "deviation", target = "deviation")
+    @Mapping(source = "controlPointMeasurement", target = "controlPointMeasurement")
+    @Mapping(source = "id", target = "id")
+    ControlPoint mapToUpdateControlPoint(Long id
+                                       , Integer placeNumber
+                                       , Integer calculatedHeight
+                                       , Integer deviation
+                                       , ControlPointMeasurement controlPointMeasurement);
 }

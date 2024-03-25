@@ -8,5 +8,7 @@ public interface EquipmentDiagnosedService {
 
     void save(EquipmentDiagnosedDto equipmentDto);
 
+    EquipmentDiagnosed add(Long taskJournalId, Long equipmentId, boolean full);
+
     EquipmentDiagnosed getEquipmentDiagnosedData(SearchParametersBuilder parameters);
 }

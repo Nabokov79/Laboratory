@@ -46,17 +46,14 @@ public class ControlPointMeasurementServiceImpl implements ControlPointMeasureme
         ControlPointMeasurement controlPointMeasurement = repository.findByEquipmentDiagnosedId(
                                                                                builder.getEquipmentDiagnosed().getId());
         if (controlPointMeasurement != null) {
-            controlPointMeasurement = repository.save(mapper.mapToControlPointMeasurement(
-                                              new MeasurementBuilder.Builder()
-                                                                    .equipmentDiagnosed(builder.getEquipmentDiagnosed())
-                                                                    .build()));
-            pointDifferenceService.save(new MeasurementBuilder.Builder()
+            pointDifferenceService.update(new MeasurementBuilder.Builder()
                     .controlPointMeasurement(builder.getControlPointMeasurement())
                     .controlPointMeasurement(controlPointMeasurement)
-                    .controlPoints(controlPointService.save(controlPointMeasurement, builder.getGeodesicMeasurements()))
+                    .controlPoints(controlPointService.update(controlPointMeasurement, builder.getGeodesicMeasurements()))
                     .permissibleDeviations(builder.getPermissibleDeviations())
                     .build()
             );
+            return;
         }
         throw new NotFoundException(
                 String.format("ControlPointMeasurement by equipmentDiagnosedId=%s not found for update"
@@ -66,16 +63,12 @@ public class ControlPointMeasurementServiceImpl implements ControlPointMeasureme
 
     @Override
     public ControlPointMeasurementDto get(Long id) {
-        ControlPointMeasurement measurement = getByEquipmentDiagnosedId(id);
+        ControlPointMeasurement measurement = repository.findByEquipmentDiagnosedId(id);
         if (measurement == null) {
             throw new NotFoundException(
                     String.format("ControlPointMeasurement by equipmentDiagnosedId=%s not found for update", id)
             );
         }
         return mapper.mapToControlPointMeasurementDto(measurement);
-    }
-
-    private ControlPointMeasurement getByEquipmentDiagnosedId(Long equipmentDiagnosedId) {
-        return repository.findByEquipmentDiagnosedId(equipmentDiagnosedId);
     }
 }

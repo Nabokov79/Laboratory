@@ -20,10 +20,18 @@ public interface PointDifferenceMapper {
                                        , Integer secondPlaceNumber
                                        , Integer difference);
 
-    @Mapping(source = "controlPointMeasurement", target = "controlPointMeasurement")
+    @Mapping(source = "measurement", target = "controlPointMeasurement")
     @Mapping(source = "acceptableDeviation", target = "acceptableDeviation")
     @Mapping(target = "id", ignore = true)
     PointDifference mapPointDifferenceWithControlPointMeasurement(@MappingTarget PointDifference pointDifference
-                                                                  , Boolean acceptableDeviation
-                                                                    , ControlPointMeasurement controlPointMeasurement);
+                                                                               , Boolean acceptableDeviation
+                                                                               , ControlPointMeasurement measurement);
+
+    @Mapping(source = "measurement", target = "controlPointMeasurement")
+    @Mapping(source = "acceptableDeviation", target = "acceptableDeviation")
+    @Mapping(source = "id", target = "id")
+    PointDifference mapToUpdatePointDifference(@MappingTarget PointDifference pointDifference
+                                                            , Long id
+                                                            , Boolean acceptableDeviation
+                                                            , ControlPointMeasurement measurement);
 }

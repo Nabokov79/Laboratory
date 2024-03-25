@@ -12,7 +12,6 @@ import ru.nabokovsg.result.models.EquipmentDiagnosed;
 import ru.nabokovsg.result.models.GeodesicMeasurement;
 import ru.nabokovsg.result.models.PermissibleDeviationsGeodesy;
 import ru.nabokovsg.result.models.builders.MeasurementBuilder;
-import ru.nabokovsg.result.models.builders.SearchParametersBuilder;
 import ru.nabokovsg.result.repository.GeodesicMeasurementRepository;
 import ru.nabokovsg.result.services.EquipmentDiagnosedService;
 import ru.nabokovsg.result.services.PermissibleDeviationsGeodesyService;
@@ -44,12 +43,9 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
                     .filter(m -> !measurements.containsKey(m.getNumberMeasurementLocation()))
                     .toList());
             if (!measurementsDto.getMeasurements().isEmpty()) {
-                EquipmentDiagnosed equipmentDiagnosed = equipmentDiagnosedService.getEquipmentDiagnosedData(
-                        new SearchParametersBuilder.SearchParameters()
-                                                   .taskJournalId(measurementsDto.getTaskJournalId())
-                                                   .equipmentId(measurementsDto.getEquipmentId())
-                                                   .full(measurementsDto.getFull())
-                                                   .build());
+                EquipmentDiagnosed equipmentDiagnosed = equipmentDiagnosedService.add(measurementsDto.getTaskJournalId()
+                                                                                    , measurementsDto.getEquipmentId()
+                                                                                    , measurementsDto.getFull());
                 repository.saveAll(measurementsDto.getMeasurements()
                                 .stream()
                                 .map(m -> mapper.mapToGeodesicMeasurement(m, equipmentDiagnosed))
@@ -87,8 +83,8 @@ public class GeodesicMeasurementServiceImpl implements GeodesicMeasurementServic
                     .toList());
             countingMeasurementPoints(equipmentDiagnosed, measurements, false);
             return measurements.stream()
-                    .map(mapper::mapToResponseGeodesicMeasurementDto)
-                    .toList();
+                               .map(mapper::mapToResponseGeodesicMeasurementDto)
+                               .toList();
         }
         throw new NotFoundException(
                 String.format("Geodetic measurement equipment by ids=%s not found for update", ids));

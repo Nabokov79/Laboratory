@@ -30,6 +30,16 @@ public class EquipmentDiagnosedServiceImpl implements EquipmentDiagnosedService 
     }
 
     @Override
+    public EquipmentDiagnosed add(Long taskJournalId, Long equipmentId, boolean full) {
+        return repository.save(mapper.mapToParamFull(getEquipmentDiagnosedData(
+                                                                        new SearchParametersBuilder.SearchParameters()
+                                                                                .taskJournalId(taskJournalId)
+                                                                                .equipmentId(equipmentId)
+                                                                                .build())
+                                                                        , full));
+    }
+
+    @Override
     public EquipmentDiagnosed getEquipmentDiagnosedData(SearchParametersBuilder parameters) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QEquipmentDiagnosed equipmentDiagnosed = QEquipmentDiagnosed.equipmentDiagnosed;

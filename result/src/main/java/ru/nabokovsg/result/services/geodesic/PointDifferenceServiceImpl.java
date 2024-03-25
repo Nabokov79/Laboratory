@@ -39,21 +39,28 @@ public class PointDifferenceServiceImpl implements PointDifferenceService {
     }
     @Override
     public void update(MeasurementBuilder builder) {
+        Map<String, Long> pointDifferences = builder.getControlPointMeasurement().getPointDifferences()
+                .stream()
+                .collect(Collectors.toMap(p -> convertToString(p.getFirstPlaceNumber(), p.getSecondPlaceNumber())
+                                        , PointDifference::getId));
         repository.saveAll(calculated(builder.getControlPoints())
                                              .stream()
-                                             .map(m -> mapper.mapPointDifferenceWithControlPointMeasurement(
-                                                    m
-                                                  , determinePermissibleDeviation(m, builder.getPermissibleDeviations())
-                                                  , builder.getControlPointMeasurement()))
+                                             .map(m -> mapper.mapToUpdatePointDifference(
+                                                  m
+                                                 , pointDifferences.get(
+                                                    convertToString(m.getFirstPlaceNumber(), m.getSecondPlaceNumber())
+                                                     )
+                                                , determinePermissibleDeviation(m, builder.getPermissibleDeviations())
+                                                , builder.getControlPointMeasurement()))
                                             .toList());
     }
 
     private List<PointDifference> calculated(Set<ControlPoint> controlPoints) {
         Map<Integer, ControlPoint> points = controlPoints.stream()
-                .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
+                                                       .collect(Collectors.toMap(ControlPoint::getPlaceNumber, c -> c));
         return Stream.of(calculatedNeighboringPoints(points), calculatedDiametricalPoints(points))
-                .flatMap(Collection::stream)
-                .toList();
+                     .flatMap(Collection::stream)
+                     .toList();
     }
 
     private List<PointDifference> calculatedNeighboringPoints(Map<Integer, ControlPoint> points) {
@@ -117,5 +124,9 @@ public class PointDifferenceServiceImpl implements PointDifferenceService {
                 return false;
             }
         }
+    }
+
+    private String convertToString(Integer firstPlaceNumber, Integer secondPlaceNumber) {
+        return String.join("", String.valueOf(firstPlaceNumber), String.valueOf(secondPlaceNumber));
     }
 }

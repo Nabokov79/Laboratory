@@ -35,7 +35,7 @@ public class HardnessMeasurementServiceImpl implements HardnessMeasurementServic
                                           .stream()
                                           .collect(Collectors.toMap(HardnessMeasurement::getMeasurementNumber, h -> h));
         EquipmentDiagnosed equipmentDiagnosed = equipmentDiagnosedService.getEquipmentDiagnosedData(
-                                                            new SearchParametersBuilder.SearchParameters()
+                                         new SearchParametersBuilder.SearchParameters()
                                                                     .taskJournalId(measurementsDto.getTaskJournalId())
                                                                     .equipmentId(measurementsDto.getEquipmentId())
                                                                     .build());
@@ -121,10 +121,11 @@ public class HardnessMeasurementServiceImpl implements HardnessMeasurementServic
     private boolean getAcceptableValue(FullAcceptableThicknessDto acceptableThickness
                                                     , HardnessMeasurement measurement) {
         if (acceptableThickness == null) {
-            return measurement.getAcceptableValue();
+            return false;
+        } else {
+            return measurement.getMeasurementValue() < acceptableThickness.getMinHardness() ||
+                    measurement.getMeasurementValue() > acceptableThickness.getMaxHardness();
         }
-        return measurement.getMeasurementValue() < acceptableThickness.getMinHardness() ||
-               measurement.getMeasurementValue() > acceptableThickness.getMaxHardness();
     }
 
     private Integer calculateAverageValue(List<Integer> measurementValues) {
