@@ -21,4 +21,6 @@ public class SizeParameters {
     private String parametersName;
     @Column(name = "unit_measurement")
     private String unitMeasurement;
+    @Column(name = "unit_measurement")
+    private Boolean useCalculateThickness;
 }
