@@ -10,8 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "repair_methods")
-public class RepairMethod {
+@Table(name = "completed_repairs")
+public class CompletedRepairs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +22,9 @@ public class RepairMethod {
     private String repairName;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "repair_methods_size_parameters",
+            name = "completed_repairs_parameters",
             joinColumns = {@JoinColumn(name = "repair_id")},
             inverseJoinColumns = {@JoinColumn(name = "parameter_id")})
     @ToString.Exclude
-    private List<SizeParameters> sizeParameters;
+    private List<Parameters> parameters;
 }

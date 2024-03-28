@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.result.dto.sizeParameters.FullSizeParametersDto;
+import ru.nabokovsg.result.dto.parameters.ResponseParametersDto;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные дефекта")
-public class FullDefectDto {
+public class ResponseDefectDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
     @Schema(description = "Название дефекта")
     private String defectName;
     @Schema(description = "Параметры дефекта")
-    private List<FullSizeParametersDto> parameters;
+    private List<ResponseParametersDto> parameters;
 }

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.nabokovsg.result.dto.defects.DefectDto;
-import ru.nabokovsg.result.dto.defects.FullDefectDto;
+import ru.nabokovsg.result.dto.defects.ResponseDefectDto;
 import ru.nabokovsg.result.services.DefectsService;
 
 import java.util.List;
@@ -21,32 +21,32 @@ import java.util.List;
         produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Validated
-@Tag(name="Дефекты элемента объекта",
-        description="API для работы с дефектами элементов объекта")
+@Tag(name="Дефекты элемента оборудования",
+        description="API для работы с дефектами элементов оборудования")
 public class DefectsController {
 
     private final DefectsService service;
 
-    @Operation(summary = "Добавление новых дефектов объекта")
+    @Operation(summary = "Добавление новых дефектов оборудования")
     @PostMapping
-    public ResponseEntity<FullDefectDto> save(@RequestBody @Parameter(description = "Дефекты") DefectDto defectDto) {
+    public ResponseEntity<ResponseDefectDto> save(@RequestBody @Parameter(description = "Дефекты") DefectDto defectDto) {
         return ResponseEntity.ok().body(service.save(defectDto));
     }
 
-    @Operation(summary = "Изменение данных дефектов объекта")
+    @Operation(summary = "Изменение данных дефектов оборудования")
     @PatchMapping
-    public ResponseEntity<FullDefectDto> update(@RequestBody @Parameter(description = "Дефект") DefectDto defectDto) {
+    public ResponseEntity<ResponseDefectDto> update(@RequestBody @Parameter(description = "Дефект") DefectDto defectDto) {
         return ResponseEntity.ok().body(service.update(defectDto));
     }
 
-    @Operation(summary = "Получить рекомендации по типу объекта")
+    @Operation(summary = "Получить дефекты по типу оборудования")
     @GetMapping("/{id}")
-    public ResponseEntity<List<FullDefectDto>> getAll(
+    public ResponseEntity<List<ResponseDefectDto>> getAll(
             @PathVariable @Parameter(name = "Индентификатор типа оборудования") Long id) {
         return ResponseEntity.ok().body(service.getAll(id));
     }
 
-    @Operation(summary = "Удалить рекомендацию")
+    @Operation(summary = "Удалить дефект")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable @Parameter(name = "Индентификатор") Long id) {
         service.delete(id);

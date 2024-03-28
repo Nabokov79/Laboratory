@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.nabokovsg.result.dto.sizeParameters.SizeParametersDto;
+import ru.nabokovsg.result.dto.parameters.ParametersDto;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные нового способа ремонта")
-public class RepairMethodDto {
+public class CompletedRepairsDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
@@ -21,5 +21,5 @@ public class RepairMethodDto {
     @Schema(description = "Название способа ремонта")
     private String methodName;
     @Schema(description = "Параметры дефекта")
-    private List<SizeParametersDto> parameters;
+    private List<ParametersDto> parameters;
 }

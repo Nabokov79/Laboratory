@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.dto.defectRepair;
+package ru.nabokovsg.result.dto.defects;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Результаты измерения параметров выполненного ремонта дефекта элемента, подэлемента")
-public class DefectRepairDto {
+@Schema(description = "Данные измеренного дефекта")
+public class DefectMeasurementDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
@@ -24,8 +24,8 @@ public class DefectRepairDto {
     private Long elementId;
     @Schema(description = "Индентификатор подэлемента")
     private Long partElementId;
-    @Schema(description = "Индентификатор ремонта")
-    private Long repairId;
+    @Schema(description = "Индентификатор дефекта")
+    private Long defectId;
     @Schema(description = "Измеренные параметры дефекта")
-    private List<ParameterMeasurementDto> parameters;
+    private List<ParameterMeasurementDto> parametersMeasurements;
 }

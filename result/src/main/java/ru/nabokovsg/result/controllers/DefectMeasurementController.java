@@ -1,11 +1,17 @@
 package ru.nabokovsg.result.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.nabokovsg.result.dto.defects.DefectMeasurementDto;
+import ru.nabokovsg.result.dto.defects.ResponseDefectMeasurementDto;
 import ru.nabokovsg.result.services.DefectMeasurementService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(
@@ -18,4 +24,34 @@ import ru.nabokovsg.result.services.DefectMeasurementService;
 public class DefectMeasurementController {
 
     private final DefectMeasurementService service;
+
+    @Operation(summary = "Добавить данные измеренного дефекта")
+    @PostMapping
+    public ResponseEntity<ResponseDefectMeasurementDto> save(@RequestBody
+                                                             @Parameter(name = "Данные измеренного дефекта")
+                                                             DefectMeasurementDto defectMeasurementDto) {
+        return ResponseEntity.ok().body(service.save(defectMeasurementDto));
+    }
+
+    @Operation(summary = "Измененить данные измеренного дефекта")
+    @PatchMapping
+    public ResponseEntity<ResponseDefectMeasurementDto> update(@RequestBody
+                                                               @Parameter(name = "Данные измеренного дефекта")
+                                                               DefectMeasurementDto defectMeasurementDto) {
+        return ResponseEntity.ok().body(service.update(defectMeasurementDto));
+    }
+
+    @Operation(summary = "Получить данные измеренных дефектов оборудования")
+    @GetMapping("/{id}")
+    public ResponseEntity<List<ResponseDefectMeasurementDto>> getAll(
+            @PathVariable @Parameter(name = "Индентификатор записи в журнале задач") Long id) {
+        return ResponseEntity.ok().body(service.getAll(id));
+    }
+
+    @Operation(summary = "Удалить измеренный дефект")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable @Parameter(name = "Индентификатор") Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Данные дефекта успешно удалены.");
+    }
 }

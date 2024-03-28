@@ -1,17 +1,20 @@
 package ru.nabokovsg.result.services;
 
 import ru.nabokovsg.result.dto.defects.DefectDto;
-import ru.nabokovsg.result.dto.defects.FullDefectDto;
+import ru.nabokovsg.result.dto.defects.ResponseDefectDto;
+import ru.nabokovsg.result.models.Defect;
 
 import java.util.List;
 
 public interface DefectsService {
 
-    FullDefectDto save(DefectDto defectDto);
+    ResponseDefectDto save(DefectDto defectDto);
 
-    FullDefectDto update(DefectDto defectDto);
+    ResponseDefectDto update(DefectDto defectDto);
 
-    List<FullDefectDto> getAll(Long id);
+    List<ResponseDefectDto> getAll(Long id);
+
+    Defect get(Long id);
 
     void delete(Long id);
 }

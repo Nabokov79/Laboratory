@@ -3,7 +3,7 @@ package ru.nabokovsg.result.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -26,9 +26,9 @@ public class Defect {
     private Boolean useToCalculateResidualThickness;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "defects_size_parameters",
+            name = "defects_parameters",
             joinColumns = {@JoinColumn(name = "defect_id")},
             inverseJoinColumns = {@JoinColumn(name = "parameter_id")})
     @ToString.Exclude
-    private List<SizeParameters> sizeParameters;
+    private Set<Parameters> parameters;
 }

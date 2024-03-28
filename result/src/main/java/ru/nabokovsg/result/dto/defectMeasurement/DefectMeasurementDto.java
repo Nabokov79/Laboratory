@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.nabokovsg.result.dto.parameters.ParametersDto;
+import ru.nabokovsg.result.dto.parameters.ParameterMeasurementDto;
 
 import java.util.List;
 
@@ -25,5 +25,5 @@ public class DefectMeasurementDto {
     @Schema(description = "Индентификатор дефекта")
     private Long defectId;
     @Schema(description = "Измеренные параметры дефекта")
-    private List<ParametersDto> parameters;
+    private List<ParameterMeasurementDto> parameters;
 }

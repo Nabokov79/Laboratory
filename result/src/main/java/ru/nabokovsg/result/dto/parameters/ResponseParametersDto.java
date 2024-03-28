@@ -1,4 +1,4 @@
-package ru.nabokovsg.result.dto.sizeParameters;
+package ru.nabokovsg.result.dto.parameters;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @Schema(description = "Данные параметра дефекта")
-public class FullSizeParametersDto {
+public class ResponseParametersDto {
 
     @Schema(description = "Индентификатор")
     private Long id;
     @Schema(description = "Название параметра дефекта")
-    private String parametersName;
+    private String parameterName;
     @Schema(description = "Единица измерения параметра дефекта")
     private String unitMeasurement;
 }
